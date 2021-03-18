@@ -26,8 +26,8 @@ public class PlayerMove : MonoBehaviour{
     private bool canGlide;
 
     [Header("Dashing")]
-    public float dashForce = 15;
-    public float dashTime = 0.1f;
+    public float dashForce = 12;
+    public float dashTime = 0.15f;
     public float dashCooldown = 0.5f;
     private float dashTimer;
     private bool isDashing;
