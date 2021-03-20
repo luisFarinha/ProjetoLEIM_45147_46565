@@ -2,7 +2,8 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerMove : MonoBehaviour{
+public class PlayerMove : MonoBehaviour
+{
     [Header("Components")]
     public LayerMask gLayer;
     private Rigidbody2D rb;
@@ -25,9 +26,10 @@ public class PlayerMove : MonoBehaviour{
     private bool canGlide;
 
     [Header("Dashing")]
-    public float dashForce = 12;
-    public float dashTime = 0.15f;
+    public float dashForce = 11;
+    public float dashTime = 0.2f;
     public float dashCooldown = 0.5f;
+    private bool facingRight = true;
     private float dashTimer;
     private bool isDashing;
     private bool canDash;
@@ -81,13 +83,15 @@ public class PlayerMove : MonoBehaviour{
         im.Disable();
     }
 
-    private void Update(){
+    private void Update()
+    {
         leftGPoint = new Vector3(transform.position.x - sr.bounds.size.x * 0.2f, transform.position.y, transform.position.z);
         rightGPoint = new Vector3(transform.position.x + sr.bounds.size.x * 0.2f, transform.position.y, transform.position.z);
         if (Physics2D.Raycast(leftGPoint, Vector2.down, gLength, gLayer) || Physics2D.Raycast(rightGPoint, Vector2.down, gLength, gLayer))
         {
             onGround = true;
-        }else { onGround = false; }
+        }
+        else { onGround = false; }
 
 
         if (Physics2D.Raycast(transform.position, Vector2.left, wLength, gLayer))
@@ -100,10 +104,10 @@ public class PlayerMove : MonoBehaviour{
             onRightWall = true;
         }
         else { onRightWall = false; }
-        
+
 
         x = im.Player.Walk.ReadValue<float>(); y = im.Player.Jump.ReadValue<float>();
-        
+
         if (!isDashing && !isWallJumping)
         {
             glide();
@@ -113,7 +117,8 @@ public class PlayerMove : MonoBehaviour{
         checkDirectionDigital();
     }
 
-    private void FixedUpdate(){
+    private void FixedUpdate()
+    {
         if (!isDashing)
         {
             //delayed Jump
@@ -124,7 +129,7 @@ public class PlayerMove : MonoBehaviour{
             if (!isWallJumping)
             {
                 moveCharacter();
-                
+
             }
             wallSlide();
         }
@@ -137,11 +142,13 @@ public class PlayerMove : MonoBehaviour{
         {
             x = 1;
             transform.eulerAngles = new Vector3(0, 0, 0);
+            facingRight = true;
         }
         else if (x < 0)
         {
             x = -1;
             transform.eulerAngles = new Vector3(0, 180, 0);
+            facingRight = false;
         }
     }
 
@@ -149,7 +156,8 @@ public class PlayerMove : MonoBehaviour{
     {
         rb.velocity = new Vector2(x * walkSpeed, rb.velocity.y);
 
-        if (x != 0){
+        if (x != 0)
+        {
             anim.SetBool("isRunning", true);
         }
         else
@@ -166,14 +174,21 @@ public class PlayerMove : MonoBehaviour{
             canDash = false;
             dashTimer = Time.time + dashCooldown;
         }
-        
+
     }
     private IEnumerator dashing()
     {
         isDashing = true;
         rb.velocity = new Vector2(rb.velocity.x, 0);
-        
-        rb.AddForce(new Vector2(x * dashForce, 0), ForceMode2D.Impulse);
+        if (facingRight)
+        {
+            rb.AddForce(new Vector2(dashForce, 0), ForceMode2D.Impulse);
+        }
+        else
+        {
+            rb.AddForce(new Vector2(-dashForce, 0), ForceMode2D.Impulse);
+        }
+
 
         float gravity = rb.gravityScale;
         rb.gravityScale = 0;
@@ -184,7 +199,7 @@ public class PlayerMove : MonoBehaviour{
 
     private void wallSlide()
     {
-        if(!onGround && rb.velocity.y < 0 && onLeftWall && x < 0)
+        if (!onGround && rb.velocity.y < 0 && onLeftWall && x < 0)
         {
             canWallJump = true;
             rb.velocity = new Vector2(0, wallSlideSpeed);
@@ -206,19 +221,22 @@ public class PlayerMove : MonoBehaviour{
         {
             rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
             jumpTimer = 0;
-        } else if (!onGround && doubleReady && !canWallJump && !isDashing) //double jump
+        }
+        else if (!onGround && doubleReady && !canWallJump && !isDashing) //double jump
         {
             rb.velocity = new Vector2(x * walkSpeed, 0);
-            rb.AddForce(new Vector2(0, jumpForce * 3/4), ForceMode2D.Impulse);
+            rb.AddForce(new Vector2(0, jumpForce * 3 / 4), ForceMode2D.Impulse);
             doubleReady = false;
-        } else if (canWallJump && !isDashing)
+        }
+        else if (canWallJump && !isDashing)
         {
             canWallJump = false;
             StartCoroutine(wallJumping());
-        } else if (!onGround && !canWallJump)
+        }
+        else if (!onGround && !canWallJump)
         {
             jumpTimer = Time.time + jumpDelay;
-        }   
+        }
     }
 
     private IEnumerator wallJumping()
@@ -269,9 +287,9 @@ public class PlayerMove : MonoBehaviour{
 
     private void limitFallSpeed()
     {
-        if(rb.velocity.y <= maxFallingSpeed)
+        if (rb.velocity.y <= maxFallingSpeed)
         {
-            rb.velocity = new Vector2(x * walkSpeed, maxFallingSpeed); 
+            rb.velocity = new Vector2(x * walkSpeed, maxFallingSpeed);
         }
     }
 
