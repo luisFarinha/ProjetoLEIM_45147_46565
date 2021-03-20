@@ -6,13 +6,12 @@ public class PlayerMove : MonoBehaviour{
     [Header("Components")]
     public LayerMask gLayer;
     private Rigidbody2D rb;
-    //private Animator anim;
+    private Animator anim;
     private SpriteRenderer sr;
     private InputMaster im;
 
     [Header("Walking")]
     public float walkSpeed = 5f;
-    public bool facingRight = true;
     private float x, y;
 
     [Header("Jumping")]
@@ -59,7 +58,7 @@ public class PlayerMove : MonoBehaviour{
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        //anim = GetComponent<Animator>();
+        anim = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
         gLength = (sr.bounds.size.y / 2);
         wLength = (sr.bounds.size.x / 2) * 0.8f;
@@ -104,13 +103,14 @@ public class PlayerMove : MonoBehaviour{
         
 
         x = im.Player.Walk.ReadValue<float>(); y = im.Player.Jump.ReadValue<float>();
+        
         if (!isDashing && !isWallJumping)
         {
             glide();
             limitFallSpeed();
         }
         checkGrounded();
-        checkDirection();
+        checkDirectionDigital();
     }
 
     private void FixedUpdate(){
@@ -131,22 +131,31 @@ public class PlayerMove : MonoBehaviour{
 
     }
 
-    private void checkDirection()
+    private void checkDirectionDigital()
     {
         if (x > 0)
         {
-            facingRight = true;
+            x = 1;
+            transform.eulerAngles = new Vector3(0, 0, 0);
         }
         else if (x < 0)
         {
-            facingRight = false;
+            x = -1;
+            transform.eulerAngles = new Vector3(0, 180, 0);
         }
     }
 
     private void moveCharacter()
     {
         rb.velocity = new Vector2(x * walkSpeed, rb.velocity.y);
-        //anim.SetFloat("horizontal", Mathf.Abs(rb.velocity.x));
+
+        if (x != 0){
+            anim.SetBool("isRunning", true);
+        }
+        else
+        {
+            anim.SetBool("isRunning", false);
+        }
     }
 
     private void dash()
@@ -163,14 +172,8 @@ public class PlayerMove : MonoBehaviour{
     {
         isDashing = true;
         rb.velocity = new Vector2(rb.velocity.x, 0);
-        if (facingRight)
-        {
-            rb.AddForce(new Vector2(dashForce, 0), ForceMode2D.Impulse);
-        }
-        else
-        {
-            rb.AddForce(new Vector2(-dashForce, 0), ForceMode2D.Impulse);
-        }
+        
+        rb.AddForce(new Vector2(x * dashForce, 0), ForceMode2D.Impulse);
 
         float gravity = rb.gravityScale;
         rb.gravityScale = 0;

@@ -20,10 +20,10 @@ public class @InputMaster : IInputActionCollection, IDisposable
             ""actions"": [
                 {
                     ""name"": ""Walk"",
-                    ""type"": ""Button"",
+                    ""type"": ""Value"",
                     ""id"": ""131a2c46-ad64-4a6b-a563-e84b4d0c9e82"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
+                    ""expectedControlType"": """",
+                    ""processors"": ""AxisDeadzone"",
                     ""interactions"": """"
                 },
                 {
@@ -276,7 +276,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""negative"",
+                    ""name"": ""Negative"",
                     ""id"": ""73d9a8e0-d03d-471f-8ad5-8cd9f90be346"",
                     ""path"": ""<Gamepad>/leftStick/left"",
                     ""interactions"": """",
@@ -287,7 +287,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""positive"",
+                    ""name"": ""Positive"",
                     ""id"": ""e08e8f34-74f2-42f5-b5b2-d0596f5db10c"",
                     ""path"": ""<Gamepad>/leftStick/right"",
                     ""interactions"": """",

@@ -234,7 +234,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 474131922}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.65, y: 0, z: 0}
+  m_LocalPosition: {x: 5.28, y: -0.69, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1907126177}
@@ -495,7 +495,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1017597493}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.5, y: -1.2, z: 1}
+  m_LocalPosition: {x: 1.653, y: -1.257, z: 1}
   m_LocalScale: {x: 3.986155, y: 3.986155, z: 3.986155}
   m_Children: []
   m_Father: {fileID: 0}
@@ -10151,7 +10151,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   walkSpeed: 5
-  facingRight: 1
   jumpForce: 12.5
   glideFallingSpeed: -2.5
   dashForce: 12
