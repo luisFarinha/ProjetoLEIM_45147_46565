@@ -112,9 +112,9 @@ public class PlayerMove : MonoBehaviour
         {
             glide();
             limitFallSpeed();
+            checkDirectionDigital();
         }
         checkGrounded();
-        checkDirectionDigital();
     }
 
     private void FixedUpdate()
@@ -217,7 +217,7 @@ public class PlayerMove : MonoBehaviour
 
     private void jump()
     {
-        if (onGround && !canWallJump && !isDashing) //jump
+        if (onGround && !isDashing) //jump
         {
             rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
             jumpTimer = 0;
@@ -245,10 +245,14 @@ public class PlayerMove : MonoBehaviour
         rb.velocity = new Vector2(rb.velocity.x, 0);
         if (onLeftWall)
         {
+            transform.eulerAngles = new Vector3(0, 0, 0);
+            facingRight = true;
             rb.AddForce(new Vector2(wallJumpForce, wallJumpForce), ForceMode2D.Impulse);
         }
         else if (onRightWall)
         {
+            transform.eulerAngles = new Vector3(0, 180, 0);
+            facingRight = false;
             rb.AddForce(new Vector2(-wallJumpForce, wallJumpForce), ForceMode2D.Impulse);
         }
         doubleReady = true;
