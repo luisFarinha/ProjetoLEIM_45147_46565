@@ -2329,6 +2329,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1290715225530138, guid: 6877fb649746c674d8fbbcf60d41892b, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 1315759352830414, guid: 6877fb649746c674d8fbbcf60d41892b, type: 3}
       propertyPath: m_Layer
       value: 9
@@ -4476,6 +4480,8 @@ MonoBehaviour:
   walkSpeed: 5
   jumpForce: 12.5
   glideFallingSpeed: -2.5
+  isGliding: 0
+  canGlide: 0
   dashForce: 13
   dashTime: 0.25
   dashCooldown: 0.5
@@ -4496,9 +4502,11 @@ MonoBehaviour:
   attackRange: 0.75
   attackCooldown: 0.3
   meleeAttackDmg: 25
-  knockbackForce: 6
+  knockbackForce: 8
   isKnocked: 0
   knockbackTime: 0.2
+  maxHealth: 100
+  currentHealth: 0
 --- !u!61 &1907126175
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4512,18 +4520,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.055773377, y: -0.44340992}
+  m_Offset: {x: -0.023716807, y: -0.44340992}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 5.42, y: 8.09}
-    newSize: {x: 5.37, y: 8.49}
+    newSize: {x: 7.65, y: 9.98}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 4.0142794, y: 6.9493713}
+  m_Size: {x: 3.8552988, y: 6.9493713}
   m_EdgeRadius: 0
 --- !u!212 &1907126176
 SpriteRenderer:
@@ -4570,7 +4578,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 5.37, y: 8.49}
+  m_Size: {x: 7.65, y: 9.98}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

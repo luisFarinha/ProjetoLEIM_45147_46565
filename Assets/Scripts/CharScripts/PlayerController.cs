@@ -24,7 +24,8 @@ public class PlayerController : MonoBehaviour
 
     [Header("Gliding")]
     public float glideFallingSpeed = -2.5f;
-    private bool canGlide;
+    public bool isGliding;
+    public bool canGlide;
 
     [Header("Dashing")]
     public float dashForce = 11;
@@ -76,6 +77,10 @@ public class PlayerController : MonoBehaviour
     public bool isKnocked;
     public float knockbackTime = 0.4f;
 
+    [Header("Health and Damage")]
+    public int maxHealth = 100;
+    public int currentHealth;
+
     private string currentState = "player_idle";
 
     private string PLAYER_IDLE = "player_idle";
@@ -83,8 +88,10 @@ public class PlayerController : MonoBehaviour
     private string PLAYER_RUN = "player_run";
     private string PLAYER_JUMP = "player_jump";
     private string PLAYER_DOUBLEJUMP = "player_doubleJump";
+    private string PLAYER_WALLSLIDE = "player_wallSlide";
     private string PLAYER_STARTFALL = "player_startFall";
     private string PLAYER_FALL = "player_fall";
+    private string PLAYER_GLIDE = "player_glide";
     private string PLAYER_LAND = "player_land";
     private string PLAYER_ATTACK = "player_attack";
     private string PLAYER_ATTACKUP = "player_attackUp";
@@ -96,13 +103,15 @@ public class PlayerController : MonoBehaviour
         anim = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
         gLength = (sr.bounds.size.y / 2);
-        wLength = (sr.bounds.size.x / 2) * 0.8f;
+        wLength = (sr.bounds.size.x / 2) * 0.75f;
 
         im = new InputMaster();
 
         im.Player.Dash.started += _ => dash(); //pressed
         im.Player.Glide.started += _ => canGlide = true; //pressed
-        im.Player.Glide.canceled += _ => canGlide = false; //released
+        im.Player.Glide.started += _ => isGliding = true; //pressed
+        im.Player.Glide.canceled += _ => canGlide = false;//released
+        im.Player.Glide.canceled += _ => isGliding = false; //released
         im.Player.Jump.started += _ => jump(); //pressed
         im.Player.Jump.canceled += _ => stopJump(); //released
         im.Player.Attack.started += _ => attack(PLAYER_ATTACK);
@@ -197,7 +206,7 @@ public class PlayerController : MonoBehaviour
         {
             ChangeAnimationState(PLAYER_LAND);
             isLanding = true;
-            Invoke("landComplete", landAnimTime);
+            StartCoroutine(actionComplete("isLanding", landAnimTime));
         }
         else if ((int)rb.velocity.y == 0 && x != 0 && onGround)
         {
@@ -217,14 +226,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void landComplete()
-    {
-        isLanding = false;
-    }
-
     private void dash()
     {
-        if (canDash && Time.time > dashTimer)
+        if (canDash && Time.time > dashTimer && !isWallSliding)
         {
             StartCoroutine(dashing());
             canDash = false;
@@ -258,13 +262,15 @@ public class PlayerController : MonoBehaviour
     {
         if (!onGround && rb.velocity.y < 0 && onLeftWall && x < 0)
         {
-            isWallSliding = true;
             rb.velocity = new Vector2(0, wallSlideSpeed);
+            ChangeAnimationState(PLAYER_WALLSLIDE);
+            isWallSliding = true;
         }
         else if (!onGround && rb.velocity.y < 0 && onRightWall && x > 0)
         {
-            isWallSliding = true;
             rb.velocity = new Vector2(0, wallSlideSpeed);
+            ChangeAnimationState(PLAYER_WALLSLIDE);
+            isWallSliding = true;
         }
         else
         {
@@ -286,13 +292,14 @@ public class PlayerController : MonoBehaviour
 
             ChangeAnimationState(PLAYER_DOUBLEJUMP);
             isLanding = true;
-            Invoke("landComplete", 0.25f);
+            StartCoroutine(actionComplete("isLanding", 0.25f));
 
             doubleReady = false;
         }
         else if (isWallSliding && !isDashing)
         {
             isWallSliding = false;
+            ChangeAnimationState(PLAYER_JUMP);
             StartCoroutine(wallJumping());
         }
         else if (!onGround && !isWallSliding)
@@ -319,7 +326,6 @@ public class PlayerController : MonoBehaviour
         }
         doubleReady = true;
         canDash = true;
-
         yield return new WaitForSeconds(wallJumpTime);
         isWallJumping = false;
     }
@@ -329,6 +335,11 @@ public class PlayerController : MonoBehaviour
         if (rb.velocity.y < 0 && canGlide)
         {
             rb.velocity = new Vector2(x * walkSpeed, glideFallingSpeed);
+            ChangeAnimationState(PLAYER_GLIDE);
+        }
+        if (onGround)
+        {
+            isGliding = false;
         }
     }
 
@@ -359,25 +370,20 @@ public class PlayerController : MonoBehaviour
             {
                 ChangeAnimationState(attackType);
                 isAttacking = true;
-                checkForDmg(attackType);
-                Invoke("attackComplete", attackAnimTime);
+                checkForDmgToGive(attackType);
+                StartCoroutine(actionComplete("isAttacking", attackAnimTime));
             }
             else if (!onGround)
             {
                 ChangeAnimationState(attackType);
                 isAttacking = true;
-                checkForDmg(attackType);
-                Invoke("attackComplete", attackAnimTime);
+                checkForDmgToGive(attackType);
+                StartCoroutine(actionComplete("isAttacking", attackAnimTime));
             }
         }
     }
 
-        private void attackComplete()
-    {
-        isAttacking = false;
-    }
-
-    private void checkForDmg(string attackType)
+    private void checkForDmgToGive(string attackType)
     {
         Collider2D[] damagedEnemies = Physics2D.OverlapCircleAll(attackPos.position, attackRange, eLayer);
         string DmgDirection = "";
@@ -427,13 +433,35 @@ public class PlayerController : MonoBehaviour
             isKnocked = true;
             rb.velocity = new Vector2(x * walkSpeed, 0);
             rb.AddForce(new Vector2(xKnock, yKnock), ForceMode2D.Impulse);
-            Invoke("knockComplete", knockbackTime);
+            StartCoroutine(actionComplete("isKnocked", knockbackTime));
         }
     }
 
-    private void knockComplete()
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        isKnocked = false;
+        if(collision.gameObject.tag == "Enemy")
+        {
+            isKnocked = true;
+            rb.velocity = new Vector2(0, 0);
+            rb.AddForce(new Vector2(-10, 10), ForceMode2D.Impulse);
+            StartCoroutine(actionComplete("isKnocked", knockbackTime));
+        }
+    }
+
+    private void checkForDmgTakenDirection(Collision2D collision)
+    {
+        Vector2 dmgHere = gameObject.transform.position - collision.gameObject.transform.position;
+    }
+
+    private IEnumerator actionComplete(string action, float time)
+    {
+        yield return new WaitForSeconds(time);
+        switch (action)
+        {
+            case "isAttacking": isAttacking = false; break;
+            case "isLanding": isLanding = false; break;
+            case "isKnocked": isKnocked = false; break;
+        }
     }
 
     private void limitFallSpeed()
@@ -448,14 +476,14 @@ public class PlayerController : MonoBehaviour
     {
         if (currentState == newState) return;
         
-        if (!isAttacking && !isLanding)
+        if (!isAttacking && !isLanding && !isWallSliding && !isGliding)
         {
             anim.Play(newState);
             currentState = newState;
-        }else if(!isAttacking && (newState == PLAYER_ATTACK || newState == PLAYER_ATTACKUP || newState == PLAYER_ATTACKDOWN)){
+        }else if(!isAttacking && !isGliding && (newState == PLAYER_ATTACK || newState == PLAYER_ATTACKUP || newState == PLAYER_ATTACKDOWN || newState == PLAYER_WALLSLIDE)){
             anim.Play(newState);
             currentState = newState;
-        }else if(newState == PLAYER_DASH)
+        }else if(newState == PLAYER_DASH || newState == PLAYER_GLIDE)
         {
             anim.Play(newState);
             currentState = newState;
