@@ -331,7 +331,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""Button With One Modifier"",
+                    ""name"": ""Button With Joystick"",
                     ""id"": ""3f1fc3c1-1736-4795-bdcc-68aa22c1cae2"",
                     ""path"": ""ButtonWithOneModifier"",
                     ""interactions"": """",
@@ -359,6 +359,39 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
+                    ""action"": ""AttackUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Button With DPad"",
+                    ""id"": ""326b62a3-aca8-442d-a9b0-02d31e609912"",
+                    ""path"": ""ButtonWithOneModifier"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AttackUp"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""modifier"",
+                    ""id"": ""2454cf95-ac07-47ca-a273-f6c5426cde46"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AttackUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""button"",
+                    ""id"": ""15f2aaaa-5eb4-400e-943c-0a3355ea68c4"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
                     ""action"": ""AttackUp"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -397,7 +430,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""Button With One Modifier"",
+                    ""name"": ""Button With Joystick"",
                     ""id"": ""757f3ec6-6eb3-4bce-a040-aa8fafe37d9b"",
                     ""path"": ""ButtonWithOneModifier"",
                     ""interactions"": """",
@@ -425,6 +458,39 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
+                    ""action"": ""AttackDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Button With DPad"",
+                    ""id"": ""a6ecc631-e1c9-4377-b808-8d695b17d0da"",
+                    ""path"": ""ButtonWithOneModifier"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AttackDown"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""modifier"",
+                    ""id"": ""185e8392-91a6-45da-b1f0-1a870d030c0a"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AttackDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""button"",
+                    ""id"": ""74dcd688-476a-487b-83c1-166fa8516334"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
                     ""action"": ""AttackDown"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
