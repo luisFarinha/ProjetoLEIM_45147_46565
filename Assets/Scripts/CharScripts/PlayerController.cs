@@ -25,11 +25,10 @@ public class PlayerController : MonoBehaviour
     [Header("Gliding")]
     public float glideFallingSpeed = -2.5f;
     public bool isGliding;
-    public bool canGlide;
 
     [Header("Dashing")]
-    public float dashForce = 11;
-    public float dashTime = 0.2f;
+    public float dashForce = 13;
+    public float dashTime = 0.25f;
     public float dashCooldown = 0.5f;
     private bool facingRight = true;
     private float dashTimer;
@@ -41,7 +40,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Wall Jumping")]
     public float wallJumpForce = 8;
-    public float wallJumpTime = 0.25f;
+    public float wallJumpTime = 0.2f;
     public float landAnimTime = 0.2f;
     private bool isWallJumping;
     private bool isLanding;
@@ -62,24 +61,30 @@ public class PlayerController : MonoBehaviour
     private float wLength;
 
     [Header("Melee Attacks")]
-    public float attackAnimTime = 0.33f;
+    public float attackAnimTime = 0.23f;
     public bool isAttacking;
     public Transform attackPos;
     public Transform attackUpPos;
     public Transform attackDownPos;
-    public float attackRange = 2f;
+    public float attackRange = 0.75f;
     public float attackCooldown = 0.3f;
     public int meleeAttackDmg = 25;
     private float attackTimer;
 
     [Header("Knocked Back")]
-    public float knockbackForce = 15f;
+    public float knockbackForce = 8f;
     public bool isKnocked;
-    public float knockbackTime = 0.4f;
+    public float knockbackTime = 0.2f;
 
     [Header("Health and Damage")]
     public int maxHealth = 100;
     public int currentHealth;
+    public float stunForce = 6;
+    public float stunTime = 0.3f;
+
+    [Header("Particle Effects")]
+    public ParticleSystem dust;
+    private bool readyForDust;
 
     private string currentState = "player_idle";
 
@@ -108,9 +113,7 @@ public class PlayerController : MonoBehaviour
         im = new InputMaster();
 
         im.Player.Dash.started += _ => dash(); //pressed
-        im.Player.Glide.started += _ => canGlide = true; //pressed
         im.Player.Glide.started += _ => isGliding = true; //pressed
-        im.Player.Glide.canceled += _ => canGlide = false;//released
         im.Player.Glide.canceled += _ => isGliding = false; //released
         im.Player.Jump.started += _ => jump(); //pressed
         im.Player.Jump.canceled += _ => stopJump(); //released
@@ -131,15 +134,55 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        //track movement values
+        x = im.Player.Walk.ReadValue<float>(); y = im.Player.Jump.ReadValue<float>();
+
+        if (!isDashing && !isWallJumping)
+        {
+            glide();
+            checkDirectionDigital();
+        }
+        
+        limitFallSpeed();
+        checkGrounded();
+        checkWalled();
+    }
+
+    private void FixedUpdate()
+    {
+        checkForParticles();
+
+        if (!isDashing)
+        {
+            //delayed Jump
+            if (jumpTimer > Time.time && onGround)
+            {
+                jump();
+            }
+            if (!isWallJumping && !isKnocked)
+            {
+                moveCharacter();
+            }
+            wallSlide();
+        }
+    }
+
+    private void checkGrounded()
+    {
         leftGPoint = new Vector3(transform.position.x - sr.bounds.size.x * 0.3f, transform.position.y, transform.position.z);
         rightGPoint = new Vector3(transform.position.x + sr.bounds.size.x * 0.3f, transform.position.y, transform.position.z);
         if (Physics2D.Raycast(leftGPoint, Vector2.down, gLength, gLayer) || Physics2D.Raycast(rightGPoint, Vector2.down, gLength, gLayer))
         {
             onGround = true;
+            doubleReady = true;
+            canDash = true;
+            isGliding = false;
         }
         else { onGround = false; }
+    }
 
-
+    private void checkWalled()
+    {
         if (Physics2D.Raycast(transform.position, Vector2.left, wLength, gLayer))
         {
             onLeftWall = true;
@@ -150,35 +193,6 @@ public class PlayerController : MonoBehaviour
             onRightWall = true;
         }
         else { onRightWall = false; }
-
-
-        x = im.Player.Walk.ReadValue<float>(); y = im.Player.Jump.ReadValue<float>();
-
-        if (!isDashing && !isWallJumping && !isAttacking)
-        {
-            glide();
-            limitFallSpeed();
-            checkDirectionDigital();
-        }
-        checkGrounded();
-    }
-
-    private void FixedUpdate()
-    {
-        if (!isDashing)
-        {
-            //delayed Jump
-            if (jumpTimer > Time.time && onGround)
-            {
-                jump();
-            }
-            if (!isDashing && !isWallJumping && !isKnocked)
-            {
-                moveCharacter();
-            }
-            wallSlide();
-        }
-
     }
 
     private void checkDirectionDigital()
@@ -187,42 +201,58 @@ public class PlayerController : MonoBehaviour
         {
             x = 1;
             transform.eulerAngles = new Vector3(0, 0, 0);
+            if (!facingRight && onGround) dust.Play();
             facingRight = true;
         }
         else if (x < 0)
         {
             x = -1;
             transform.eulerAngles = new Vector3(0, 180, 0);
+            if (facingRight && onGround) dust.Play();
             facingRight = false;
+        }
+    }
+
+    private void checkForParticles()
+    {
+        if (x == 0 && onGround) readyForDust = true;
+
+        if (readyForDust && x != 0 && onGround)
+        {
+            dust.Play();
+            readyForDust = false;
         }
     }
 
     private void moveCharacter()
     {
         rb.velocity = new Vector2(x * walkSpeed, rb.velocity.y);
-
-
-        if ((int)rb.velocity.y == 0 && (currentState == PLAYER_FALL || currentState == PLAYER_STARTFALL))
+        if (!isAttacking && !isLanding && !isWallSliding && !isGliding)
         {
-            ChangeAnimationState(PLAYER_LAND);
-            isLanding = true;
-            StartCoroutine(actionComplete("isLanding", landAnimTime));
-        }
-        else if ((int)rb.velocity.y == 0 && x != 0 && onGround)
-        {
-            ChangeAnimationState(PLAYER_RUN);
-        }
-        else if((int)rb.velocity.y == 0 && x == 0 && onGround)
-        {
-            ChangeAnimationState(PLAYER_IDLE);
-        }
-        else if((int)rb.velocity.y > 0)
-        {
-            ChangeAnimationState(PLAYER_JUMP);
-        }
-        else if((int)rb.velocity.y < 0)
-        {
-            ChangeAnimationState(PLAYER_STARTFALL);
+            if ((int)rb.velocity.y == 0 && (currentState == PLAYER_FALL || currentState == PLAYER_STARTFALL))
+            {
+                ChangeAnimationState(PLAYER_LAND);
+                isLanding = true;
+                dust.Play();
+                StartCoroutine(actionComplete("isLanding", landAnimTime));
+            }
+            else if ((int)rb.velocity.y == 0 && x != 0 && onGround)
+            {
+                ChangeAnimationState(PLAYER_RUN);
+                dust.Play();
+            }
+            else if ((int)rb.velocity.y == 0 && x == 0 && onGround)
+            {
+                ChangeAnimationState(PLAYER_IDLE);
+            }
+            else if ((int)rb.velocity.y > 0)
+            {
+                ChangeAnimationState(PLAYER_JUMP);
+            }
+            else if ((int)rb.velocity.y < 0)
+            {
+                ChangeAnimationState(PLAYER_STARTFALL);
+            }
         }
     }
 
@@ -251,6 +281,8 @@ public class PlayerController : MonoBehaviour
 
         ChangeAnimationState(PLAYER_DASH);
 
+        dust.Play();
+
         float gravity = rb.gravityScale;
         rb.gravityScale = 0;
         yield return new WaitForSeconds(dashTime);
@@ -260,16 +292,18 @@ public class PlayerController : MonoBehaviour
 
     private void wallSlide()
     {
-        if (!onGround && rb.velocity.y < 0 && onLeftWall && x < 0)
+        if (!onGround && rb.velocity.y < 0 && onLeftWall && x < 0 && !isAttacking && !isGliding)
         {
             rb.velocity = new Vector2(0, wallSlideSpeed);
             ChangeAnimationState(PLAYER_WALLSLIDE);
+            dust.Play();
             isWallSliding = true;
         }
-        else if (!onGround && rb.velocity.y < 0 && onRightWall && x > 0)
+        else if (!onGround && rb.velocity.y < 0 && onRightWall && x > 0 && !isAttacking && !isGliding)
         {
             rb.velocity = new Vector2(0, wallSlideSpeed);
             ChangeAnimationState(PLAYER_WALLSLIDE);
+            dust.Play();
             isWallSliding = true;
         }
         else
@@ -284,15 +318,19 @@ public class PlayerController : MonoBehaviour
         {
             rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
             jumpTimer = 0;
+            dust.Play();
         }
-        else if (!onGround && doubleReady && !isWallSliding && !isDashing) //double jump
+        else if (!onGround && doubleReady && !isLanding && !isWallSliding && !isGliding) //double jump
         {
             rb.velocity = new Vector2(x * walkSpeed, 0);
             rb.AddForce(new Vector2(0, jumpForce * 3 / 4), ForceMode2D.Impulse);
-
-            ChangeAnimationState(PLAYER_DOUBLEJUMP);
-            isLanding = true;
-            StartCoroutine(actionComplete("isLanding", 0.25f));
+            if (!isAttacking)
+            {
+                ChangeAnimationState(PLAYER_DOUBLEJUMP);
+                isLanding = true;
+                StartCoroutine(actionComplete("isLanding", 0.25f));
+            }
+            dust.Play();
 
             doubleReady = false;
         }
@@ -300,6 +338,7 @@ public class PlayerController : MonoBehaviour
         {
             isWallSliding = false;
             ChangeAnimationState(PLAYER_JUMP);
+            dust.Play();
             StartCoroutine(wallJumping());
         }
         else if (!onGround && !isWallSliding)
@@ -332,24 +371,10 @@ public class PlayerController : MonoBehaviour
 
     private void glide()
     {
-        if (rb.velocity.y < 0 && canGlide)
+        if (rb.velocity.y < 0 && isGliding && !isWallSliding)
         {
             rb.velocity = new Vector2(x * walkSpeed, glideFallingSpeed);
             ChangeAnimationState(PLAYER_GLIDE);
-        }
-        if (onGround)
-        {
-            isGliding = false;
-        }
-    }
-
-    private void checkGrounded()
-    {
-        if (onGround)
-        {
-            doubleReady = true;
-            canDash = true;
-            canGlide = false;
         }
     }
 
@@ -364,13 +389,14 @@ public class PlayerController : MonoBehaviour
 
     private void attack(string attackType)
     {
-        if (!isDashing && !isWallSliding && !isAttacking)
+        if (!isDashing && !isWallSliding && !isAttacking && !isGliding)
         {
             if (onGround && attackType != PLAYER_ATTACKDOWN)
             {
                 ChangeAnimationState(attackType);
                 isAttacking = true;
                 checkForDmgToGive(attackType);
+                dust.Play();
                 StartCoroutine(actionComplete("isAttacking", attackAnimTime));
             }
             else if (!onGround)
@@ -442,15 +468,27 @@ public class PlayerController : MonoBehaviour
         if(collision.gameObject.tag == "Enemy")
         {
             isKnocked = true;
-            rb.velocity = new Vector2(0, 0);
-            rb.AddForce(new Vector2(-10, 10), ForceMode2D.Impulse);
-            StartCoroutine(actionComplete("isKnocked", knockbackTime));
-        }
-    }
+            
+            Vector2 dmgHere = gameObject.transform.position - collision.gameObject.transform.position;
+            if(dmgHere.x < 1 && dmgHere.x > -1)
+            {
+                dmgHere.y = dmgHere.y > 0 ? 1 : -1;
+            }
+            else if(dmgHere.y < 1 && dmgHere.y > -1)
+            {
+                dmgHere.x = dmgHere.x > 0 ? 1 : -1;
+            }
+            else
+            {
+                dmgHere.x = dmgHere.x > 0 ? 1 : -1;
+                dmgHere.y = dmgHere.y > 0 ? 1 : -1;
+            }
 
-    private void checkForDmgTakenDirection(Collision2D collision)
-    {
-        Vector2 dmgHere = gameObject.transform.position - collision.gameObject.transform.position;
+
+            rb.velocity = new Vector2(0, 0);
+            rb.AddForce(new Vector2(dmgHere.x * stunForce, dmgHere.y * stunForce*1.5f), ForceMode2D.Impulse);
+            StartCoroutine(actionComplete("isKnocked", stunTime));
+        }
     }
 
     private IEnumerator actionComplete(string action, float time)
@@ -475,19 +513,8 @@ public class PlayerController : MonoBehaviour
     private void ChangeAnimationState(string newState)
     {
         if (currentState == newState) return;
-        
-        if (!isAttacking && !isLanding && !isWallSliding && !isGliding)
-        {
-            anim.Play(newState);
-            currentState = newState;
-        }else if(!isAttacking && !isGliding && (newState == PLAYER_ATTACK || newState == PLAYER_ATTACKUP || newState == PLAYER_ATTACKDOWN || newState == PLAYER_WALLSLIDE)){
-            anim.Play(newState);
-            currentState = newState;
-        }else if(newState == PLAYER_DASH || newState == PLAYER_GLIDE)
-        {
-            anim.Play(newState);
-            currentState = newState;
-        }
+        anim.Play(newState);
+        currentState = newState;
     }
 
     private void OnDrawGizmos()

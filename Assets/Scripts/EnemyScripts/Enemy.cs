@@ -5,6 +5,7 @@ using UnityEngine.InputSystem.XR.Haptics;
 
 public class Enemy : MonoBehaviour
 {
+
     private Rigidbody2D rb;
 
     [Header("Health")]
@@ -12,7 +13,7 @@ public class Enemy : MonoBehaviour
     public int currentHealth;
 
     [Header("Dmg Taken")]
-    public float DmgForce = 5f;
+    public float knockbackForce = 5f;
 
     // Start is called before the first frame update
     void Start()
@@ -33,25 +34,25 @@ public class Enemy : MonoBehaviour
 
         if (DmgDirection == "right")
         {
-            rb.AddForce(new Vector2(DmgForce, 0), ForceMode2D.Impulse);
+            rb.AddForce(new Vector2(knockbackForce, 0), ForceMode2D.Impulse);
         }
         else if (DmgDirection == "left")
         {
-            rb.AddForce(new Vector2(-DmgForce, 0), ForceMode2D.Impulse);
+            rb.AddForce(new Vector2(-knockbackForce, 0), ForceMode2D.Impulse);
         }
         else if (DmgDirection == "up")
         {
-            rb.AddForce(new Vector2(0, DmgForce), ForceMode2D.Impulse);
+            rb.AddForce(new Vector2(0, knockbackForce), ForceMode2D.Impulse);
         }
         else if (DmgDirection == "down")
         {
-            rb.AddForce(new Vector2(0, -DmgForce), ForceMode2D.Impulse);
+            rb.AddForce(new Vector2(0, -knockbackForce), ForceMode2D.Impulse);
         }
 
         if (currentHealth <= 0)
         {
             Debug.Log("Enemy Died");
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
     }
 }
