@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     [Header("Walking")]
     public float walkSpeed = 5f;
     private float x, y;
+    private bool facingRight = true;
 
     [Header("Jumping")]
     public float jumpForce = 12.5f;
@@ -30,7 +31,6 @@ public class PlayerController : MonoBehaviour
     public float dashForce = 13;
     public float dashTime = 0.25f;
     public float dashCooldown = 0.5f;
-    private bool facingRight = true;
     private float dashTimer;
     private bool isDashing;
     private bool canDash;
@@ -53,8 +53,8 @@ public class PlayerController : MonoBehaviour
     [Header("Ground Collisions")]
     public bool onGround;
     private float gLength;
-    private Vector3 leftGPoint;
-    private Vector3 rightGPoint;
+    private Vector2 leftGPoint;
+    private Vector2 rightGPoint;
 
     [Header("Wall Collisions")]
     public bool onLeftWall;
@@ -452,7 +452,6 @@ public class PlayerController : MonoBehaviour
             foreach (Collider2D enemy in damagedEnemies)
             {
                 enemy.GetComponent<Enemy>().takeDamage(meleeAttackDmg, DmgDirection);
-                Debug.Log("We hit" + enemy.name);
             }
             attackTimer = Time.time + attackCooldown;
         }
@@ -531,8 +530,8 @@ public class PlayerController : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawLine(leftGPoint, leftGPoint + Vector3.down * gLength);
-        Gizmos.DrawLine(rightGPoint, rightGPoint + Vector3.down * gLength);
+        Gizmos.DrawLine(leftGPoint, leftGPoint + Vector2.down * gLength);
+        Gizmos.DrawLine(rightGPoint, rightGPoint + Vector2.down * gLength);
         Gizmos.color = Color.blue;
         Gizmos.DrawLine(transform.position, transform.position + Vector3.left * wLength);
         Gizmos.DrawLine(transform.position, transform.position + Vector3.right * wLength);
