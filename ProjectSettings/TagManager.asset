@@ -41,9 +41,24 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 2725482847
+    locked: 0
+  - name: turtleEnemy
+    uniqueID: 1996860805
+    locked: 0
+  - name: beetleEnemy
+    uniqueID: 124475005
+    locked: 0
+  - name: Player
+    uniqueID: 2939267003
+    locked: 0
+  - name: Ground
+    uniqueID: 1235990163
+    locked: 0
+  - name: Foreground
+    uniqueID: 1547165849
+    locked: 0
   - name: Default
     uniqueID: 0
-    locked: 0
-  - name: New Layer
-    uniqueID: 1235990163
     locked: 0
