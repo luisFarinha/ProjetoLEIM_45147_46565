@@ -48,8 +48,8 @@ public class Enemy : MonoBehaviour
         col = GetComponent<Collider2D>();
         
         setMaxHealth(maxHealth);
-        gLength = (col.bounds.size.y / 2);
-        wLength = (col.bounds.size.x / 1.5f);
+        gLength = (col.bounds.size.y / 1.8f);
+        wLength = (col.bounds.size.x / 1.8f);
     }
 
     void Update()
@@ -65,8 +65,8 @@ public class Enemy : MonoBehaviour
 
     private void checkGrounded()
     {
-        leftGPoint = new Vector2(transform.position.x - col.bounds.size.x * 0.5f, transform.position.y + 0.2f);
-        rightGPoint = new Vector2(transform.position.x + col.bounds.size.x * 0.5f, transform.position.y + 0.2f);
+        leftGPoint = new Vector2(transform.position.x - col.bounds.size.x * 0.5f, transform.position.y);
+        rightGPoint = new Vector2(transform.position.x + col.bounds.size.x * 0.5f, transform.position.y);
         gRayDiretion = (facingRight) ? Physics2D.Raycast(rightGPoint, Vector2.down, gLength, gLayer) : Physics2D.Raycast(leftGPoint, Vector2.down, gLength, gLayer);
         if (gRayDiretion)
         {
@@ -79,7 +79,7 @@ public class Enemy : MonoBehaviour
 
     private void checkWalled()
     {
-        wallPoint = new Vector2(transform.position.x, transform.position.y + 0.5f);
+        wallPoint = new Vector2(transform.position.x, transform.position.y);
         wRayDiretion = (facingRight) ? Physics2D.Raycast(wallPoint, Vector2.right, wLength, gLayer) : Physics2D.Raycast(wallPoint, Vector2.left, wLength, gLayer);
 
         if (wRayDiretion)
@@ -121,29 +121,32 @@ public class Enemy : MonoBehaviour
 
     public void takeDamage(int damage, string DmgDirection)
     {
-        slider.gameObject.SetActive(true);
+        if (!isDead) 
+        { 
+            slider.gameObject.SetActive(true);
 
-        setHealth(damage);
+            setHealth(damage);
 
-        if (DmgDirection == "right")
-        {
-            rb.AddForce(new Vector2(knockbackForce, 0), ForceMode2D.Impulse);
-        }
-        else if (DmgDirection == "left")
-        {
-            rb.AddForce(new Vector2(-knockbackForce, 0), ForceMode2D.Impulse);
-        }
-        else if (DmgDirection == "up")
-        {
-            rb.AddForce(new Vector2(0, knockbackForce), ForceMode2D.Impulse);
-        }
-        else if (DmgDirection == "down")
-        {
-            rb.AddForce(new Vector2(0, -knockbackForce), ForceMode2D.Impulse);
-        }
+            if (DmgDirection == "right")
+            {
+                rb.AddForce(new Vector2(knockbackForce, 0), ForceMode2D.Impulse);
+            }
+            else if (DmgDirection == "left")
+            {
+                rb.AddForce(new Vector2(-knockbackForce, 0), ForceMode2D.Impulse);
+            }
+            else if (DmgDirection == "up")
+            {
+                rb.AddForce(new Vector2(0, knockbackForce), ForceMode2D.Impulse);
+            }
+            else if (DmgDirection == "down")
+            {
+                rb.AddForce(new Vector2(0, -knockbackForce), ForceMode2D.Impulse);
+            }
 
-        isStunned = true;
-        StartCoroutine(actionComplete("isStunned", stunDuration));
+            isStunned = true;
+            StartCoroutine(actionComplete("isStunned", stunDuration));
+        }
 
         if (currentHealth <= 0)
         {
@@ -152,6 +155,7 @@ public class Enemy : MonoBehaviour
             anim.Play("beetle_die");
             isDead = true;
             Physics2D.IgnoreCollision(col, playerCol);
+            rb.drag = 1;
         }
     }
     private IEnumerator actionComplete(string action, float time)

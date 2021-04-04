@@ -206,14 +206,20 @@ public class PlayerController : MonoBehaviour
         if (x > 0)
         {
             x = 1;
-            transform.eulerAngles = new Vector3(0, 0, 0);
+            if (!isAttacking)
+            {
+                transform.eulerAngles = new Vector3(0, 0, 0);
+            }
             if (!facingRight && onGround) dust.Play();
             facingRight = true;
         }
         else if (x < 0)
         {
             x = -1;
-            transform.eulerAngles = new Vector3(0, 180, 0);
+            if (!isAttacking)
+            {
+                transform.eulerAngles = new Vector3(0, 180, 0);
+            }
             if (facingRight && onGround) dust.Play();
             facingRight = false;
         }
@@ -278,10 +284,12 @@ public class PlayerController : MonoBehaviour
         rb.velocity = new Vector2(rb.velocity.x, 0);
         if (facingRight)
         {
+            transform.eulerAngles = new Vector3(0, 0, 0);
             rb.AddForce(new Vector2(dashForce, 0), ForceMode2D.Impulse);
         }
         else
         {
+            transform.eulerAngles = new Vector3(0, 180, 0);
             rb.AddForce(new Vector2(-dashForce, 0), ForceMode2D.Impulse);
         }
 
@@ -377,7 +385,7 @@ public class PlayerController : MonoBehaviour
 
     private void glide()
     {
-        if (rb.velocity.y < 0 && isGliding && !isWallSliding && Unlockables.glideUnlocked)
+        if (rb.velocity.y < 0 && isGliding && !isWallSliding && !isAttacking && Unlockables.glideUnlocked)
         {
             rb.velocity = new Vector2(x * walkSpeed, glideFallingSpeed);
             ChangeAnimationState(PLAYER_GLIDE);
