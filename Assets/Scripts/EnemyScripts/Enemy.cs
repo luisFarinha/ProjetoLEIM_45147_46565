@@ -46,8 +46,8 @@ public class Enemy : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         col = GetComponent<Collider2D>();
-        
-        setMaxHealth(maxHealth);
+
+        SetMaxHealth(maxHealth);
         gLength = (col.bounds.size.y / 1.8f);
         wLength = (col.bounds.size.x / 1.8f);
     }
@@ -56,14 +56,14 @@ public class Enemy : MonoBehaviour
     {
         if (!isDead)
         {
-            checkGrounded();
-            checkWalled();
-            checkDirection();
-            move();
+            CheckGrounded();
+            CheckWall();
+            CheckDirection();
+            Move();
         }
     }
 
-    private void checkGrounded()
+    private void CheckGrounded()
     {
         leftGPoint = new Vector2(transform.position.x - col.bounds.size.x * 0.5f, transform.position.y);
         rightGPoint = new Vector2(transform.position.x + col.bounds.size.x * 0.5f, transform.position.y);
@@ -72,12 +72,13 @@ public class Enemy : MonoBehaviour
         {
             onGround = true;
         }
-        else { 
+        else
+        {
             onGround = false;
         }
     }
 
-    private void checkWalled()
+    private void CheckWall()
     {
         wallPoint = new Vector2(transform.position.x, transform.position.y);
         wRayDiretion = (facingRight) ? Physics2D.Raycast(wallPoint, Vector2.right, wLength, gLayer) : Physics2D.Raycast(wallPoint, Vector2.left, wLength, gLayer);
@@ -89,7 +90,7 @@ public class Enemy : MonoBehaviour
         else { onWall = false; }
     }
 
-    private void move()
+    private void Move()
     {
         if (!isStunned)
         {
@@ -104,13 +105,13 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void setHealth(int damage)
+    public void SetHealth(int damage)
     {
         currentHealth -= damage;
         slider.value = currentHealth;
     }
 
-    public void setMaxHealth(int maxhealth)
+    public void SetMaxHealth(int maxhealth)
     {
         currentHealth = maxhealth;
         slider.maxValue = maxhealth;
@@ -119,13 +120,13 @@ public class Enemy : MonoBehaviour
         followSlider.value = maxhealth;
     }
 
-    public void takeDamage(int damage, string DmgDirection)
+    public void TakeDamage(int damage, string DmgDirection)
     {
-        if (!isDead) 
-        { 
+        if (!isDead)
+        {
             slider.gameObject.SetActive(true);
 
-            setHealth(damage);
+            SetHealth(damage);
 
             if (DmgDirection == "right")
             {
@@ -145,7 +146,7 @@ public class Enemy : MonoBehaviour
             }
 
             isStunned = true;
-            StartCoroutine(actionComplete("isStunned", stunDuration));
+            StartCoroutine(ActionComplete("isStunned", stunDuration));
         }
 
         if (currentHealth <= 0)
@@ -162,7 +163,7 @@ public class Enemy : MonoBehaviour
             anim.Play("beetle_takedmg");
         }
     }
-    private IEnumerator actionComplete(string action, float time)
+    private IEnumerator ActionComplete(string action, float time)
     {
         yield return new WaitForSeconds(time);
         switch (action)
@@ -171,9 +172,10 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void checkDirection()
+    private void CheckDirection()
     {
-        if (!onGround || onWall) {
+        if (!onGround || onWall)
+        {
             if (facingRight)
             {
                 transform.eulerAngles = new Vector3(0, 0, 0);

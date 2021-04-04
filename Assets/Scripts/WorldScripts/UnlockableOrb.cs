@@ -9,12 +9,12 @@ public class UnlockableOrb : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            chooseUnlockable(unlockable);
+            ChooseUnlockable(unlockable);
             gameObject.SetActive(false);
         }
     }
 
-    private void chooseUnlockable(string unlockable)
+    private void ChooseUnlockable(string unlockable)
     {
         switch (unlockable)
         {

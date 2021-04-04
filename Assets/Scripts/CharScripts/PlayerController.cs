@@ -92,21 +92,7 @@ public class PlayerController : MonoBehaviour
     public ParticleSystem dust;
     private bool readyForDust;
 
-    private string currentState = "player_idle";
-
-    private string PLAYER_IDLE = "player_idle";
-    private string PLAYER_DASH = "player_dash";
-    private string PLAYER_RUN = "player_run";
-    private string PLAYER_JUMP = "player_jump";
-    private string PLAYER_DOUBLEJUMP = "player_doubleJump";
-    private string PLAYER_WALLSLIDE = "player_wallSlide";
-    private string PLAYER_STARTFALL = "player_startFall";
-    private string PLAYER_FALL = "player_fall";
-    private string PLAYER_GLIDE = "player_glide";
-    private string PLAYER_LAND = "player_land";
-    private string PLAYER_ATTACK = "player_attack";
-    private string PLAYER_ATTACKUP = "player_attackUp";
-    private string PLAYER_ATTACKDOWN = "player_attackDown";
+    private string currentState = Constants.PLAYER_IDLE;
 
     private void Awake()
     {
@@ -118,14 +104,14 @@ public class PlayerController : MonoBehaviour
 
         im = new InputMaster();
 
-        im.Player.Dash.started += _ => dash(); //pressed
+        im.Player.Dash.started += _ => Dash(); //pressed
         im.Player.Glide.started += _ => isGliding = true; //pressed
         im.Player.Glide.canceled += _ => isGliding = false; //released
-        im.Player.Jump.started += _ => jump(); //pressed
-        im.Player.Jump.canceled += _ => stopJump(); //released
-        im.Player.Attack.started += _ => attack(PLAYER_ATTACK);
-        im.Player.AttackUp.started += _ => attack(PLAYER_ATTACKUP);
-        im.Player.AttackDown.started += _ => attack(PLAYER_ATTACKDOWN);
+        im.Player.Jump.started += _ => Jump(); //pressed
+        im.Player.Jump.canceled += _ => StopJump(); //released
+        im.Player.Attack.started += _ => Attack(Constants.PLAYER_ATTACK);
+        im.Player.AttackUp.started += _ => Attack(Constants.PLAYER_ATTACKUP);
+        im.Player.AttackDown.started += _ => Attack(Constants.PLAYER_ATTACKDOWN);
     }
 
     private void OnEnable()
@@ -145,35 +131,35 @@ public class PlayerController : MonoBehaviour
 
         if (!isDashing && !isWallJumping && !isStunned)
         {
-            glide();
-            checkDirectionDigital();
+            Glide();
+            CheckDirectionDigital();
         }
         
-        limitFallSpeed();
-        checkGrounded();
-        checkWalled();
+        LimitFallSpeed();
+        CheckGrounded();
+        CheckWalled();
     }
 
     private void FixedUpdate()
     {
-        checkForParticles();
+        CheckForParticles();
 
         if (!isDashing)
         {
             //delayed Jump
             if (jumpTimer > Time.time && onGround)
             {
-                jump();
+                Jump();
             }
             if (!isWallJumping && !isKnocked && !isStunned)
             {
-                moveCharacter();
+                MoveCharacter();
             }
-            wallSlide();
+            WallSlide();
         }
     }
 
-    private void checkGrounded()
+    private void CheckGrounded()
     {
         leftGPoint = new Vector3(transform.position.x - sr.bounds.size.x * 0.3f, transform.position.y, transform.position.z);
         rightGPoint = new Vector3(transform.position.x + sr.bounds.size.x * 0.3f, transform.position.y, transform.position.z);
@@ -187,7 +173,7 @@ public class PlayerController : MonoBehaviour
         else { onGround = false; }
     }
 
-    private void checkWalled()
+    private void CheckWalled()
     {
         if (Physics2D.Raycast(transform.position, Vector2.left, wLength, gLayer))
         {
@@ -201,7 +187,7 @@ public class PlayerController : MonoBehaviour
         else { onRightWall = false; }
     }
 
-    private void checkDirectionDigital()
+    private void CheckDirectionDigital()
     {
         if (x > 0)
         {
@@ -210,7 +196,7 @@ public class PlayerController : MonoBehaviour
             {
                 transform.eulerAngles = new Vector3(0, 0, 0);
             }
-            if (!facingRight && onGround) dust.Play();
+            if (!facingRight && onGround) { dust.Play(); }
             facingRight = true;
         }
         else if (x < 0)
@@ -220,12 +206,12 @@ public class PlayerController : MonoBehaviour
             {
                 transform.eulerAngles = new Vector3(0, 180, 0);
             }
-            if (facingRight && onGround) dust.Play();
+            if (facingRight && onGround) { dust.Play(); }
             facingRight = false;
         }
     }
 
-    private void checkForParticles()
+    private void CheckForParticles()
     {
         if (x == 0 && onGround) readyForDust = true;
 
@@ -236,49 +222,49 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void moveCharacter()
+    private void MoveCharacter()
     {
         rb.velocity = new Vector2(x * walkSpeed, rb.velocity.y);
         if (!isAttacking && !isLanding && !isWallSliding && !isGliding && !isStunned)
         {
-            if ((int)rb.velocity.y == 0 && (currentState == PLAYER_FALL || currentState == PLAYER_STARTFALL))
+            if ((int)rb.velocity.y == 0 && (currentState == Constants.PLAYER_FALL || currentState == Constants.PLAYER_STARTFALL))
             {
-                ChangeAnimationState(PLAYER_LAND);
+                ChangeAnimationState(Constants.PLAYER_LAND);
                 isLanding = true;
                 dust.Play();
-                StartCoroutine(actionComplete("isLanding", landAnimTime));
+                StartCoroutine(ActionComplete("isLanding", landAnimTime));
             }
             else if ((int)rb.velocity.y == 0 && x != 0 && onGround)
             {
-                ChangeAnimationState(PLAYER_RUN);
+                ChangeAnimationState(Constants.PLAYER_RUN);
                 dust.Play();
             }
             else if ((int)rb.velocity.y == 0 && x == 0 && onGround)
             {
-                ChangeAnimationState(PLAYER_IDLE);
+                ChangeAnimationState(Constants.PLAYER_IDLE);
             }
             else if ((int)rb.velocity.y > 0)
             {
-                ChangeAnimationState(PLAYER_JUMP);
+                ChangeAnimationState(Constants.PLAYER_JUMP);
             }
             else if ((int)rb.velocity.y < 0)
             {
-                ChangeAnimationState(PLAYER_STARTFALL);
+                ChangeAnimationState(Constants.PLAYER_STARTFALL);
             }
         }
     }
 
-    private void dash()
+    private void Dash()
     {
         if (canDash && Time.time > dashTimer && !isWallSliding && !isStunned && Unlockables.dashUnlocked)
         {
-            StartCoroutine(dashing());
+            StartCoroutine(Dashing());
             canDash = false;
             dashTimer = Time.time + dashCooldown;
         }
 
     }
-    private IEnumerator dashing()
+    private IEnumerator Dashing()
     {
         isDashing = true;
         rb.velocity = new Vector2(rb.velocity.x, 0);
@@ -293,7 +279,7 @@ public class PlayerController : MonoBehaviour
             rb.AddForce(new Vector2(-dashForce, 0), ForceMode2D.Impulse);
         }
 
-        ChangeAnimationState(PLAYER_DASH);
+        ChangeAnimationState(Constants.PLAYER_DASH);
 
         dust.Play();
 
@@ -304,19 +290,19 @@ public class PlayerController : MonoBehaviour
         isDashing = false;
     }
 
-    private void wallSlide()
+    private void WallSlide()
     {
         if (!onGround && rb.velocity.y < 0 && onLeftWall && x < 0 && !isAttacking && !isGliding && !isStunned)
         {
             rb.velocity = new Vector2(0, wallSlideSpeed);
-            ChangeAnimationState(PLAYER_WALLSLIDE);
+            ChangeAnimationState(Constants.PLAYER_WALLSLIDE);
             dust.Play();
             isWallSliding = true;
         }
         else if (!onGround && rb.velocity.y < 0 && onRightWall && x > 0 && !isAttacking && !isGliding && !isStunned)
         {
             rb.velocity = new Vector2(0, wallSlideSpeed);
-            ChangeAnimationState(PLAYER_WALLSLIDE);
+            ChangeAnimationState(Constants.PLAYER_WALLSLIDE);
             dust.Play();
             isWallSliding = true;
         }
@@ -326,7 +312,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void jump()
+    private void Jump()
     {
         if (onGround && !isDashing && !isStunned) //jump
         {
@@ -340,9 +326,9 @@ public class PlayerController : MonoBehaviour
             rb.AddForce(new Vector2(0, jumpForce * 3 / 4), ForceMode2D.Impulse);
             if (!isAttacking)
             {
-                ChangeAnimationState(PLAYER_DOUBLEJUMP);
+                ChangeAnimationState(Constants.PLAYER_DOUBLEJUMP);
                 isLanding = true;
-                StartCoroutine(actionComplete("isLanding", doubleJumpAnimTime));
+                StartCoroutine(ActionComplete("isLanding", doubleJumpAnimTime));
             }
             dust.Play();
 
@@ -351,9 +337,9 @@ public class PlayerController : MonoBehaviour
         else if (isWallSliding && !isDashing && !isStunned && Unlockables.wallJumpUnlocked)
         {
             isWallSliding = false;
-            ChangeAnimationState(PLAYER_JUMP);
+            ChangeAnimationState(Constants.PLAYER_JUMP);
             dust.Play();
-            StartCoroutine(wallJumping());
+            StartCoroutine(WallJumping());
         }
         else if (!onGround && !isWallSliding)
         {
@@ -361,7 +347,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private IEnumerator wallJumping()
+    private IEnumerator WallJumping()
     {
         isWallJumping = true;
         rb.velocity = new Vector2(rb.velocity.x, 0);
@@ -383,16 +369,16 @@ public class PlayerController : MonoBehaviour
         isWallJumping = false;
     }
 
-    private void glide()
+    private void Glide()
     {
         if (rb.velocity.y < 0 && isGliding && !isWallSliding && !isAttacking && Unlockables.glideUnlocked)
         {
             rb.velocity = new Vector2(x * walkSpeed, glideFallingSpeed);
-            ChangeAnimationState(PLAYER_GLIDE);
+            ChangeAnimationState(Constants.PLAYER_GLIDE);
         }
     }
 
-    private void stopJump()
+    private void StopJump()
     {
         //jump height control
         if (rb.velocity.y > 0)
@@ -401,84 +387,82 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void attack(string attackType)
+    private void Attack(string attackType)
     {
         if (!isDashing && !isWallSliding && !isAttacking && !isGliding && !isStunned)
         {
-            if (onGround && attackType != PLAYER_ATTACKDOWN)
+            if (onGround && attackType != Constants.PLAYER_ATTACKDOWN)
             {
                 ChangeAnimationState(attackType);
                 isAttacking = true;
-                checkForDmgToGive(attackType);
+                CheckForDmgToGive(attackType);
                 dust.Play();
-                StartCoroutine(actionComplete("isAttacking", attackAnimTime));
+                StartCoroutine(ActionComplete("isAttacking", attackAnimTime));
             }
             else if (!onGround)
             {
                 ChangeAnimationState(attackType);
                 isAttacking = true;
-                checkForDmgToGive(attackType);
-                StartCoroutine(actionComplete("isAttacking", attackAnimTime));
+                CheckForDmgToGive(attackType);
+                StartCoroutine(ActionComplete("isAttacking", attackAnimTime));
             }
         }
     }
 
-    private void checkForDmgToGive(string attackType)
+    private void CheckForDmgToGive(string attackType)
     {
         Collider2D[] damagedEnemies = Physics2D.OverlapCircleAll(attackPos.position, attackRange, eLayer);
         string DmgDirection = "";
         if (Time.time > attackTimer)
         {
-            if (attackType == PLAYER_ATTACK)
+            if (attackType == Constants.PLAYER_ATTACK)
             {
                 damagedEnemies = Physics2D.OverlapCircleAll(attackPos.position, attackRange, eLayer);
                 if (!facingRight)
                 {
                     DmgDirection = "left";
-                    if(!onGround) knockback(damagedEnemies, knockbackForce, 0);
+                    if (!onGround) { Knockback(damagedEnemies, knockbackForce, 0); }
                 }
                 else if (facingRight)
                 {
                     DmgDirection = "right";
-                    if(!onGround) knockback(damagedEnemies, -knockbackForce, 0);
+                    if (!onGround) { Knockback(damagedEnemies, -knockbackForce, 0); }
                 }
             }
-            else if (attackType == PLAYER_ATTACKUP)
+            else if (attackType == Constants.PLAYER_ATTACKUP)
             {
                 damagedEnemies = Physics2D.OverlapCircleAll(attackUpPos.position, attackRange, eLayer);
                 DmgDirection = "up";
-                if (!onGround) knockback(damagedEnemies, 0, -knockbackForce);
-
+                if (!onGround) { Knockback(damagedEnemies, 0, -knockbackForce); }
             }
-            else if (attackType == PLAYER_ATTACKDOWN)
+            else if (attackType == Constants.PLAYER_ATTACKDOWN)
             {
                 damagedEnemies = Physics2D.OverlapCircleAll(attackDownPos.position, attackRange, eLayer);
                 DmgDirection = "down";
-                if (!onGround) knockback(damagedEnemies, 0, knockbackForce);
-
+                if (!onGround) { Knockback(damagedEnemies, 0, knockbackForce); }
             }
             foreach (Collider2D enemy in damagedEnemies)
             {
-                enemy.GetComponent<Enemy>().takeDamage(meleeAttackDmg, DmgDirection);
+                enemy.GetComponent<Enemy>().TakeDamage(meleeAttackDmg, DmgDirection);
             }
             attackTimer = Time.time + attackCooldown;
         }
     }
 
-    private void knockback(Collider2D[] damagedEnemies, float xKnock, float yKnock)
+    private void Knockback(Collider2D[] damagedEnemies, float xKnock, float yKnock)
     {
         if (damagedEnemies.Length > 0)
         {
             isKnocked = true;
             rb.velocity = new Vector2(x * walkSpeed, 0);
             rb.AddForce(new Vector2(xKnock, yKnock), ForceMode2D.Impulse);
-            StartCoroutine(actionComplete("isKnocked", knockbackTime));
+            StartCoroutine(ActionComplete("isKnocked", knockbackTime));
         }
     }
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if(collision.gameObject.tag == "Enemy")
+        if(collision.gameObject.CompareTag("Enemy"))
         {   
             Vector2 dmgHere = gameObject.transform.position - collision.gameObject.transform.position;
             if(dmgHere.x < 1 && dmgHere.x > -1)
@@ -501,14 +485,14 @@ public class PlayerController : MonoBehaviour
                 isStunned = true;
                 rb.velocity = new Vector2(0, 0);
                 rb.AddForce(new Vector2(dmgHere.x * stunForce, dmgHere.y * stunForce * 1.5f), ForceMode2D.Impulse);
-                StartCoroutine(actionComplete("isStunned", stunTime));
+                StartCoroutine(ActionComplete("isStunned", stunTime));
                 
                 stunTimer = Time.time + stunCooldown;
             }
         }
     }
 
-    private IEnumerator actionComplete(string action, float time)
+    private IEnumerator ActionComplete(string action, float time)
     {
         yield return new WaitForSeconds(time);
         switch (action)
@@ -520,7 +504,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void limitFallSpeed()
+    private void LimitFallSpeed()
     {
         if (rb.velocity.y <= maxFallingSpeed)
         {

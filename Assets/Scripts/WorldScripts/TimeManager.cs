@@ -9,10 +9,10 @@ public class TimeManager : MonoBehaviour
 
     void FixedUpdate()
     {
-        doSlowmotion();
+        DoSlowMotion();
     }
 
-    void doSlowmotion()
+    void DoSlowMotion()
     {
         Time.timeScale = slowdownFactor;
     }
