@@ -157,6 +157,10 @@ public class Enemy : MonoBehaviour
             Physics2D.IgnoreCollision(col, playerCol);
             rb.drag = 1;
         }
+        else
+        {
+            anim.Play("beetle_takedmg");
+        }
     }
     private IEnumerator actionComplete(string action, float time)
     {
