@@ -380,6 +380,8 @@ MonoBehaviour:
   gLayer:
     serializedVersion: 2
     m_Bits: 256
+  slider: {fileID: 0}
+  followSlider: {fileID: 0}
   walkSpeed: 5
   jumpForce: 12.5
   glideFallingSpeed: -2.5
@@ -414,6 +416,7 @@ MonoBehaviour:
   stunCooldown: 1
   maxHealth: 100
   currentHealth: 0
+  dmgTaken: 20
   dust: {fileID: 4891150492563484030}
 --- !u!95 &4891150491923075433
 Animator:

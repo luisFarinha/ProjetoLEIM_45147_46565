@@ -1,12 +1,15 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
     [Header("Components")]
     public LayerMask eLayer;
     public LayerMask gLayer;
+    public Slider slider;
+    public Slider followSlider;
     private Rigidbody2D rb;
     private Animator anim;
     private SpriteRenderer sr;
@@ -14,7 +17,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Walking")]
     public float walkSpeed = 5f;
-    private float x, y;
+    private float xMove;
     private bool facingRight = true;
 
     [Header("Jumping")]
@@ -87,6 +90,7 @@ public class PlayerController : MonoBehaviour
     [Header("Health and Damage")]
     public int maxHealth = 100;
     public int currentHealth;
+    public int dmgTaken = 20;
 
     [Header("Particle Effects")]
     public ParticleSystem dust;
@@ -99,8 +103,8 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
-        gLength = (sr.bounds.size.y / 2);
-        wLength = (sr.bounds.size.x / 2) * 0.75f;
+        gLength = (sr.bounds.size.y / 2) * 0.85f;
+        wLength = (sr.bounds.size.x / 2) * 0.55f;
 
         im = new InputMaster();
 
@@ -112,6 +116,8 @@ public class PlayerController : MonoBehaviour
         im.Player.Attack.started += _ => Attack(Constants.PLAYER_ATTACK);
         im.Player.AttackUp.started += _ => Attack(Constants.PLAYER_ATTACKUP);
         im.Player.AttackDown.started += _ => Attack(Constants.PLAYER_ATTACKDOWN);
+
+        currentHealth = maxHealth;
     }
 
     private void OnEnable()
@@ -127,7 +133,7 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         //track movement values
-        x = im.Player.Walk.ReadValue<float>(); y = im.Player.Jump.ReadValue<float>();
+        xMove = im.Player.Walk.ReadValue<float>();
 
         if (!isDashing && !isWallJumping && !isStunned)
         {
@@ -189,9 +195,9 @@ public class PlayerController : MonoBehaviour
 
     private void CheckDirectionDigital()
     {
-        if (x > 0)
+        if (xMove > 0)
         {
-            x = 1;
+            xMove = 1;
             if (!isAttacking)
             {
                 transform.eulerAngles = new Vector3(0, 0, 0);
@@ -199,9 +205,9 @@ public class PlayerController : MonoBehaviour
             if (!facingRight && onGround) { dust.Play(); }
             facingRight = true;
         }
-        else if (x < 0)
+        else if (xMove < 0)
         {
-            x = -1;
+            xMove = -1;
             if (!isAttacking)
             {
                 transform.eulerAngles = new Vector3(0, 180, 0);
@@ -213,9 +219,9 @@ public class PlayerController : MonoBehaviour
 
     private void CheckForParticles()
     {
-        if (x == 0 && onGround) readyForDust = true;
+        if (xMove == 0 && onGround) readyForDust = true;
 
-        if (readyForDust && x != 0 && onGround)
+        if (readyForDust && xMove != 0 && onGround)
         {
             dust.Play();
             readyForDust = false;
@@ -224,7 +230,7 @@ public class PlayerController : MonoBehaviour
 
     private void MoveCharacter()
     {
-        rb.velocity = new Vector2(x * walkSpeed, rb.velocity.y);
+        rb.velocity = new Vector2(xMove * walkSpeed, rb.velocity.y);
         if (!isAttacking && !isLanding && !isWallSliding && !isGliding && !isStunned)
         {
             if ((int)rb.velocity.y == 0 && (currentState == Constants.PLAYER_FALL || currentState == Constants.PLAYER_STARTFALL))
@@ -232,14 +238,14 @@ public class PlayerController : MonoBehaviour
                 ChangeAnimationState(Constants.PLAYER_LAND);
                 isLanding = true;
                 dust.Play();
-                StartCoroutine(ActionComplete("isLanding", landAnimTime));
+                StartCoroutine(ActionComplete(Constants.ActionType.Landing, landAnimTime));
             }
-            else if ((int)rb.velocity.y == 0 && x != 0 && onGround)
+            else if ((int)rb.velocity.y == 0 && xMove != 0 && onGround)
             {
                 ChangeAnimationState(Constants.PLAYER_RUN);
                 dust.Play();
             }
-            else if ((int)rb.velocity.y == 0 && x == 0 && onGround)
+            else if ((int)rb.velocity.y == 0 && xMove == 0 && onGround)
             {
                 ChangeAnimationState(Constants.PLAYER_IDLE);
             }
@@ -292,14 +298,14 @@ public class PlayerController : MonoBehaviour
 
     private void WallSlide()
     {
-        if (!onGround && rb.velocity.y < 0 && onLeftWall && x < 0 && !isAttacking && !isGliding && !isStunned)
+        if (!onGround && rb.velocity.y < 0 && onLeftWall && xMove < 0 && !isAttacking && !isGliding && !isStunned && Unlockables.wallJumpUnlocked)
         {
             rb.velocity = new Vector2(0, wallSlideSpeed);
             ChangeAnimationState(Constants.PLAYER_WALLSLIDE);
             dust.Play();
             isWallSliding = true;
         }
-        else if (!onGround && rb.velocity.y < 0 && onRightWall && x > 0 && !isAttacking && !isGliding && !isStunned)
+        else if (!onGround && rb.velocity.y < 0 && onRightWall && xMove > 0 && !isAttacking && !isGliding && !isStunned && Unlockables.wallJumpUnlocked)
         {
             rb.velocity = new Vector2(0, wallSlideSpeed);
             ChangeAnimationState(Constants.PLAYER_WALLSLIDE);
@@ -322,13 +328,13 @@ public class PlayerController : MonoBehaviour
         }
         else if (!onGround && doubleReady && !isLanding && !isWallSliding && !isGliding && !isStunned && Unlockables.doubleJumpUnlocked) //double jump
         {
-            rb.velocity = new Vector2(x * walkSpeed, 0);
+            rb.velocity = new Vector2(xMove * walkSpeed, 0);
             rb.AddForce(new Vector2(0, jumpForce * 3 / 4), ForceMode2D.Impulse);
             if (!isAttacking)
             {
                 ChangeAnimationState(Constants.PLAYER_DOUBLEJUMP);
                 isLanding = true;
-                StartCoroutine(ActionComplete("isLanding", doubleJumpAnimTime));
+                StartCoroutine(ActionComplete(Constants.ActionType.Landing, doubleJumpAnimTime));
             }
             dust.Play();
 
@@ -355,13 +361,13 @@ public class PlayerController : MonoBehaviour
         {
             transform.eulerAngles = new Vector3(0, 0, 0);
             facingRight = true;
-            rb.AddForce(new Vector2(wallJumpForce, wallJumpForce), ForceMode2D.Impulse);
+            rb.AddForce(new Vector2(wallJumpForce, wallJumpForce * 1.25f), ForceMode2D.Impulse);
         }
         else if (onRightWall)
         {
             transform.eulerAngles = new Vector3(0, 180, 0);
             facingRight = false;
-            rb.AddForce(new Vector2(-wallJumpForce, wallJumpForce), ForceMode2D.Impulse);
+            rb.AddForce(new Vector2(-wallJumpForce, wallJumpForce * 1.25f), ForceMode2D.Impulse);
         }
         doubleReady = true;
         canDash = true;
@@ -373,7 +379,7 @@ public class PlayerController : MonoBehaviour
     {
         if (rb.velocity.y < 0 && isGliding && !isWallSliding && !isAttacking && Unlockables.glideUnlocked)
         {
-            rb.velocity = new Vector2(x * walkSpeed, glideFallingSpeed);
+            rb.velocity = new Vector2(xMove * walkSpeed, glideFallingSpeed);
             ChangeAnimationState(Constants.PLAYER_GLIDE);
         }
     }
@@ -397,14 +403,14 @@ public class PlayerController : MonoBehaviour
                 isAttacking = true;
                 CheckForDmgToGive(attackType);
                 dust.Play();
-                StartCoroutine(ActionComplete("isAttacking", attackAnimTime));
+                StartCoroutine(ActionComplete(Constants.ActionType.Attacking, attackAnimTime));
             }
             else if (!onGround)
             {
                 ChangeAnimationState(attackType);
                 isAttacking = true;
                 CheckForDmgToGive(attackType);
-                StartCoroutine(ActionComplete("isAttacking", attackAnimTime));
+                StartCoroutine(ActionComplete(Constants.ActionType.Attacking, attackAnimTime));
             }
         }
     }
@@ -454,15 +460,15 @@ public class PlayerController : MonoBehaviour
         if (damagedEnemies.Length > 0)
         {
             isKnocked = true;
-            rb.velocity = new Vector2(x * walkSpeed, 0);
+            rb.velocity = new Vector2(xMove * walkSpeed, 0);
             rb.AddForce(new Vector2(xKnock, yKnock), ForceMode2D.Impulse);
-            StartCoroutine(ActionComplete("isKnocked", knockbackTime));
+            StartCoroutine(ActionComplete(Constants.ActionType.Knocked, knockbackTime));
         }
     }
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if(collision.gameObject.CompareTag("Enemy"))
+        if(collision.gameObject.CompareTag("Enemy") && Time.time > stunTimer)
         {   
             Vector2 dmgHere = gameObject.transform.position - collision.gameObject.transform.position;
             if(dmgHere.x < 1 && dmgHere.x > -1)
@@ -479,28 +485,31 @@ public class PlayerController : MonoBehaviour
                 dmgHere.y = dmgHere.y > 0 ? 1 : -1;
             }
 
-
-            if (Time.time > stunTimer)
-            {
-                isStunned = true;
-                rb.velocity = new Vector2(0, 0);
-                rb.AddForce(new Vector2(dmgHere.x * stunForce, dmgHere.y * stunForce * 1.5f), ForceMode2D.Impulse);
-                StartCoroutine(ActionComplete("isStunned", stunTime));
+            isStunned = true;
+            rb.velocity = new Vector2(0, 0);
+            rb.AddForce(new Vector2(dmgHere.x * stunForce, dmgHere.y * stunForce * 1.5f), ForceMode2D.Impulse);
+            SetHealth(dmgTaken);
+            StartCoroutine(ActionComplete(Constants.ActionType.Stunned, stunTime));
                 
-                stunTimer = Time.time + stunCooldown;
-            }
+            stunTimer = Time.time + stunCooldown;
         }
     }
 
-    private IEnumerator ActionComplete(string action, float time)
+    public void SetHealth(int damage)
+    {
+        currentHealth -= damage;
+        slider.value = currentHealth;
+    }
+
+    private IEnumerator ActionComplete(Constants.ActionType action, float time)
     {
         yield return new WaitForSeconds(time);
         switch (action)
         {
-            case "isAttacking": isAttacking = false; break;
-            case "isLanding": isLanding = false; break;
-            case "isKnocked": isKnocked = false; break;
-            case "isStunned": isStunned = false; break;
+            case Constants.ActionType.Attacking: isAttacking = false; break;
+            case Constants.ActionType.Landing: isLanding = false; break;
+            case Constants.ActionType.Knocked: isKnocked = false; break;
+            case Constants.ActionType.Stunned: isStunned = false; break;
         }
     }
 
@@ -508,7 +517,7 @@ public class PlayerController : MonoBehaviour
     {
         if (rb.velocity.y <= maxFallingSpeed)
         {
-            rb.velocity = new Vector2(x * walkSpeed, maxFallingSpeed);
+            rb.velocity = new Vector2(xMove * walkSpeed, maxFallingSpeed);
         }
     }
 

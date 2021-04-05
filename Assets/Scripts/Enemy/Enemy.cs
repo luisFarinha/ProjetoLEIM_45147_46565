@@ -48,7 +48,7 @@ public class Enemy : MonoBehaviour
         col = GetComponent<Collider2D>();
 
         SetMaxHealth(maxHealth);
-        gLength = (col.bounds.size.y / 1.8f);
+        gLength = (col.bounds.size.y / 1.6f);
         wLength = (col.bounds.size.x / 1.8f);
     }
 
@@ -105,21 +105,6 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void SetHealth(int damage)
-    {
-        currentHealth -= damage;
-        slider.value = currentHealth;
-    }
-
-    public void SetMaxHealth(int maxhealth)
-    {
-        currentHealth = maxhealth;
-        slider.maxValue = maxhealth;
-        slider.value = maxhealth;
-        followSlider.maxValue = maxhealth;
-        followSlider.value = maxhealth;
-    }
-
     public void TakeDamage(int damage, string DmgDirection)
     {
         if (!isDead)
@@ -163,6 +148,22 @@ public class Enemy : MonoBehaviour
             anim.Play("beetle_takedmg");
         }
     }
+
+    public void SetHealth(int damage)
+    {
+        currentHealth -= damage;
+        slider.value = currentHealth;
+    }
+
+    public void SetMaxHealth(int maxhealth)
+    {
+        currentHealth = maxhealth;
+        slider.maxValue = maxhealth;
+        slider.value = maxhealth;
+        followSlider.maxValue = maxhealth;
+        followSlider.value = maxhealth;
+    }
+
     private IEnumerator ActionComplete(string action, float time)
     {
         yield return new WaitForSeconds(time);
