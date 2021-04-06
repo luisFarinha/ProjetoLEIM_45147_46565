@@ -1,3 +1,4 @@
+using Microsoft.Unity.VisualStudio.Editor;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -39,12 +40,27 @@ public class Constants : MonoBehaviour
     public const string wallJumpTitle = "Wall Jump";
     public const string doubleJumpTitle = "Double Jump";
 
-    public const string glideDescription = "It eases the fall. Reliable enough, for the brave and the fools willing to take the risk";
-    public const string dashDescription = "Move much faster for a short period of time. Become the wind";
-    public const string wallJumpDescription = "Allows you to bounce off of walls. Get your grip on! ";
-    public const string doubleJumpDescription = "Provides a second push upwards. defy all logic, break the game ;)";
+    public const string glideSprite = "Glide1";
+    public const string dashSprite = "Dash5";
+    public const string wallJumpSprite = "WallSlide4";
+    public const string doubleJumpSprite = "Land2";
+
+    public const string glideDescription = "It eases the fall.";
+    public const string dashDescription = "Move much faster for a short period of time.";
+    public const string wallJumpDescription = "Allows you to bounce off of walls.";
+    public const string doubleJumpDescription = "Provides a second push upwards.";
+
+    public const string glideLore = "Reliable enough, for braves and fools willing to take the risk";
+    public const string dashLore = "Become the wind";
+    public const string wallJumpLore = "Get your grip on!";
+    public const string doubleJumpLore = "Defy all logic, break the game ;)";
 
     public const string unlockablesExit = "Press 'E' or 'North Button' to continue";
+
+    //Unlockable Animations
+    public const string unlockIdle = "unlockScreen_idle";
+    public const string unlockFadeIn = "unlockScreen_fadeIn";
+    public const string unlockFadeOut = "unlockScreen_fadeOut";
 
     public enum UnlockableType
     {

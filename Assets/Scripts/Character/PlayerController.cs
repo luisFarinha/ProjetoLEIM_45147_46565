@@ -13,7 +13,9 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     private Animator anim;
     private SpriteRenderer sr;
+    
     private InputMaster im;
+    private bool imIsEnabled = true;
 
     [Header("Walking")]
     public float walkSpeed = 5f;
@@ -94,6 +96,9 @@ public class PlayerController : MonoBehaviour
 
     [Header("Particle Effects")]
     public ParticleSystem dust;
+    public ParticleSystem landingDirt;
+    public ParticleSystem wallSlidingDust;
+    public ParticleSystem wallSlidingDirt;
     private bool readyForDust;
 
     private string currentState = Constants.PLAYER_IDLE;
@@ -120,16 +125,6 @@ public class PlayerController : MonoBehaviour
         currentHealth = maxHealth;
     }
 
-    private void OnEnable()
-    {
-        im.Enable();
-    }
-
-    private void OnDisable()
-    {
-        im.Disable();
-    }
-
     private void Update()
     {
         //track movement values
@@ -144,6 +139,8 @@ public class PlayerController : MonoBehaviour
         LimitFallSpeed();
         CheckGrounded();
         CheckWalled();
+
+        RestrictControls();
     }
 
     private void FixedUpdate()
@@ -162,6 +159,30 @@ public class PlayerController : MonoBehaviour
                 MoveCharacter();
             }
             WallSlide();
+        }
+    }
+
+    private void OnEnable()
+    {
+        im.Enable();
+    }
+
+    private void OnDisable()
+    {
+        im.Disable();
+    }
+
+    private void RestrictControls()
+    {
+        if (Time.timeScale == 0 && imIsEnabled)
+        {
+            OnDisable();
+            imIsEnabled = false;
+        }
+        else if (Time.timeScale != 0 && !imIsEnabled)
+        {
+            OnEnable();
+            imIsEnabled = true;
         }
     }
 
@@ -238,6 +259,7 @@ public class PlayerController : MonoBehaviour
                 ChangeAnimationState(Constants.PLAYER_LAND);
                 isLanding = true;
                 dust.Play();
+                landingDirt.Play();
                 StartCoroutine(ActionComplete(Constants.ActionType.Landing, landAnimTime));
             }
             else if ((int)rb.velocity.y == 0 && xMove != 0 && onGround)
@@ -302,14 +324,16 @@ public class PlayerController : MonoBehaviour
         {
             rb.velocity = new Vector2(0, wallSlideSpeed);
             ChangeAnimationState(Constants.PLAYER_WALLSLIDE);
-            dust.Play();
+            wallSlidingDust.Play();
+            wallSlidingDirt.Play();
             isWallSliding = true;
         }
         else if (!onGround && rb.velocity.y < 0 && onRightWall && xMove > 0 && !isAttacking && !isGliding && !isStunned && Unlockables.wallJumpUnlocked)
         {
             rb.velocity = new Vector2(0, wallSlideSpeed);
             ChangeAnimationState(Constants.PLAYER_WALLSLIDE);
-            dust.Play();
+            wallSlidingDust.Play();
+            wallSlidingDirt.Play();
             isWallSliding = true;
         }
         else
@@ -336,7 +360,7 @@ public class PlayerController : MonoBehaviour
                 isLanding = true;
                 StartCoroutine(ActionComplete(Constants.ActionType.Landing, doubleJumpAnimTime));
             }
-            dust.Play();
+            //dust.Play();
 
             doubleReady = false;
         }

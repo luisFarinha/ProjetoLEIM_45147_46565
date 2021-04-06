@@ -6,14 +6,33 @@ public class UnlockableOrb : MonoBehaviour
 {
     public string unlockable;
     public UIManager uim;
+    private ParticleSystem ps;
+    private float psLifeTime;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void Awake()
+    {
+        ps = GetComponent<ParticleSystem>();
+        var main = ps.main;
+        main.useUnscaledTime = true;
+        psLifeTime = main.startLifetime.constant;
+}
+
+private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")
         {
-            ChooseUnlockable(unlockable);
-            gameObject.SetActive(false);
+            Time.timeScale = 0;
+            ps.Play();
+
+            StartCoroutine(Deactivate(psLifeTime));
         }
+    }
+
+    private IEnumerator Deactivate(float time)
+    {
+        yield return new WaitForSecondsRealtime(time);
+        ChooseUnlockable(unlockable);
+        gameObject.SetActive(false);
     }
 
     private void ChooseUnlockable(string unlockable)
