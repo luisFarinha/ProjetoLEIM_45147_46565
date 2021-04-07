@@ -40,39 +40,39 @@ public class UIManager : MonoBehaviour
     {
         switch (unlockable)
         {
-            case Constants.UnlockableType.Glide:
-                unlockTitle.text = Constants.glideTitle;
-                unlockImage.sprite = Resources.Load<Sprite>(Constants.glideSprite);
-                unlockDescription.text = Constants.glideDescription;
-                unlockLore.text = Constants.glideLore;
+            case Constants.UnlockableType.GLIDE:
+                unlockTitle.text = Constants.GLIDE_TITLE;
+                unlockImage.sprite = Resources.Load<Sprite>(Constants.GLIDE_SPRITE);
+                unlockDescription.text = Constants.GLIDE_DESCRIPTION;
+                unlockLore.text = Constants.GLIDE_LORE;
                 break;
             
-            case Constants.UnlockableType.Dash:
-                unlockTitle.text = Constants.dashTitle;
-                unlockImage.sprite = Resources.Load<Sprite>(Constants.dashSprite);
-                unlockDescription.text = Constants.dashDescription;
-                unlockLore.text = Constants.dashLore;
+            case Constants.UnlockableType.DASH:
+                unlockTitle.text = Constants.DASH_TITLE;
+                unlockImage.sprite = Resources.Load<Sprite>(Constants.DASH_SPRITE);
+                unlockDescription.text = Constants.DASH_DESCRIPTION;
+                unlockLore.text = Constants.DASH_LORE;
                 break;
             
-            case Constants.UnlockableType.WallJump:
-                unlockTitle.text = Constants.wallJumpTitle;
-                unlockImage.sprite = Resources.Load<Sprite>(Constants.wallJumpSprite);
-                unlockDescription.text = Constants.wallJumpDescription;
-                unlockLore.text = Constants.wallJumpLore;
+            case Constants.UnlockableType.WALL_JUMP:
+                unlockTitle.text = Constants.WALL_JUMP_TITLE;
+                unlockImage.sprite = Resources.Load<Sprite>(Constants.WALL_JUMP_SPRITE);
+                unlockDescription.text = Constants.WALL_JUMP_DESCRIPTION;
+                unlockLore.text = Constants.WALL_JUMP_LORE;
                 break;
             
-            case Constants.UnlockableType.DoubleJump:
-                unlockTitle.text = Constants.doubleJumpTitle;
-                unlockImage.sprite = Resources.Load<Sprite>(Constants.doubleJumpSprite);
-                unlockDescription.text = Constants.doubleJumpDescription;
-                unlockLore.text = Constants.doubleJumpLore;
+            case Constants.UnlockableType.DOUBLE_JUMP:
+                unlockTitle.text = Constants.DOUBLE_JUMP_TITLE;
+                unlockImage.sprite = Resources.Load<Sprite>(Constants.DOUBLE_JUMP_SPRITE);
+                unlockDescription.text = Constants.DOUBLE_JUMP_DESCRIPTION;
+                unlockLore.text = Constants.DOUBLE_JUMP_LORE;
                 break;
         }
         
         Pause();
-        unlockExit.text = Constants.unlockablesExit;
+        unlockExit.text = Constants.UNLOCKABLES_EXIT;
         unlocks.SetActive(true);
-        anim.Play(Constants.unlockFadeIn);
+        anim.Play(Constants.UNLOCK_FADE_IN);
 
     }
 
@@ -84,9 +84,9 @@ public class UIManager : MonoBehaviour
 
     private void HideUI()
     {
-        if (unlocks.activeSelf && anim.GetCurrentAnimatorStateInfo(0).IsName(Constants.unlockIdle))
+        if (unlocks.activeSelf && anim.GetCurrentAnimatorStateInfo(0).IsName(Constants.UNLOCK_IDLE))
         {
-            anim.Play(Constants.unlockFadeOut);
+            anim.Play(Constants.UNLOCK_FADE_OUT);
             StartCoroutine(Resume(anim.speed));
         }
     }
@@ -95,7 +95,6 @@ public class UIManager : MonoBehaviour
     {
         Debug.Log(anim.speed);
         yield return new WaitForSecondsRealtime(time);
-        Debug.Log(time);
         background.SetActive(false);
         unlocks.SetActive(false);
         Time.timeScale = 1f;

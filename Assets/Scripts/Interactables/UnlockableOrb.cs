@@ -41,19 +41,19 @@ private void OnTriggerEnter2D(Collider2D collision)
         {
             case "glide": 
                 Unlockables.glideUnlocked = true;
-                uim.UnlockableFound(Constants.UnlockableType.Glide);
+                uim.UnlockableFound(Constants.UnlockableType.GLIDE);
             break;
             case "dash": 
                 Unlockables.dashUnlocked = true;
-                uim.UnlockableFound(Constants.UnlockableType.Dash);
+                uim.UnlockableFound(Constants.UnlockableType.DASH);
                 break;
             case "wallJump": 
                 Unlockables.wallJumpUnlocked = true;
-                uim.UnlockableFound(Constants.UnlockableType.WallJump);
+                uim.UnlockableFound(Constants.UnlockableType.WALL_JUMP);
                 break;
             case "doubleJump": 
                 Unlockables.doubleJumpUnlocked = true;
-                uim.UnlockableFound(Constants.UnlockableType.DoubleJump);
+                uim.UnlockableFound(Constants.UnlockableType.DOUBLE_JUMP);
                 break;
         }
     }

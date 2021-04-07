@@ -95,11 +95,13 @@ public class PlayerController : MonoBehaviour
     public int dmgTaken = 20;
 
     [Header("Particle Effects")]
-    public ParticleSystem dust;
-    public ParticleSystem landingDirt;
-    public ParticleSystem wallSlidingDust;
-    public ParticleSystem wallSlidingDirt;
-    private bool readyForDust;
+    private ParticleSystem dust;
+    private ParticleSystem landingDirt;
+    private ParticleSystem dashingDust;
+    private ParticleSystem dashingShine;
+    private ParticleSystem wallSlidingDust;
+    private ParticleSystem wallSlidingDirt;
+    private ParticleSystem doubleJumpShine;
 
     private string currentState = Constants.PLAYER_IDLE;
 
@@ -108,6 +110,15 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
+
+        dust = GameObject.Find(Constants.DUST).GetComponent<ParticleSystem>();
+        landingDirt = GameObject.Find(Constants.LANDING_DIRT).GetComponent<ParticleSystem>();
+        dashingDust = GameObject.Find(Constants.DASHING_DUST).GetComponent<ParticleSystem>();
+        dashingShine = GameObject.Find(Constants.DASHING_SHINE).GetComponent<ParticleSystem>();
+        wallSlidingDust = GameObject.Find(Constants.WALL_SLIDING_DUST).GetComponent<ParticleSystem>();
+        wallSlidingDirt = GameObject.Find(Constants.WALL_SLIDING_DIRT).GetComponent<ParticleSystem>();
+        doubleJumpShine = GameObject.Find(Constants.DOUBLE_JUMP_SHINE).GetComponent<ParticleSystem>();
+
         gLength = (sr.bounds.size.y / 2) * 0.85f;
         wLength = (sr.bounds.size.x / 2) * 0.55f;
 
@@ -145,8 +156,6 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        CheckForParticles();
-
         if (!isDashing)
         {
             //delayed Jump
@@ -223,7 +232,6 @@ public class PlayerController : MonoBehaviour
             {
                 transform.eulerAngles = new Vector3(0, 0, 0);
             }
-            if (!facingRight && onGround) { dust.Play(); }
             facingRight = true;
         }
         else if (xMove < 0)
@@ -233,19 +241,7 @@ public class PlayerController : MonoBehaviour
             {
                 transform.eulerAngles = new Vector3(0, 180, 0);
             }
-            if (facingRight && onGround) { dust.Play(); }
             facingRight = false;
-        }
-    }
-
-    private void CheckForParticles()
-    {
-        if (xMove == 0 && onGround) readyForDust = true;
-
-        if (readyForDust && xMove != 0 && onGround)
-        {
-            dust.Play();
-            readyForDust = false;
         }
     }
 
@@ -260,7 +256,7 @@ public class PlayerController : MonoBehaviour
                 isLanding = true;
                 dust.Play();
                 landingDirt.Play();
-                StartCoroutine(ActionComplete(Constants.ActionType.Landing, landAnimTime));
+                StartCoroutine(ActionComplete(Constants.ActionType.LANDING, landAnimTime));
             }
             else if ((int)rb.velocity.y == 0 && xMove != 0 && onGround)
             {
@@ -309,7 +305,17 @@ public class PlayerController : MonoBehaviour
 
         ChangeAnimationState(Constants.PLAYER_DASH);
 
-        dust.Play();
+        if (onGround)
+        {
+            dashingDust.Play();
+            landingDirt.Play();
+            dashingShine.Play();
+        }
+        else if (!onGround)
+        {
+            dashingShine.Play();
+        }
+
 
         float gravity = rb.gravityScale;
         rb.gravityScale = 0;
@@ -358,9 +364,9 @@ public class PlayerController : MonoBehaviour
             {
                 ChangeAnimationState(Constants.PLAYER_DOUBLEJUMP);
                 isLanding = true;
-                StartCoroutine(ActionComplete(Constants.ActionType.Landing, doubleJumpAnimTime));
+                StartCoroutine(ActionComplete(Constants.ActionType.LANDING, doubleJumpAnimTime));
             }
-            //dust.Play();
+            doubleJumpShine.Play();
 
             doubleReady = false;
         }
@@ -369,6 +375,7 @@ public class PlayerController : MonoBehaviour
             isWallSliding = false;
             ChangeAnimationState(Constants.PLAYER_JUMP);
             dust.Play();
+            //landing aqui talvez
             StartCoroutine(WallJumping());
         }
         else if (!onGround && !isWallSliding)
@@ -426,15 +433,14 @@ public class PlayerController : MonoBehaviour
                 ChangeAnimationState(attackType);
                 isAttacking = true;
                 CheckForDmgToGive(attackType);
-                dust.Play();
-                StartCoroutine(ActionComplete(Constants.ActionType.Attacking, attackAnimTime));
+                StartCoroutine(ActionComplete(Constants.ActionType.ATTAKING, attackAnimTime));
             }
             else if (!onGround)
             {
                 ChangeAnimationState(attackType);
                 isAttacking = true;
                 CheckForDmgToGive(attackType);
-                StartCoroutine(ActionComplete(Constants.ActionType.Attacking, attackAnimTime));
+                StartCoroutine(ActionComplete(Constants.ActionType.ATTAKING, attackAnimTime));
             }
         }
     }
@@ -486,7 +492,7 @@ public class PlayerController : MonoBehaviour
             isKnocked = true;
             rb.velocity = new Vector2(xMove * walkSpeed, 0);
             rb.AddForce(new Vector2(xKnock, yKnock), ForceMode2D.Impulse);
-            StartCoroutine(ActionComplete(Constants.ActionType.Knocked, knockbackTime));
+            StartCoroutine(ActionComplete(Constants.ActionType.KNOCKED, knockbackTime));
         }
     }
 
@@ -513,7 +519,7 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector2(0, 0);
             rb.AddForce(new Vector2(dmgHere.x * stunForce, dmgHere.y * stunForce * 1.5f), ForceMode2D.Impulse);
             SetHealth(dmgTaken);
-            StartCoroutine(ActionComplete(Constants.ActionType.Stunned, stunTime));
+            StartCoroutine(ActionComplete(Constants.ActionType.STUNNED, stunTime));
                 
             stunTimer = Time.time + stunCooldown;
         }
@@ -530,10 +536,10 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(time);
         switch (action)
         {
-            case Constants.ActionType.Attacking: isAttacking = false; break;
-            case Constants.ActionType.Landing: isLanding = false; break;
-            case Constants.ActionType.Knocked: isKnocked = false; break;
-            case Constants.ActionType.Stunned: isStunned = false; break;
+            case Constants.ActionType.ATTAKING: isAttacking = false; break;
+            case Constants.ActionType.LANDING: isLanding = false; break;
+            case Constants.ActionType.KNOCKED: isKnocked = false; break;
+            case Constants.ActionType.STUNNED: isStunned = false; break;
         }
     }
 

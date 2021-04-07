@@ -24,49 +24,57 @@ public class Constants : MonoBehaviour
 
     public enum ActionType
     {
-        Attacking,
-        Landing,
-        Knocked,
-        Stunned
+        ATTAKING,
+        LANDING,
+        KNOCKED,
+        STUNNED
     }
 
+    //Particles
+    public const string DUST = "Dust";
+    public const string LANDING_DIRT = "LandingDirt";
+    public const string DASHING_DUST = "DashingDust";
+    public const string DASHING_SHINE = "DashingShine";
+    public const string WALL_SLIDING_DUST = "WallSlidingDust";
+    public const string WALL_SLIDING_DIRT = "WallSlidingDirt";
+    public const string DOUBLE_JUMP_SHINE = "DoubleJumpShine";
 
 
     //UI---------------------------------------------------------------
 
     //Unlockable Menu Settings
-    public const string glideTitle = "Glide";
-    public const string dashTitle = "Dash";
-    public const string wallJumpTitle = "Wall Jump";
-    public const string doubleJumpTitle = "Double Jump";
+    public const string GLIDE_TITLE = "Glide";
+    public const string DASH_TITLE = "Dash";
+    public const string WALL_JUMP_TITLE = "Wall Jump";
+    public const string DOUBLE_JUMP_TITLE = "Double Jump";
 
-    public const string glideSprite = "Glide1";
-    public const string dashSprite = "Dash5";
-    public const string wallJumpSprite = "WallSlide4";
-    public const string doubleJumpSprite = "Land2";
+    public const string GLIDE_SPRITE = "Glide1";
+    public const string DASH_SPRITE = "Dash5";
+    public const string WALL_JUMP_SPRITE = "WallSlide4";
+    public const string DOUBLE_JUMP_SPRITE = "Land2";
 
-    public const string glideDescription = "It eases the fall.";
-    public const string dashDescription = "Move much faster for a short period of time.";
-    public const string wallJumpDescription = "Allows you to bounce off of walls.";
-    public const string doubleJumpDescription = "Provides a second push upwards.";
+    public const string GLIDE_DESCRIPTION = "It eases the fall.";
+    public const string DASH_DESCRIPTION = "Move much faster for a short period of time.";
+    public const string WALL_JUMP_DESCRIPTION = "Allows you to bounce off of walls.";
+    public const string DOUBLE_JUMP_DESCRIPTION = "Provides a second push upwards.";
 
-    public const string glideLore = "Reliable enough, for braves and fools willing to take the risk";
-    public const string dashLore = "Become the wind";
-    public const string wallJumpLore = "Get your grip on!";
-    public const string doubleJumpLore = "Defy all logic, break the game ;)";
+    public const string GLIDE_LORE = "Reliable enough, for braves and fools willing to take the risk";
+    public const string DASH_LORE = "Become the wind";
+    public const string WALL_JUMP_LORE = "Get your grip on!";
+    public const string DOUBLE_JUMP_LORE = "Defy all logic, break the game ;)";
 
-    public const string unlockablesExit = "Press 'E' or 'North Button' to continue";
+    public const string UNLOCKABLES_EXIT = "Press 'E' or 'North Button' to continue";
 
     //Unlockable Animations
-    public const string unlockIdle = "unlockScreen_idle";
-    public const string unlockFadeIn = "unlockScreen_fadeIn";
-    public const string unlockFadeOut = "unlockScreen_fadeOut";
+    public const string UNLOCK_IDLE = "unlockScreen_idle";
+    public const string UNLOCK_FADE_IN = "unlockScreen_fadeIn";
+    public const string UNLOCK_FADE_OUT = "unlockScreen_fadeOut";
 
     public enum UnlockableType
     {
-        Glide,
-        Dash,
-        WallJump,
-        DoubleJump
+        GLIDE,
+        DASH,
+        WALL_JUMP,
+        DOUBLE_JUMP
     }
 }
