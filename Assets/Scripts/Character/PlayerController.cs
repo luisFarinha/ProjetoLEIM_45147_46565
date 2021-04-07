@@ -375,7 +375,7 @@ public class PlayerController : MonoBehaviour
             isWallSliding = false;
             ChangeAnimationState(Constants.PLAYER_JUMP);
             dust.Play();
-            //landing aqui talvez
+
             StartCoroutine(WallJumping());
         }
         else if (!onGround && !isWallSliding)

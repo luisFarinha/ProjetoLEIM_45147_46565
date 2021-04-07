@@ -6,6 +6,7 @@ using UnityEngine;
 public class Constants : MonoBehaviour
 {
     //PLAYER-----------------------------------------------------------
+    public const string PLAYER_OBJECT = "Character";
     
     //PLayer Animations
     public const string PLAYER_IDLE = "player_idle";
@@ -77,4 +78,22 @@ public class Constants : MonoBehaviour
         WALL_JUMP,
         DOUBLE_JUMP
     }
+
+
+    //Money
+    public const string MONEY_TEXT = "MoneyText";
+
+
+    //COINS------------------------------------------------------------------------
+    
+    //Force Range
+    public const float COIN_X_RANGE = 5f;
+    public const float COIN_Y_MIN_RANGE = 6f;
+    public const float COIN_Y_MAX_RANGE = 8f;
+    public const float COIN_TIME_UNTIL_FOLLOW = 0.5f;
+    
+    //Follow Range
+    public const float COIN_ACCELERATION = 0.4f;
+    public const float COIN_SPEED_VARIATION = 3f;
+
 }
