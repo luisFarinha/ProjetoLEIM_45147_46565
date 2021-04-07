@@ -21,7 +21,9 @@ public class Enemy : MonoBehaviour
 
     [Header("Movement")]
     public float moveSpeed = 2f;
+    public float changeDirectionCooldown = 0.5f;
     public bool facingRight = false;
+    private float changeDirectionTimer;
 
     [Header("Dmg Taken")]
     public float knockbackForce = 5f;
@@ -192,8 +194,10 @@ public class Enemy : MonoBehaviour
 
     private void CheckDirection()
     {
-        if (!onGround || onWall)
+        if ((!onGround || onWall) && Time.time > changeDirectionTimer)
         {
+            changeDirectionTimer = Time.time + changeDirectionCooldown;
+            
             if (facingRight)
             {
                 transform.eulerAngles = new Vector3(0, 0, 0);

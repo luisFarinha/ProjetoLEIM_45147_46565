@@ -978,7 +978,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: c275ccf19ade474468952c5bdd972cea, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -1039,11 +1039,14 @@ MonoBehaviour:
   maxHealth: 100
   currentHealth: 0
   moveSpeed: 2
+  changeDirectionCooldown: 1
   facingRight: 0
   knockbackForce: 8
   stunDuration: 0.3
   isStunned: 0
   isDead: 0
+  nCoins: 3
+  Coin: {fileID: 4658316346526997151, guid: eb1c624a1cd5f1c4a9fe518298de52c5, type: 3}
   onGround: 0
   onWall: 0
 --- !u!1 &5069700415724755361
