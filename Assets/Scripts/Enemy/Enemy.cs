@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.Processors;
 using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
@@ -26,7 +27,11 @@ public class Enemy : MonoBehaviour
     public float knockbackForce = 5f;
     public float stunDuration = 0.5f;
     public bool isStunned;
+
+    [Header("Death")]
     public bool isDead;
+    public float nCoins;
+    public GameObject Coin;
 
     [Header("Ground Collisions")]
     public bool onGround;
@@ -134,18 +139,30 @@ public class Enemy : MonoBehaviour
             StartCoroutine(ActionComplete("isStunned", stunDuration));
         }
 
-        if (currentHealth <= 0)
+        if (currentHealth <= 0 && !isDead)
         {
-            slider.gameObject.SetActive(false);
-            //Destroy(gameObject);
-            anim.Play("beetle_die");
-            isDead = true;
-            Physics2D.IgnoreCollision(col, playerCol);
-            rb.drag = 1;
+            Die();
         }
-        else
+        else if(!isDead)
         {
             anim.Play("beetle_takedmg");
+        }
+    }
+
+    public void Die()
+    {
+        slider.gameObject.SetActive(false);
+        //Destroy(gameObject);
+        anim.Play("beetle_die");
+        isDead = true;
+        Physics2D.IgnoreCollision(col, playerCol);
+        rb.drag = 1;
+
+        for(int i = 0; i < nCoins; i++)
+        {
+            GameObject c = (GameObject)GameObject.Instantiate(Coin, transform.position, Quaternion.identity);
+            c.GetComponent<Rigidbody2D>().AddForce(new Vector2(rb.velocity.x, 0), ForceMode2D.Impulse);
+
         }
     }
 
