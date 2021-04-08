@@ -53,11 +53,11 @@ TagManager:
   - name: beetleEnemy
     uniqueID: 124475005
     locked: 0
-  - name: BoarHardEnemy
-    uniqueID: 1130156503
-    locked: 0
   - name: BoarEnemy
     uniqueID: 3580490193
+    locked: 0
+  - name: BoarHardEnemy
+    uniqueID: 1130156503
     locked: 0
   - name: Player
     uniqueID: 2939267003

@@ -1,30 +1,30 @@
 fileFormatVersion: 2
-guid: 77e37318016eb08468c27a8b0bd98be5
+guid: 9f1e7eb03ae1f944089db122ac28dac3
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1659448841728516861
-    second: JavaliSprite_0
+      213: 324896899352100741
+    second: JMSprite_0
   - first:
-      213: 1246345163782864607
-    second: JavaliSprite_1
+      213: -7891918080148783941
+    second: JMSprite_1
   - first:
-      213: 3385642987832471505
-    second: JavaliSprite_2
+      213: 9156449417981578122
+    second: JMSprite_2
   - first:
-      213: -1887326657069130524
-    second: JavaliSprite_3
+      213: -4570988772781756041
+    second: JMSprite_3
   - first:
-      213: 3980202819622034019
-    second: JavaliSprite_4
+      213: -2232996731944234568
+    second: JMSprite_4
   - first:
-      213: 2834288217252098667
-    second: JavaliSprite_5
+      213: 312940393349814226
+    second: JMSprite_5
   - first:
-      213: 4915712400781040468
-    second: JavaliSprite_6
+      213: -2972448745842046109
+    second: JMSprite_6
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 10
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -44,7 +44,6 @@ TextureImporter:
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
-  vTOnly: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -76,13 +75,9 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
-  flipbookRows: 1
-  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
-  ignorePngGamma: 0
-  applyGammaDecoding: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -112,11 +107,11 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: JavaliSprite_0
+      name: JMSprite_0
       rect:
         serializedVersion: 2
-        x: 168
-        y: 1032
+        x: 170
+        y: 1038
         width: 143
         height: 29
       alignment: 0
@@ -126,134 +121,134 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 30d96d1121478f8e0800000000000000
-      internalID: -1659448841728516861
+      spriteID: 58ff1823204428400800000000000000
+      internalID: 324896899352100741
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: JavaliSprite_1
+      name: JMSprite_1
       rect:
         serializedVersion: 2
-        x: 0
-        y: 525
-        width: 389
-        height: 536
-      alignment: 9
-      pivot: {x: 0.6018417, y: 0.66350055}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: fdebdc2b258eb4110800000000000000
-      internalID: 1246345163782864607
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: JavaliSprite_2
-      rect:
-        serializedVersion: 2
-        x: 393
-        y: 461
+        x: 392
+        y: 535
         width: 864
         height: 540
       alignment: 9
-      pivot: {x: 0.58336794, y: 0.5644711}
+      pivot: {x: 0.5833679, y: 0.5644711}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1dfeb0a0c583cfe20800000000000000
-      internalID: 3385642987832471505
+      spriteID: bbcbf3cb1564a7290800000000000000
+      internalID: -7891918080148783941
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: JavaliSprite_3
-      rect:
-        serializedVersion: 2
-        x: 1274
-        y: 63
-        width: 502
-        height: 671
-      alignment: 9
-      pivot: {x: 0.88741153, y: 0.43559173}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4ecd446a76edec5e0800000000000000
-      internalID: -1887326657069130524
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: JavaliSprite_4
+      name: JMSprite_2
       rect:
         serializedVersion: 2
         x: 2
+        y: 531
+        width: 389
+        height: 544
+      alignment: 9
+      pivot: {x: 0.6018417, y: 0.6635005}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a8bcf929b3e321f70800000000000000
+      internalID: 9156449417981578122
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JMSprite_3
+      rect:
+        serializedVersion: 2
+        x: 1271
+        y: 64
+        width: 502
+        height: 671
+      alignment: 9
+      pivot: {x: 0.8874115, y: 0.4355917}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7717b06ede59090c0800000000000000
+      internalID: -4570988772781756041
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JMSprite_4
+      rect:
+        serializedVersion: 2
+        x: 0
         y: 0
         width: 385
         height: 494
       alignment: 9
-      pivot: {x: 0.3752729, y: 0.78918856}
+      pivot: {x: 0.3752729, y: 0.7891886}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 36a549d50658c3730800000000000000
-      internalID: 3980202819622034019
+      spriteID: 8b11bdf9d4dc201e0800000000000000
+      internalID: -2232996731944234568
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: JavaliSprite_5
+      name: JMSprite_5
       rect:
         serializedVersion: 2
-        x: 466
-        y: 0
+        x: 465
+        y: 1
         width: 297
         height: 365
       alignment: 9
-      pivot: {x: 0.16046533, y: 0.93086356}
+      pivot: {x: 0.1604653, y: 0.9308636}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b62f26ced1a655720800000000000000
-      internalID: 2834288217252098667
+      spriteID: 2d79c7531a9c75400800000000000000
+      internalID: 312940393349814226
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: JavaliSprite_6
+      name: JMSprite_6
       rect:
         serializedVersion: 2
-        x: 812
-        y: 7
+        x: 805
+        y: 13
         width: 331
         height: 228
       alignment: 9
-      pivot: {x: 0.891703, y: 0.87383914}
+      pivot: {x: 0.891703, y: 0.8738391}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 45b598a426e183440800000000000000
-      internalID: 4915712400781040468
+      spriteID: 36b87074d9dbfb6d0800000000000000
+      internalID: -2972448745842046109
       vertices: []
       indices: 
       edges: []
