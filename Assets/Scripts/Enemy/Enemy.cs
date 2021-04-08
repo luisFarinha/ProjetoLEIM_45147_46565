@@ -155,7 +155,8 @@ public class Enemy : MonoBehaviour
         }
         else if(!isDead)
         {
-            anim.Play("beetle_takedmg");
+            //anim.Play("beetle_takedmg");
+            anim.Play("Hit");
         }
     }
 
@@ -163,7 +164,8 @@ public class Enemy : MonoBehaviour
     {
         slider.gameObject.SetActive(false);
         //Destroy(gameObject);
-        anim.Play("beetle_die");
+        //anim.Play("beetle_die"); 
+        anim.Play("Death");
         isDead = true;
         Physics2D.IgnoreCollision(col, playerCol);
         rb.drag = 5;
