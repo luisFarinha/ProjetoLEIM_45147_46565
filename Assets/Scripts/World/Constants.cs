@@ -91,9 +91,17 @@ public class Constants : MonoBehaviour
     public const float COIN_Y_MIN_RANGE = 6f;
     public const float COIN_Y_MAX_RANGE = 8f;
     public const float COIN_TIME_UNTIL_FOLLOW = 0.5f;
-    
     //Follow Range
     public const float COIN_ACCELERATION = 0.4f;
     public const float COIN_SPEED_VARIATION = 3f;
+    
+    //Coin Text
+    public const string SMALL_COIN_TEXT = "SmallCoin";
+    public const string MEDIUM_COIN_TEXT = "MediumCoin";
+    public const string LARGE_COIN_TEXT = "LargeCoin";
+    //Coin Value
+    public const int SMALL_COIN_VALUE = 1;
+    public const int MEDIUM_COIN_VALUE = 3;
+    public const int LARGE_COIN_VALUE = 9;
 
 }

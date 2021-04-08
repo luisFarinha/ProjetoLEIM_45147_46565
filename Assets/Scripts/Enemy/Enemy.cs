@@ -26,14 +26,18 @@ public class Enemy : MonoBehaviour
     private float changeDirectionTimer;
 
     [Header("Dmg Taken")]
-    public float knockbackForce = 5f;
-    public float stunDuration = 0.5f;
+    public float knockbackForce = 8f;
+    public float stunDuration = 0.15f;
     public bool isStunned;
 
     [Header("Death")]
     public bool isDead;
-    public float nCoins;
-    public GameObject Coin;
+    public int nSmallCoins;
+    public int nMediumCoins;
+    public int nLargeCoins;
+    private GameObject smallCoin;
+    private GameObject mediumCoin;
+    private GameObject largeCoin;
 
     [Header("Ground Collisions")]
     public bool onGround;
@@ -53,6 +57,10 @@ public class Enemy : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         col = GetComponent<Collider2D>();
+
+        smallCoin = (GameObject)Resources.Load(Constants.SMALL_COIN_TEXT);
+        mediumCoin = (GameObject)Resources.Load(Constants.MEDIUM_COIN_TEXT);
+        largeCoin = (GameObject)Resources.Load(Constants.LARGE_COIN_TEXT);
 
         SetMaxHealth(maxHealth);
         gLength = (col.bounds.size.y / 1.6f);
@@ -119,7 +127,7 @@ public class Enemy : MonoBehaviour
             slider.gameObject.SetActive(true);
 
             SetHealth(damage);
-
+            rb.velocity = Vector2.zero;
             if (DmgDirection == "right")
             {
                 rb.AddForce(new Vector2(knockbackForce, 0), ForceMode2D.Impulse);
@@ -158,13 +166,20 @@ public class Enemy : MonoBehaviour
         anim.Play("beetle_die");
         isDead = true;
         Physics2D.IgnoreCollision(col, playerCol);
-        rb.drag = 1;
+        rb.drag = 5;
+        rb.gravityScale = 3;
 
-        for(int i = 0; i < nCoins; i++)
+        SpawnCoins(smallCoin, nSmallCoins);
+        SpawnCoins(mediumCoin, nMediumCoins);
+        SpawnCoins(largeCoin, nLargeCoins);
+    }
+
+    private void SpawnCoins(GameObject coin, int nCoins)
+    {
+        for (int i = 0; i < nCoins; i++)
         {
-            GameObject c = (GameObject)GameObject.Instantiate(Coin, transform.position, Quaternion.identity);
+            GameObject c = (GameObject)GameObject.Instantiate(coin, transform.position, Quaternion.identity);
             c.GetComponent<Rigidbody2D>().AddForce(new Vector2(rb.velocity.x, 0), ForceMode2D.Impulse);
-
         }
     }
 

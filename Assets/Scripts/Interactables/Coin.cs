@@ -70,7 +70,18 @@ public class Coin : MonoBehaviour
         {
             if (sr.enabled) //make sure coins only add once to the money text
             {
-                moneyText.text = (int.Parse(moneyText.text) + 1).ToString();
+                if (gameObject.CompareTag(Constants.SMALL_COIN_TEXT))
+                {
+                    moneyText.text = (int.Parse(moneyText.text) + Constants.SMALL_COIN_VALUE).ToString();
+                }
+                else if (gameObject.CompareTag(Constants.MEDIUM_COIN_TEXT))
+                {
+                    moneyText.text = (int.Parse(moneyText.text) + Constants.MEDIUM_COIN_VALUE).ToString();
+                }
+                else if (gameObject.CompareTag(Constants.LARGE_COIN_TEXT))
+                {
+                    moneyText.text = (int.Parse(moneyText.text) + Constants.LARGE_COIN_VALUE).ToString();
+                }
             }
             sr.enabled = false;
             ps.Play();
@@ -80,6 +91,6 @@ public class Coin : MonoBehaviour
 
     private void KillMe()
     {
-        gameObject.SetActive(false);
+        Destroy(gameObject);
     }
 }

@@ -93,7 +93,6 @@ public class UIManager : MonoBehaviour
 
     private IEnumerator Resume(float time)
     {
-        Debug.Log(anim.speed);
         yield return new WaitForSecondsRealtime(time);
         background.SetActive(false);
         unlocks.SetActive(false);

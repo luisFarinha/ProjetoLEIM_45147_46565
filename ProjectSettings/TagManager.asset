@@ -7,6 +7,9 @@ TagManager:
   - Ground
   - Block
   - Enemy
+  - SmallCoin
+  - MediumCoin
+  - LargeCoin
   layers:
   - Default
   - TransparentFX
