@@ -10,7 +10,7 @@ public class Enemy : MonoBehaviour
     public LayerMask gLayer;
     public Slider slider;
     public Slider followSlider;
-    public Collider2D playerCol;
+    private Collider2D playerCol;
     private Rigidbody2D rb;
     private Animator anim;
     private Collider2D col;
@@ -57,6 +57,7 @@ public class Enemy : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         col = GetComponent<Collider2D>();
+        playerCol = GameObject.FindWithTag("Player").GetComponent<BoxCollider2D>();
 
         smallCoin = (GameObject)Resources.Load(Constants.SMALL_COIN_TEXT);
         mediumCoin = (GameObject)Resources.Load(Constants.MEDIUM_COIN_TEXT);

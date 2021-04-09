@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
@@ -103,6 +104,10 @@ public class PlayerController : MonoBehaviour
     private ParticleSystem wallSlidingDirt;
     private ParticleSystem doubleJumpShine;
 
+    [Header("SceneTransitions")]
+    public bool isSpawning = true;
+    public string startPos = "StartPos";
+
     private string currentState = Constants.PLAYER_IDLE;
 
     private void Awake()
@@ -134,6 +139,7 @@ public class PlayerController : MonoBehaviour
         im.Player.AttackDown.started += _ => Attack(Constants.PLAYER_ATTACKDOWN);
 
         currentHealth = maxHealth;
+        isSpawning = true;
     }
 
     private void Update()
@@ -171,14 +177,24 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (!isSpawning)
+        {
+            transform.position = GameObject.FindWithTag(startPos).transform.position;
+        }
+    }
+
     private void OnEnable()
     {
         im.Enable();
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     private void OnDisable()
     {
         im.Disable();
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     private void RestrictControls()
