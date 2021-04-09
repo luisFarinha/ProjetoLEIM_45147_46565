@@ -793,7 +793,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8744484833214338549}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 14.27, y: -1.1, z: 0}
   m_LocalScale: {x: 0.26757, y: 0.26757, z: 0.26757}
   m_Children:
@@ -890,8 +890,8 @@ MonoBehaviour:
   isStunned: 0
   isDead: 0
   nSmallCoins: 3
-  nMediumCoins: 0
-  nLargeCoins: 0
+  nMediumCoins: 1
+  nLargeCoins: 1
   onGround: 0
   onWall: 0
 --- !u!1 &8744484833702854006

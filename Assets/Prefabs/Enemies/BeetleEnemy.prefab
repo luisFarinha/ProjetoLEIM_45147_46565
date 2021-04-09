@@ -409,7 +409,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 124475005
-  m_SortingLayer: -4
+  m_SortingLayer: -6
   m_SortingOrder: 0
   m_Sprite: {fileID: -8880726034288268130, guid: 60834f9558b1e38419788eb351eb78ae,
     type: 3}
@@ -492,7 +492,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 124475005
-  m_SortingLayer: -4
+  m_SortingLayer: -6
   m_SortingOrder: 2
   m_Sprite: {fileID: -2829468838614700351, guid: 60834f9558b1e38419788eb351eb78ae,
     type: 3}
@@ -575,7 +575,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 124475005
-  m_SortingLayer: -4
+  m_SortingLayer: -6
   m_SortingOrder: 2
   m_Sprite: {fileID: 485954684156032849, guid: 60834f9558b1e38419788eb351eb78ae, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -657,7 +657,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 124475005
-  m_SortingLayer: -4
+  m_SortingLayer: -6
   m_SortingOrder: 2
   m_Sprite: {fileID: -8010925291771029169, guid: 60834f9558b1e38419788eb351eb78ae,
     type: 3}
@@ -740,7 +740,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 124475005
-  m_SortingLayer: -4
+  m_SortingLayer: -6
   m_SortingOrder: 1
   m_Sprite: {fileID: 4084850919040870427, guid: 60834f9558b1e38419788eb351eb78ae,
     type: 3}
@@ -823,7 +823,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 124475005
-  m_SortingLayer: -4
+  m_SortingLayer: -6
   m_SortingOrder: 0
   m_Sprite: {fileID: 6581319418756032828, guid: 60834f9558b1e38419788eb351eb78ae,
     type: 3}
@@ -906,7 +906,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 124475005
-  m_SortingLayer: -4
+  m_SortingLayer: -6
   m_SortingOrder: 0
   m_Sprite: {fileID: -463233051834862659, guid: 60834f9558b1e38419788eb351eb78ae,
     type: 3}
@@ -1041,13 +1041,13 @@ MonoBehaviour:
   moveSpeed: 2
   changeDirectionCooldown: 1
   facingRight: 0
-  knockbackForce: 8
+  knockbackForce: 6
   stunDuration: 0.15
   isStunned: 0
   isDead: 0
-  nSmallCoins: 3
-  nMediumCoins: 3
-  nLargeCoins: 3
+  nSmallCoins: 2
+  nMediumCoins: 0
+  nLargeCoins: 0
   onGround: 0
   onWall: 0
 --- !u!1 &5069700415724755361
