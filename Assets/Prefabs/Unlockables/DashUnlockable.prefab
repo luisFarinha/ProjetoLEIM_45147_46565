@@ -4853,7 +4853,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unlockable: dash
-  uim: {fileID: 0}
 --- !u!58 &3350127590602517729
 CircleCollider2D:
   m_ObjectHideFlags: 0

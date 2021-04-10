@@ -9657,7 +9657,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unlockable: glide
-  uim: {fileID: 0}
 --- !u!58 &5517052320954518991
 CircleCollider2D:
   m_ObjectHideFlags: 0

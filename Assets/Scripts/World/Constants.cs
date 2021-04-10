@@ -49,6 +49,11 @@ public class Constants : MonoBehaviour
     public const string WALL_JUMP_TITLE = "Wall Jump";
     public const string DOUBLE_JUMP_TITLE = "Double Jump";
 
+    public const string GLIDE_KEYBIND = "Hold 'L' or 'Left Trigger'";
+    public const string DASH_KEYBIND = "Press 'Shift' or 'Right Trigger'";
+    public const string WALL_JUMP_KEYBIND = "Press 'Space' or 'South Button' while wall sliding";
+    public const string DOUBLE_JUMP_KEYBIND = "Press 'Space' or 'South Button' after jumping";
+
     public const string GLIDE_SPRITE = "Glide1";
     public const string DASH_SPRITE = "Dash5";
     public const string WALL_JUMP_SPRITE = "WallSlide4";
@@ -70,6 +75,10 @@ public class Constants : MonoBehaviour
     public const string UNLOCK_IDLE = "unlockScreen_idle";
     public const string UNLOCK_FADE_IN = "unlockScreen_fadeIn";
     public const string UNLOCK_FADE_OUT = "unlockScreen_fadeOut";
+
+    //Scene Transition Animations
+    public const string SCENE_TRANSITION_FADE_IN = "sceneTransition_fadeIn";
+    public const string SCENE_TRANSITION_FADE_OUT = "sceneTransition_fadeOut";
 
     public enum UnlockableType
     {

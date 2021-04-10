@@ -4853,7 +4853,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unlockable: wallJump
-  uim: {fileID: 0}
 --- !u!58 &2256580920875340024
 CircleCollider2D:
   m_ObjectHideFlags: 0

@@ -13,6 +13,8 @@ TagManager:
   - StartPos
   - CharacterObjects
   - BoundingBox
+  - UI
+  - StartPos_1
   layers:
   - Default
   - TransparentFX

@@ -5333,6 +5333,16 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: 1.06
       objectReference: {fileID: 0}
+    - target: {fileID: 6694670408976460665, guid: f039f79b6af755949b43f9127aa00319,
+        type: 3}
+      propertyPath: m_Name
+      value: StartPos_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6694670408976460665, guid: f039f79b6af755949b43f9127aa00319,
+        type: 3}
+      propertyPath: m_TagString
+      value: StartPos_1
+      objectReference: {fileID: 0}
     - target: {fileID: 8468419891333870007, guid: f039f79b6af755949b43f9127aa00319,
         type: 3}
       propertyPath: sceneName

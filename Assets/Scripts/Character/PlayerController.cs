@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     private Animator anim;
     private SpriteRenderer sr;
-    
+
     private InputMaster im;
     private bool imIsEnabled = true;
 
@@ -139,7 +139,11 @@ public class PlayerController : MonoBehaviour
         im.Player.AttackDown.started += _ => Attack(Constants.PLAYER_ATTACKDOWN);
 
         currentHealth = maxHealth;
-        isSpawning = true;
+    }
+
+    public void Start()
+    {
+        isSpawning = false;
     }
 
     private void Update()
@@ -152,7 +156,7 @@ public class PlayerController : MonoBehaviour
             Glide();
             CheckDirectionDigital();
         }
-        
+
         LimitFallSpeed();
         CheckGrounded();
         CheckWalled();
@@ -187,6 +191,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnEnable()
     {
+        Debug.Log(isSpawning);
         im.Enable();
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
@@ -514,14 +519,14 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if(collision.gameObject.CompareTag("Enemy") && Time.time > stunTimer)
-        {   
+        if (collision.gameObject.CompareTag("Enemy") && Time.time > stunTimer)
+        {
             Vector2 dmgHere = gameObject.transform.position - collision.gameObject.transform.position;
-            if(dmgHere.x < 1 && dmgHere.x > -1)
+            if (dmgHere.x < 1 && dmgHere.x > -1)
             {
                 dmgHere.y = dmgHere.y > 0 ? 1 : -1;
             }
-            else if(dmgHere.y < 1 && dmgHere.y > -1)
+            else if (dmgHere.y < 1 && dmgHere.y > -1)
             {
                 dmgHere.x = dmgHere.x > 0 ? 1 : -1;
             }
@@ -536,7 +541,7 @@ public class PlayerController : MonoBehaviour
             rb.AddForce(new Vector2(dmgHere.x * stunForce, dmgHere.y * stunForce * 1.5f), ForceMode2D.Impulse);
             SetHealth(dmgTaken);
             StartCoroutine(ActionComplete(Constants.ActionType.STUNNED, stunTime));
-                
+
             stunTimer = Time.time + stunCooldown;
         }
     }

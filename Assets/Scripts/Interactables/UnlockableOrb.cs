@@ -5,13 +5,14 @@ using UnityEngine;
 public class UnlockableOrb : MonoBehaviour
 {
     public string unlockable;
-    public UIManager uim;
+    private UIManager uim;
     private ParticleSystem ps;
     private float psLifeTime;
 
     private void Awake()
     {
         ps = GetComponent<ParticleSystem>();
+        uim = GameObject.FindWithTag("UI").GetComponent<UIManager>();
         var main = ps.main;
         main.useUnscaledTime = true;
         psLifeTime = main.startLifetime.constant;
@@ -19,7 +20,7 @@ public class UnlockableOrb : MonoBehaviour
 
 private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player")
+        if (collision.CompareTag("Player"))
         {
             Time.timeScale = 0;
             ps.Play();
