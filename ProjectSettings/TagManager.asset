@@ -10,7 +10,6 @@ TagManager:
   - SmallCoin
   - MediumCoin
   - LargeCoin
-  - StartPos
   - CharacterObjects
   - BoundingBox
   - UI
