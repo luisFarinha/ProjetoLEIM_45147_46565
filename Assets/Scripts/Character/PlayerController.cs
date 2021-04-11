@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     private Animator anim;
     private SpriteRenderer sr;
+    private CinemachineShake cineShake;
 
     private InputMaster im;
     private bool imIsEnabled = true;
@@ -87,7 +88,7 @@ public class PlayerController : MonoBehaviour
     public float stunForce = 6f;
     public bool isStunned;
     public float stunTime = 0.3f;
-    public float stunCooldown = 1f;
+    public float stunCooldown = 0.5f;
     private float stunTimer;
 
     [Header("Health and Damage")]
@@ -115,6 +116,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
+        cineShake = GameObject.FindWithTag("Cinemachine").GetComponent<CinemachineShake>();
 
         dust = GameObject.Find(Constants.DUST).GetComponent<ParticleSystem>();
         landingDirt = GameObject.Find(Constants.LANDING_DIRT).GetComponent<ParticleSystem>();
@@ -499,6 +501,7 @@ public class PlayerController : MonoBehaviour
             }
             foreach (Collider2D enemy in damagedEnemies)
             {
+                cineShake.ShakeCamera(1f, 0.15f);
                 enemy.GetComponent<Enemy>().TakeDamage(meleeAttackDmg, DmgDirection);
             }
             attackTimer = Time.time + attackCooldown;
@@ -542,6 +545,20 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(ActionComplete(Constants.ActionType.STUNNED, stunTime));
 
             stunTimer = Time.time + stunCooldown;
+            StartCoroutine(FlashRed(stunTime / 4, 2));
+            cineShake.ShakeCamera(3f, stunTime);
+        }
+    }
+
+    private IEnumerator FlashRed(float time, int nTimes)
+    {
+        yield return new WaitForSeconds(time);
+        for (int i = 0; i < nTimes; i++)
+        {
+            sr.color = new Color(0, 0, 0, 0);
+            yield return new WaitForSeconds(time);
+            sr.color = new Color(255, 255, 255, 255);
+            yield return new WaitForSeconds(time);
         }
     }
 

@@ -14,6 +14,7 @@ TagManager:
   - BoundingBox
   - UI
   - StartPos_1
+  - Cinemachine
   layers:
   - Default
   - TransparentFX

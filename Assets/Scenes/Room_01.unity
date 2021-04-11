@@ -1040,7 +1040,7 @@ Transform:
   - {fileID: 214894208}
   - {fileID: 1913540969}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &671200318
 GameObject:
@@ -1629,6 +1629,29 @@ Transform:
   m_Father: {fileID: 1949509836}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -3.174}
+--- !u!1 &1012461719 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4891150492176851277, guid: 2c40168298356bb489a731018a85c760,
+    type: 3}
+  m_PrefabInstance: {fileID: 4891150492217982669}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1012461723
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1012461719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68bb026fafb42b14791938953eaace77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_NoiseProfile: {fileID: 11400000, guid: 69ce8388f6785dd4c8c39915efece2f4, type: 2}
+  m_PivotOffset: {x: 0, y: 0, z: 0}
+  m_AmplitudeGain: 0
+  m_FrequencyGain: 5
+  mNoiseOffsets: {x: 0, y: 0, z: 0}
 --- !u!1 &1017597493
 GameObject:
   m_ObjectHideFlags: 0
@@ -5783,6 +5806,24 @@ LightingSettings:
   m_PVRFilteringAtrousPositionSigmaDirect: 0.5
   m_PVRFilteringAtrousPositionSigmaIndirect: 2
   m_PVRFilteringAtrousPositionSigmaAO: 1
+--- !u!1 &1725583033 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4891150491148459941, guid: 2c40168298356bb489a731018a85c760,
+    type: 3}
+  m_PrefabInstance: {fileID: 4891150492217982669}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1725583037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1725583033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ac32c766939a3947861b1cc588add06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1772702666
 GameObject:
   m_ObjectHideFlags: 0
@@ -6498,6 +6539,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: slowMotion
       objectReference: {fileID: 0}
+    - target: {fileID: 4504828322670530968, guid: ade2aacd53bfcec4b828a41379ecb64a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4504828322670530970, guid: ade2aacd53bfcec4b828a41379ecb64a,
         type: 3}
       propertyPath: m_RootOrder
@@ -6659,6 +6705,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4891150491148459941, guid: 2c40168298356bb489a731018a85c760,
+        type: 3}
+      propertyPath: m_TagString
+      value: Cinemachine
+      objectReference: {fileID: 0}
     - target: {fileID: 4891150491148459942, guid: 2c40168298356bb489a731018a85c760,
         type: 3}
       propertyPath: m_BoundingShape2D
@@ -6673,6 +6724,36 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.034000397
+      objectReference: {fileID: 0}
+    - target: {fileID: 4891150491923075411, guid: 2c40168298356bb489a731018a85c760,
+        type: 3}
+      propertyPath: stunCooldown
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4891150491923075437, guid: 2c40168298356bb489a731018a85c760,
+        type: 3}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4891150491923075437, guid: 2c40168298356bb489a731018a85c760,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4891150491923075437, guid: 2c40168298356bb489a731018a85c760,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4891150491923075437, guid: 2c40168298356bb489a731018a85c760,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4891150491923075437, guid: 2c40168298356bb489a731018a85c760,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2c40168298356bb489a731018a85c760, type: 3}
@@ -6691,7 +6772,7 @@ PrefabInstance:
     - target: {fileID: 8817015450265050780, guid: fd251c747ee74034999026d1356a8681,
         type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8817015450265050780, guid: fd251c747ee74034999026d1356a8681,
         type: 3}
