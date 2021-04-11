@@ -5129,7 +5129,7 @@ RectTransform:
   m_GameObject: {fileID: 466539343}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.11, y: 1.11, z: 1.11}
   m_Children: []
   m_Father: {fileID: 679542408}
   m_RootOrder: 1
@@ -30326,9 +30326,10 @@ GameObject:
   - component: {fileID: 4891150491148459943}
   - component: {fileID: 4891150491148459940}
   - component: {fileID: 4891150491148459942}
+  - component: {fileID: 1725583037}
   m_Layer: 0
   m_Name: CM vcam1
-  m_TagString: Untagged
+  m_TagString: Cinemachine
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30341,7 +30342,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4891150491148459941}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.049999237, y: 0.03399992, z: -7}
+  m_LocalPosition: {x: -0.05000019, y: 0.034000397, z: -7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4891150492176851276}
@@ -30400,6 +30401,18 @@ MonoBehaviour:
   m_BoundingShape2D: {fileID: 0}
   m_ConfineScreenEdges: 1
   m_Damping: 0
+--- !u!114 &1725583037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4891150491148459941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ac32c766939a3947861b1cc588add06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4891150491290430542
 GameObject:
   m_ObjectHideFlags: 0
@@ -30597,7 +30610,7 @@ MonoBehaviour:
   stunForce: 6
   isStunned: 0
   stunTime: 0.3
-  stunCooldown: 1
+  stunCooldown: 0.5
   maxHealth: 100
   currentHealth: 0
   dmgTaken: 20
@@ -30659,6 +30672,7 @@ GameObject:
   - component: {fileID: 4891150492176851276}
   - component: {fileID: 4891150492176851278}
   - component: {fileID: 4891150492176851279}
+  - component: {fileID: 1012461723}
   m_Layer: 0
   m_Name: cm
   m_TagString: Untagged
@@ -30735,6 +30749,23 @@ MonoBehaviour:
   m_MaximumFOV: 60
   m_MinimumOrthoSize: 1
   m_MaximumOrthoSize: 5000
+--- !u!114 &1012461723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4891150492176851277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68bb026fafb42b14791938953eaace77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_NoiseProfile: {fileID: 11400000, guid: 69ce8388f6785dd4c8c39915efece2f4, type: 2}
+  m_PivotOffset: {x: 0, y: 0, z: 0}
+  m_AmplitudeGain: 0
+  m_FrequencyGain: 5
+  mNoiseOffsets: {x: 0, y: 0, z: 0}
 --- !u!1 &4891150492246509233
 GameObject:
   m_ObjectHideFlags: 0

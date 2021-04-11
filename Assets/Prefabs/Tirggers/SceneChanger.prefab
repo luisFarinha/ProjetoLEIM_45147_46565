@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8468419891333870007}
   m_Layer: 0
   m_Name: Entrance
-  m_TagString: Untagged
+  m_TagString: Entrance
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -45,7 +45,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.006158352, y: 0.90299225}
+  m_Offset: {x: 0.006158352, y: 0.49817562}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -56,7 +56,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.25179482, y: 4.418642}
+  m_Size: {x: 0.25179482, y: 3.4762821}
   m_EdgeRadius: 0
 --- !u!114 &8468419891333870007
 MonoBehaviour:
@@ -70,7 +70,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a32016aea0e7b0940b8c83456ce80963, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneName: Room_01
+  sceneName: Room_00
   startPos: StartPos_1
 --- !u!1 &6694670407766459032
 GameObject:
@@ -114,7 +114,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6694670408976460664}
   m_Layer: 0
-  m_Name: StartPos
+  m_Name: StartPos_1
   m_TagString: StartPos_1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -128,7 +128,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6694670408976460665}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.61, y: 0, z: 0}
+  m_LocalPosition: {x: 1.06, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6694670407766459039}

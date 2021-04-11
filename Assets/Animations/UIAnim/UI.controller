@@ -140,16 +140,16 @@ AnimatorStateMachine:
     m_Position: {x: 30, y: 210, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -3951927945873797965}
-    m_Position: {x: -190, y: 360, z: 0}
+    m_Position: {x: -190, y: 210, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 6364931942030571929}
     m_Position: {x: 30, y: 300, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -907457817153723572}
-    m_Position: {x: 60, y: 360, z: 0}
+    m_Position: {x: -200, y: 270, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 7949020908270183751}
-    m_Position: {x: -70, y: 430, z: 0}
+    m_Position: {x: -200, y: 330, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []

@@ -15,6 +15,7 @@ TagManager:
   - UI
   - StartPos_1
   - Cinemachine
+  - Entrance
   layers:
   - Default
   - TransparentFX

@@ -188,7 +188,23 @@ public class PlayerController : MonoBehaviour
         if (!isSpawning)
         {
             transform.position = GameObject.FindWithTag(startPos).transform.position;
+            StartCoroutine(StartMoving(0.7f));
         }
+    }
+
+    private IEnumerator StartMoving(float time)
+    {
+        //isStunned from OnCollisionEnter2D
+        if (facingRight && onGround)
+        {
+            rb.velocity = new Vector2(walkSpeed, 0);
+        }
+        else if(onGround)
+        {
+            rb.velocity = new Vector2(-walkSpeed, 0);
+        }
+        yield return new WaitForSeconds(time);
+        isStunned = false;    
     }
 
     private void OnEnable()
@@ -566,6 +582,16 @@ public class PlayerController : MonoBehaviour
     {
         currentHealth -= damage;
         slider.value = currentHealth;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Entrance"))
+        {
+            isStunned = true;
+            rb.velocity = new Vector2(0, 0);
+            anim.Play(Constants.PLAYER_RUN);
+        }
     }
 
     private IEnumerator ActionComplete(Constants.ActionType action, float time)
