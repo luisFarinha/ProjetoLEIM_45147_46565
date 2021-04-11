@@ -191,7 +191,6 @@ public class PlayerController : MonoBehaviour
 
     private void OnEnable()
     {
-        Debug.Log(isSpawning);
         im.Enable();
         SceneManager.sceneLoaded += OnSceneLoaded;
     }

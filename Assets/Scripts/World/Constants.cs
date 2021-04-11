@@ -113,4 +113,13 @@ public class Constants : MonoBehaviour
     public const int MEDIUM_COIN_VALUE = 3;
     public const int LARGE_COIN_VALUE = 9;
 
+
+    //CHESTS-------------------------------------------------------------------------
+
+    //Chest Animations
+    public const string CHEST_IDLE = "chest_idle";
+    public const string CHEST_WIGGLE = "chest_wiggle";
+    public const string CHEST_OPENED_IDLE = "chest_openedIdle";
+
+
 }

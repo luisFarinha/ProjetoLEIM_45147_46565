@@ -66,7 +66,7 @@ public class Coin : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player") && isFollowing)
         {
             if (sr.enabled) //make sure coins only add once to the money text
             {
