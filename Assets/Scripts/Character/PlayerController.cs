@@ -78,6 +78,11 @@ public class PlayerController : MonoBehaviour
     public float attackCooldown = 0.3f;
     public int meleeAttackDmg = 25;
     private float attackTimer;
+    private float AttackTimeConstant = 0.005f;
+    private float AttackTime;
+
+    private float lastHitTime;
+    private float timeSinceLastHit;
 
     [Header("Knocked Back")]
     public float knockbackForce = 8f;
@@ -104,6 +109,10 @@ public class PlayerController : MonoBehaviour
     private ParticleSystem wallSlidingDust;
     private ParticleSystem wallSlidingDirt;
     private ParticleSystem doubleJumpShine;
+    private ParticleSystem Slash01;
+    private ParticleSystem Slash02;
+
+    private int attackCounter = 0;
 
     [Header("SceneTransitions")]
     public bool isSpawning = true;
@@ -125,6 +134,8 @@ public class PlayerController : MonoBehaviour
         wallSlidingDust = GameObject.Find(Constants.WALL_SLIDING_DUST).GetComponent<ParticleSystem>();
         wallSlidingDirt = GameObject.Find(Constants.WALL_SLIDING_DIRT).GetComponent<ParticleSystem>();
         doubleJumpShine = GameObject.Find(Constants.DOUBLE_JUMP_SHINE).GetComponent<ParticleSystem>();
+        Slash01 = GameObject.Find(Constants.SLASH01).GetComponent<ParticleSystem>();
+        Slash02 = GameObject.Find(Constants.SLASH02).GetComponent<ParticleSystem>();
 
         gLength = (sr.bounds.size.y / 2) * 0.85f;
         wLength = (sr.bounds.size.x / 2) * 0.55f;
@@ -139,7 +150,7 @@ public class PlayerController : MonoBehaviour
         im.Player.Attack.started += _ => Attack(Constants.PLAYER_ATTACK);
         im.Player.AttackUp.started += _ => Attack(Constants.PLAYER_ATTACKUP);
         im.Player.AttackDown.started += _ => Attack(Constants.PLAYER_ATTACKDOWN);
-
+        
         currentHealth = maxHealth;
     }
 
@@ -152,6 +163,7 @@ public class PlayerController : MonoBehaviour
     {
         //track movement values
         xMove = im.Player.Walk.ReadValue<float>();
+        timeSinceLastHit = Time.time - lastHitTime;
 
         if (!isDashing && !isWallJumping && !isStunned)
         {
@@ -461,11 +473,47 @@ public class PlayerController : MonoBehaviour
             rb.AddForce(new Vector2(0, -rb.velocity.y), ForceMode2D.Impulse);
         }
     }
+    
 
     private void Attack(string attackType)
     {
+        
         if (!isDashing && !isWallSliding && !isAttacking && !isGliding && !isStunned)
         {
+            if (attackType == Constants.PLAYER_ATTACK)
+            {            
+                if (attackCounter == 0)
+                {
+                    lastHitTime = Time.time;
+                    attackType = Constants.PLAYER_ATTACK;
+                    attackCounter = 1;
+                }
+                else if (attackCounter == 1)
+                {
+                    if (timeSinceLastHit < 1f)
+                    {
+                        attackType = Constants.PLAYER_ATTACK + "2";
+                        attackCounter = 2;
+                        lastHitTime = Time.time;
+                    }
+                    else
+                    { 
+                        attackCounter = 0;
+                    }
+                }
+                else if (attackCounter == 2)
+                {
+                    if (timeSinceLastHit < 1f)
+                    {
+                        attackType = Constants.PLAYER_ATTACK + "3";
+                        attackCounter = 0;
+                        lastHitTime = Time.time;
+                    } else
+                    {
+                        attackCounter = 0;
+                    }
+                }
+            }
             if (onGround && attackType != Constants.PLAYER_ATTACKDOWN)
             {
                 ChangeAnimationState(attackType);
@@ -480,6 +528,38 @@ public class PlayerController : MonoBehaviour
                 CheckForDmgToGive(attackType);
                 StartCoroutine(ActionComplete(Constants.ActionType.ATTAKING, attackAnimTime));
             }
+        }
+        AttackParticlesAnimations(attackType);
+    }
+    
+    private void AttackParticlesAnimations(string attackType)
+    {
+        if (!onGround && attackType == Constants.PLAYER_ATTACKDOWN)
+        {
+            if (facingRight)
+            {
+                Slash01.transform.rotation = Quaternion.Euler(0, 180, -92);
+            }
+            else { Slash01.transform.rotation = Quaternion.Euler(0, 0, -92); }
+
+            Slash01.transform.localPosition = new Vector3(1.35f, 0.25f, 0);
+            Slash01.Play();
+            //Slash02.Play();
+        }
+        else if (attackType == Constants.PLAYER_ATTACKUP)
+        {
+            if (facingRight)
+            { Slash01.transform.rotation = Quaternion.Euler(0, 0, 90); }
+            else { Slash01.transform.rotation = Quaternion.Euler(0, 180, 90); }
+            Slash01.transform.localPosition = new Vector3(-1.88f, 0.2266611f, 0);
+            Slash01.Play();
+        }
+        else if (attackType == Constants.PLAYER_ATTACK)
+        {
+            if (facingRight) { Slash01.transform.rotation = Quaternion.Euler(0, 0, 0); }
+            else { Slash01.transform.rotation = Quaternion.Euler(0, 180, 0); }
+            Slash01.transform.localPosition = new Vector3(2.050729f, 0.2266611f, 0);
+            Slash01.Play();
         }
     }
 
@@ -619,6 +699,8 @@ public class PlayerController : MonoBehaviour
         if (currentState == newState) return;
         anim.Play(newState);
         currentState = newState;
+      
+        
     }
 
     private void OnDrawGizmos()
