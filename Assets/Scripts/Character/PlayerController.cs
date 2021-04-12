@@ -78,9 +78,7 @@ public class PlayerController : MonoBehaviour
     public float attackCooldown = 0.3f;
     public int meleeAttackDmg = 25;
     private float attackTimer;
-    private float AttackTimeConstant = 0.005f;
-    private float AttackTime;
-
+    private float attackTime = 0.7f;
     private float lastHitTime;
     private float timeSinceLastHit;
 
@@ -111,7 +109,11 @@ public class PlayerController : MonoBehaviour
     private ParticleSystem doubleJumpShine;
     private ParticleSystem Slash01;
     private ParticleSystem Slash02;
-
+    private ParticleSystem Slash02Shine;
+    private ParticleSystem Slash03;
+    private ParticleSystem SlashUp;
+    private ParticleSystem SlashDown;
+    
     private int attackCounter = 0;
 
     [Header("SceneTransitions")]
@@ -135,7 +137,11 @@ public class PlayerController : MonoBehaviour
         wallSlidingDirt = GameObject.Find(Constants.WALL_SLIDING_DIRT).GetComponent<ParticleSystem>();
         doubleJumpShine = GameObject.Find(Constants.DOUBLE_JUMP_SHINE).GetComponent<ParticleSystem>();
         Slash01 = GameObject.Find(Constants.SLASH01).GetComponent<ParticleSystem>();
+        SlashUp = GameObject.Find(Constants.SLASHUP).GetComponent<ParticleSystem>();
+        SlashDown = GameObject.Find(Constants.SLASHDOWN).GetComponent<ParticleSystem>();
         Slash02 = GameObject.Find(Constants.SLASH02).GetComponent<ParticleSystem>();
+        Slash02Shine = GameObject.Find(Constants.SLASH02SHINE).GetComponent<ParticleSystem>();
+        Slash03 = GameObject.Find(Constants.SLASH03).GetComponent<ParticleSystem>();
 
         gLength = (sr.bounds.size.y / 2) * 0.85f;
         wLength = (sr.bounds.size.x / 2) * 0.55f;
@@ -477,41 +483,42 @@ public class PlayerController : MonoBehaviour
 
     private void Attack(string attackType)
     {
-        
         if (!isDashing && !isWallSliding && !isAttacking && !isGliding && !isStunned)
         {
             if (attackType == Constants.PLAYER_ATTACK)
             {            
                 if (attackCounter == 0)
                 {
-                    lastHitTime = Time.time;
-                    attackType = Constants.PLAYER_ATTACK;
+                    //attackType = Constants.PLAYER_ATTACK;
                     attackCounter = 1;
+                    lastHitTime = Time.time;
                 }
                 else if (attackCounter == 1)
                 {
-                    if (timeSinceLastHit < 1f)
+                    if (timeSinceLastHit < attackTime)
                     {
-                        attackType = Constants.PLAYER_ATTACK + "2";
+                        attackType = Constants.PLAYER_ATTACK2;
                         attackCounter = 2;
                         lastHitTime = Time.time;
                     }
                     else
                     { 
                         attackCounter = 0;
+                        lastHitTime = Time.time;
                     }
                 }
                 else if (attackCounter == 2)
                 {
-                    if (timeSinceLastHit < 1f)
+                    if (timeSinceLastHit < attackTime)
                     {
-                        attackType = Constants.PLAYER_ATTACK + "3";
+                        attackType = Constants.PLAYER_ATTACK3;
                         attackCounter = 0;
                         lastHitTime = Time.time;
                     } else
                     {
+                        lastHitTime = Time.time;
                         attackCounter = 0;
-                    }
+                    }  
                 }
             }
             if (onGround && attackType != Constants.PLAYER_ATTACKDOWN)
@@ -528,38 +535,34 @@ public class PlayerController : MonoBehaviour
                 CheckForDmgToGive(attackType);
                 StartCoroutine(ActionComplete(Constants.ActionType.ATTAKING, attackAnimTime));
             }
+            AttackParticlesAnimations(attackType);
         }
-        AttackParticlesAnimations(attackType);
     }
+
+
     
     private void AttackParticlesAnimations(string attackType)
     {
         if (!onGround && attackType == Constants.PLAYER_ATTACKDOWN)
         {
-            if (facingRight)
-            {
-                Slash01.transform.rotation = Quaternion.Euler(0, 180, -92);
-            }
-            else { Slash01.transform.rotation = Quaternion.Euler(0, 0, -92); }
-
-            Slash01.transform.localPosition = new Vector3(1.35f, 0.25f, 0);
-            Slash01.Play();
-            //Slash02.Play();
+            SlashDown.Play();
         }
         else if (attackType == Constants.PLAYER_ATTACKUP)
         {
-            if (facingRight)
-            { Slash01.transform.rotation = Quaternion.Euler(0, 0, 90); }
-            else { Slash01.transform.rotation = Quaternion.Euler(0, 180, 90); }
-            Slash01.transform.localPosition = new Vector3(-1.88f, 0.2266611f, 0);
-            Slash01.Play();
+            SlashUp.Play();
         }
         else if (attackType == Constants.PLAYER_ATTACK)
         {
-            if (facingRight) { Slash01.transform.rotation = Quaternion.Euler(0, 0, 0); }
-            else { Slash01.transform.rotation = Quaternion.Euler(0, 180, 0); }
-            Slash01.transform.localPosition = new Vector3(2.050729f, 0.2266611f, 0);
+            Slash02.Play();
+            Slash02Shine.Play();
+        }
+        else if(attackType == Constants.PLAYER_ATTACK2)
+        {
             Slash01.Play();
+        }
+        else if (attackType == Constants.PLAYER_ATTACK3)
+        {
+            Slash03.Play();
         }
     }
 
@@ -699,8 +702,6 @@ public class PlayerController : MonoBehaviour
         if (currentState == newState) return;
         anim.Play(newState);
         currentState = newState;
-      
-        
     }
 
     private void OnDrawGizmos()
