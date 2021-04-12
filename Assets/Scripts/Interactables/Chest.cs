@@ -12,6 +12,7 @@ public class Chest : MonoBehaviour
     private Image img;
     private InputMaster im;
     private Animator anim;
+    private SpriteRenderer sr;
 
     [Header("Opening Action")]
     public float openIncrement = 20f;
@@ -37,6 +38,7 @@ public class Chest : MonoBehaviour
         meter = openMeter.GetComponent<Slider>();
         img = meter.GetComponentInChildren<Image>();
         anim = GetComponent<Animator>();
+        sr = GetComponentInChildren<SpriteRenderer>();
 
         smallCoin = (GameObject)Resources.Load(Constants.SMALL_COIN_TEXT);
         mediumCoin = (GameObject)Resources.Load(Constants.MEDIUM_COIN_TEXT);
@@ -96,6 +98,7 @@ public class Chest : MonoBehaviour
             StartCoroutine(SpawnCoins(mediumCoin, nMediumCoins));
             StartCoroutine(SpawnCoins(largeCoin, nLargeCoins));
 
+            sr.sprite = Resources.Load<Sprite>("chestOpened");
             anim.Play(Constants.CHEST_OPENED_IDLE);
         }
     }
