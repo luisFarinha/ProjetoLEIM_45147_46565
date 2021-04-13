@@ -578,30 +578,33 @@ public class PlayerController : MonoBehaviour
                 if (!facingRight)
                 {
                     DmgDirection = "left";
-                    if (!onGround) { Knockback(damagedEnemies, knockbackForce, 0); }
+                    Knockback(damagedEnemies, knockbackForce, 0);
                 }
                 else if (facingRight)
                 {
                     DmgDirection = "right";
-                    if (!onGround) { Knockback(damagedEnemies, -knockbackForce, 0); }
+                    Knockback(damagedEnemies, -knockbackForce, 0);
                 }
             }
             else if (attackType == Constants.PLAYER_ATTACKUP)
             {
                 damagedEnemies = Physics2D.OverlapCircleAll(attackUpPos.position, attackRange, eLayer);
                 DmgDirection = "up";
-                if (!onGround) { Knockback(damagedEnemies, 0, -knockbackForce); }
+                Knockback(damagedEnemies, 0, -knockbackForce);
             }
             else if (attackType == Constants.PLAYER_ATTACKDOWN)
             {
                 damagedEnemies = Physics2D.OverlapCircleAll(attackDownPos.position, attackRange, eLayer);
                 DmgDirection = "down";
-                if (!onGround) { Knockback(damagedEnemies, 0, knockbackForce); }
+                Knockback(damagedEnemies, 0, knockbackForce);
             }
             foreach (Collider2D enemy in damagedEnemies)
             {
-                cineShake.ShakeCamera(1f, 0.15f);
-                enemy.GetComponent<Enemy>().TakeDamage(meleeAttackDmg, DmgDirection);
+                if(!enemy.GetComponent<Enemy>().isDead)
+                {
+                    cineShake.ShakeCamera(1f, 0.15f);
+                    enemy.GetComponent<Enemy>().TakeDamage(meleeAttackDmg, DmgDirection);
+                }
             }
             attackTimer = Time.time + attackCooldown;
         }
@@ -609,7 +612,16 @@ public class PlayerController : MonoBehaviour
 
     private void Knockback(Collider2D[] damagedEnemies, float xKnock, float yKnock)
     {
-        if (damagedEnemies.Length > 0)
+        bool canKnockback = false;
+        foreach (Collider2D enemy in damagedEnemies)
+        {
+            if (!enemy.GetComponent<Enemy>().isDead)
+            {
+                canKnockback = true;
+            }
+        }
+      
+        if (damagedEnemies.Length > 0 && canKnockback && !!onGround)
         {
             isKnocked = true;
             rb.velocity = new Vector2(xMove * walkSpeed, 0);

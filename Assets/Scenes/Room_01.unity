@@ -6496,6 +6496,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: slowMotion
       objectReference: {fileID: 0}
+    - target: {fileID: 4504828322670530968, guid: ade2aacd53bfcec4b828a41379ecb64a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4504828322670530970, guid: ade2aacd53bfcec4b828a41379ecb64a,
         type: 3}
       propertyPath: m_RootOrder
@@ -6560,6 +6565,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 397028474, guid: 2c40168298356bb489a731018a85c760, type: 3}
+      propertyPath: moveWithTransform
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 398246924, guid: 2c40168298356bb489a731018a85c760, type: 3}
+      propertyPath: moveWithTransform
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 493765261, guid: 2c40168298356bb489a731018a85c760, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -6584,7 +6597,7 @@ PrefabInstance:
     - target: {fileID: 4891150490962565785, guid: 2c40168298356bb489a731018a85c760,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 15.32
+      value: 13.36
       objectReference: {fileID: 0}
     - target: {fileID: 4891150490962565785, guid: 2c40168298356bb489a731018a85c760,
         type: 3}
@@ -6641,6 +6654,16 @@ PrefabInstance:
       propertyPath: m_BoundingShape2D
       value: 
       objectReference: {fileID: 955274780}
+    - target: {fileID: 4891150491148459943, guid: 2c40168298356bb489a731018a85c760,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.05000019
+      objectReference: {fileID: 0}
+    - target: {fileID: 4891150491148459943, guid: 2c40168298356bb489a731018a85c760,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.034000397
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2c40168298356bb489a731018a85c760, type: 3}
 --- !u!1001 &8817015450627663554
