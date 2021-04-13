@@ -72,13 +72,13 @@ public class PlayerController : MonoBehaviour
     private float wLength;
 
     [Header("Melee Attacks")]
-    public float attackAnimTime = 0.23f;
+    public float attackAnimTime = 0.25f;
     public bool isAttacking;
     public Transform attackPos;
     public Transform attackUpPos;
     public Transform attackDownPos;
     public float attackRange = 0.75f;
-    public float attackCooldown = 0.3f;
+    public float attackCooldown = 0.35f;
     public int meleeAttackDmg = 25;
     private float attackTimer;
     private float attackTime = 0.7f;
@@ -120,7 +120,7 @@ public class PlayerController : MonoBehaviour
     private ParticleSystem Slash03Shine;
     private ParticleSystem SlashUp;
     private ParticleSystem SlashDown;
-    
+
     private int attackCounter = 0;
 
     [Header("SceneTransitions")]
@@ -167,7 +167,7 @@ public class PlayerController : MonoBehaviour
         im.Player.Attack.started += _ => Attack(Constants.PLAYER_ATTACK);
         im.Player.AttackUp.started += _ => Attack(Constants.PLAYER_ATTACKUP);
         im.Player.AttackDown.started += _ => Attack(Constants.PLAYER_ATTACKDOWN);
-        
+
         currentHealth = maxHealth;
     }
 
@@ -228,12 +228,12 @@ public class PlayerController : MonoBehaviour
         {
             rb.velocity = new Vector2(walkSpeed, 0);
         }
-        else if(onGround)
+        else if (onGround)
         {
             rb.velocity = new Vector2(-walkSpeed, 0);
         }
         yield return new WaitForSeconds(time);
-        isStunned = false;    
+        isStunned = false;
     }
 
     private void OnEnable()
@@ -274,9 +274,11 @@ public class PlayerController : MonoBehaviour
             isGliding = false;
             if (rb.velocity.y <= 0) { canSetDelayedJump = true; }
         }
-        else { 
+        else
+        {
             onGround = false;
-            if(canSetDelayedJump) { 
+            if (canSetDelayedJump)
+            {
                 delayedJumpTimer = Time.time;
                 canSetDelayedJump = false;
             }
@@ -499,17 +501,16 @@ public class PlayerController : MonoBehaviour
             rb.AddForce(new Vector2(0, -rb.velocity.y), ForceMode2D.Impulse);
         }
     }
-    
+
 
     private void Attack(string attackType)
     {
-        if (!isDashing && !isWallSliding && !isAttacking && !isGliding && !isStunned)
+        if (!isDashing && !isWallSliding && !isGliding && !isStunned && !isAttacking && Time.time > attackTimer)
         {
             if (attackType == Constants.PLAYER_ATTACK)
-            {            
+            {
                 if (attackCounter == 0)
                 {
-                    //attackType = Constants.PLAYER_ATTACK;
                     attackCounter = 1;
                     lastHitTime = Time.time;
                 }
@@ -522,8 +523,8 @@ public class PlayerController : MonoBehaviour
                         lastHitTime = Time.time;
                     }
                     else
-                    { 
-                        attackCounter = 0;
+                    {
+                        attackCounter = 1;
                         lastHitTime = Time.time;
                     }
                 }
@@ -534,12 +535,12 @@ public class PlayerController : MonoBehaviour
                         attackType = Constants.PLAYER_ATTACK3;
                         attackCounter = 0;
                         lastHitTime = Time.time;
-                        StartCoroutine(ActionComplete(Constants.ActionType.ATTAKING, attackAnimTime));
-                    } else
+                    }
+                    else
                     {
                         lastHitTime = Time.time;
-                        attackCounter = 0;
-                    }  
+                        attackCounter = 1;
+                    }
                 }
             }
             if (onGround && attackType != Constants.PLAYER_ATTACKDOWN)
@@ -557,11 +558,12 @@ public class PlayerController : MonoBehaviour
                 StartCoroutine(ActionComplete(Constants.ActionType.ATTAKING, attackAnimTime));
             }
             AttackParticlesAnimations(attackType);
+            attackTimer = Time.time + attackCooldown;
         }
     }
 
 
-    
+
     private void AttackParticlesAnimations(string attackType)
     {
         if (!onGround && attackType == Constants.PLAYER_ATTACKDOWN)
@@ -579,7 +581,7 @@ public class PlayerController : MonoBehaviour
             Slash02.Play();
             Slash02Shine.Play();
         }
-        else if(attackType == Constants.PLAYER_ATTACK2)
+        else if (attackType == Constants.PLAYER_ATTACK2)
         {
             Slash01.Play();
             Slash01Shine.Play();
@@ -588,7 +590,7 @@ public class PlayerController : MonoBehaviour
         {
             Slash03.Play();
             Slash03Shine.Play();
-            
+
         }
     }
 
@@ -596,49 +598,46 @@ public class PlayerController : MonoBehaviour
     {
         Collider2D[] damagedEnemies = Physics2D.OverlapCircleAll(attackPos.position, attackRange, eLayer);
         string DmgDirection = "";
-        if (Time.time > attackTimer)
+        if (attackType == Constants.PLAYER_ATTACK)
         {
-            if (attackType == Constants.PLAYER_ATTACK)
+            damagedEnemies = Physics2D.OverlapCircleAll(attackPos.position, attackRange, eLayer);
+            if (!facingRight)
             {
-                damagedEnemies = Physics2D.OverlapCircleAll(attackPos.position, attackRange, eLayer);
-                if (!facingRight)
+                DmgDirection = "left";
+                Knockback(damagedEnemies, knockbackForce, 0);
+            }
+            else if (facingRight)
+            {
+                DmgDirection = "right";
+                Knockback(damagedEnemies, -knockbackForce, 0);
+            }
+        }
+        else if (attackType == Constants.PLAYER_ATTACKUP)
+        {
+            damagedEnemies = Physics2D.OverlapCircleAll(attackUpPos.position, attackRange, eLayer);
+            DmgDirection = "up";
+            Knockback(damagedEnemies, 0, -knockbackForce);
+        }
+        else if (attackType == Constants.PLAYER_ATTACKDOWN)
+        {
+            damagedEnemies = Physics2D.OverlapCircleAll(attackDownPos.position, attackRange, eLayer);
+            DmgDirection = "down";
+            Knockback(damagedEnemies, 0, knockbackForce);
+        }
+        foreach (Collider2D enemy in damagedEnemies)
+        {
+            if (!enemy.GetComponent<Enemy>().isDead)
+            {
+                if (attackType == Constants.PLAYER_ATTACK3)
                 {
-                    DmgDirection = "left";
-                    Knockback(damagedEnemies, knockbackForce, 0);
+                    cineShake.ShakeCamera(3f, 0.15f);
                 }
-                else if (facingRight)
+                else
                 {
-                    DmgDirection = "right";
-                    Knockback(damagedEnemies, -knockbackForce, 0);
+                    cineShake.ShakeCamera(1f, 0.15f);
                 }
+                enemy.GetComponent<Enemy>().TakeDamage(meleeAttackDmg, DmgDirection);
             }
-            else if (attackType == Constants.PLAYER_ATTACKUP)
-            {
-                damagedEnemies = Physics2D.OverlapCircleAll(attackUpPos.position, attackRange, eLayer);
-                DmgDirection = "up";
-                Knockback(damagedEnemies, 0, -knockbackForce);
-            }
-            else if (attackType == Constants.PLAYER_ATTACKDOWN)
-            {
-                damagedEnemies = Physics2D.OverlapCircleAll(attackDownPos.position, attackRange, eLayer);
-                DmgDirection = "down";
-                Knockback(damagedEnemies, 0, knockbackForce);
-            }
-            foreach (Collider2D enemy in damagedEnemies)
-            {
-                if(!enemy.GetComponent<Enemy>().isDead)
-                {
-                    if (attackType == Constants.PLAYER_ATTACK3)
-                    {
-                        cineShake.ShakeCamera(3f, 0.15f);
-                    }
-                    else {
-                        cineShake.ShakeCamera(1f, 0.15f);
-                    }
-                    enemy.GetComponent<Enemy>().TakeDamage(meleeAttackDmg, DmgDirection);
-                }
-            }
-            attackTimer = Time.time + attackCooldown;
         }
     }
 
@@ -652,7 +651,7 @@ public class PlayerController : MonoBehaviour
                 canKnockback = true;
             }
         }
-      
+
         if (damagedEnemies.Length > 0 && canKnockback && !onGround)
         {
             isKnocked = true;
@@ -680,7 +679,7 @@ public class PlayerController : MonoBehaviour
                 dmgHere.x = dmgHere.x > 0 ? 1 : -1;
                 dmgHere.y = dmgHere.y > 0 ? 1 : -1;
             }
-                                  
+
             isStunned = true;
             rb.velocity = new Vector2(0, 0);
             rb.AddForce(new Vector2(dmgHere.x * stunForce, dmgHere.y * stunForce * 1.5f), ForceMode2D.Impulse);
