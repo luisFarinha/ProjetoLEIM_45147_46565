@@ -420,7 +420,7 @@ public class PlayerController : MonoBehaviour
             jumpTimer = 0;
             dust.Play();
         }
-        else if (!onGround && doubleReady && !isLanding && !isWallSliding && !isGliding && !isStunned && Unlockables.doubleJumpUnlocked) //double jump
+        else if (!onGround && doubleReady && !isLanding && !isWallSliding && !isGliding && !isStunned && !isDashing && Unlockables.doubleJumpUnlocked) //double jump
         {
             rb.velocity = new Vector2(xMove * walkSpeed, 0);
             rb.AddForce(new Vector2(0, jumpForce * 3 / 4), ForceMode2D.Impulse);
@@ -576,7 +576,7 @@ public class PlayerController : MonoBehaviour
         {
             Slash03.Play();
             Slash03Shine.Play();
-            cineShake.ShakeCamera(3f, stunTime);
+            
         }
     }
 
@@ -616,7 +616,13 @@ public class PlayerController : MonoBehaviour
             {
                 if(!enemy.GetComponent<Enemy>().isDead)
                 {
-                    cineShake.ShakeCamera(1f, 0.15f);
+                    if (attackType == Constants.PLAYER_ATTACK3)
+                    {
+                        cineShake.ShakeCamera(3f, 0.15f);
+                    }
+                    else {
+                        cineShake.ShakeCamera(1f, 0.15f);
+                    }
                     enemy.GetComponent<Enemy>().TakeDamage(meleeAttackDmg, DmgDirection);
                 }
             }
@@ -662,7 +668,7 @@ public class PlayerController : MonoBehaviour
                 dmgHere.x = dmgHere.x > 0 ? 1 : -1;
                 dmgHere.y = dmgHere.y > 0 ? 1 : -1;
             }
-
+                                  
             isStunned = true;
             rb.velocity = new Vector2(0, 0);
             rb.AddForce(new Vector2(dmgHere.x * stunForce, dmgHere.y * stunForce * 1.5f), ForceMode2D.Impulse);
