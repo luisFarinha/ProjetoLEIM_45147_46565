@@ -108,9 +108,13 @@ public class PlayerController : MonoBehaviour
     private ParticleSystem wallSlidingDirt;
     private ParticleSystem doubleJumpShine;
     private ParticleSystem Slash01;
+    private ParticleSystem Slash01Shine;
+    private ParticleSystem Slash01ShineUp;
+    private ParticleSystem Slash01ShineDown;
     private ParticleSystem Slash02;
     private ParticleSystem Slash02Shine;
     private ParticleSystem Slash03;
+    private ParticleSystem Slash03Shine;
     private ParticleSystem SlashUp;
     private ParticleSystem SlashDown;
     
@@ -137,11 +141,15 @@ public class PlayerController : MonoBehaviour
         wallSlidingDirt = GameObject.Find(Constants.WALL_SLIDING_DIRT).GetComponent<ParticleSystem>();
         doubleJumpShine = GameObject.Find(Constants.DOUBLE_JUMP_SHINE).GetComponent<ParticleSystem>();
         Slash01 = GameObject.Find(Constants.SLASH01).GetComponent<ParticleSystem>();
+        Slash01Shine = GameObject.Find(Constants.SLASH01SHINE).GetComponent<ParticleSystem>();
+        Slash01ShineUp = GameObject.Find(Constants.SLASH01SHINEUP).GetComponent<ParticleSystem>();
+        Slash01ShineDown = GameObject.Find(Constants.SLASH01SHINEDOWN).GetComponent<ParticleSystem>();
         SlashUp = GameObject.Find(Constants.SLASHUP).GetComponent<ParticleSystem>();
         SlashDown = GameObject.Find(Constants.SLASHDOWN).GetComponent<ParticleSystem>();
         Slash02 = GameObject.Find(Constants.SLASH02).GetComponent<ParticleSystem>();
         Slash02Shine = GameObject.Find(Constants.SLASH02SHINE).GetComponent<ParticleSystem>();
         Slash03 = GameObject.Find(Constants.SLASH03).GetComponent<ParticleSystem>();
+        Slash03Shine = GameObject.Find(Constants.SLASH03SHINE).GetComponent<ParticleSystem>();
 
         gLength = (sr.bounds.size.y / 2) * 0.85f;
         wLength = (sr.bounds.size.x / 2) * 0.55f;
@@ -514,6 +522,7 @@ public class PlayerController : MonoBehaviour
                         attackType = Constants.PLAYER_ATTACK3;
                         attackCounter = 0;
                         lastHitTime = Time.time;
+                        StartCoroutine(ActionComplete(Constants.ActionType.ATTAKING, attackAnimTime));
                     } else
                     {
                         lastHitTime = Time.time;
@@ -546,10 +555,12 @@ public class PlayerController : MonoBehaviour
         if (!onGround && attackType == Constants.PLAYER_ATTACKDOWN)
         {
             SlashDown.Play();
+            Slash01ShineDown.Play();
         }
         else if (attackType == Constants.PLAYER_ATTACKUP)
         {
             SlashUp.Play();
+            Slash01ShineUp.Play();
         }
         else if (attackType == Constants.PLAYER_ATTACK)
         {
@@ -559,10 +570,13 @@ public class PlayerController : MonoBehaviour
         else if(attackType == Constants.PLAYER_ATTACK2)
         {
             Slash01.Play();
+            Slash01Shine.Play();
         }
         else if (attackType == Constants.PLAYER_ATTACK3)
         {
             Slash03.Play();
+            Slash03Shine.Play();
+            cineShake.ShakeCamera(3f, stunTime);
         }
     }
 
