@@ -621,7 +621,7 @@ public class PlayerController : MonoBehaviour
             }
         }
       
-        if (damagedEnemies.Length > 0 && canKnockback && !!onGround)
+        if (damagedEnemies.Length > 0 && canKnockback && !onGround)
         {
             isKnocked = true;
             rb.velocity = new Vector2(xMove * walkSpeed, 0);
