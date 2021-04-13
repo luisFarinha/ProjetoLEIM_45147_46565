@@ -26,6 +26,9 @@ public class PlayerController : MonoBehaviour
 
     [Header("Jumping")]
     public float jumpForce = 12.5f;
+    public float delayedJumpTime = 0.1f;
+    public bool canSetDelayedJump;
+    private float delayedJumpTimer;
     private float jumpTimer;
     private float jumpDelay = 0.2f;
     private bool doubleReady;
@@ -261,16 +264,23 @@ public class PlayerController : MonoBehaviour
 
     private void CheckGrounded()
     {
-        leftGPoint = new Vector3(transform.position.x - sr.bounds.size.x * 0.4f, transform.position.y, transform.position.z);
-        rightGPoint = new Vector3(transform.position.x + sr.bounds.size.x * 0.4f, transform.position.y, transform.position.z);
+        leftGPoint = new Vector3(transform.position.x - sr.bounds.size.x * 0.2f, transform.position.y, transform.position.z);
+        rightGPoint = new Vector3(transform.position.x + sr.bounds.size.x * 0.2f, transform.position.y, transform.position.z);
         if (Physics2D.Raycast(leftGPoint, Vector2.down, gLength, gLayer) || Physics2D.Raycast(rightGPoint, Vector2.down, gLength, gLayer))
         {
             onGround = true;
             doubleReady = true;
             canDash = true;
             isGliding = false;
+            if (rb.velocity.y <= 0) { canSetDelayedJump = true; }
         }
-        else { onGround = false; }
+        else { 
+            onGround = false;
+            if(canSetDelayedJump) { 
+                delayedJumpTimer = Time.time;
+                canSetDelayedJump = false;
+            }
+        }
     }
 
     private void CheckWalled()
@@ -414,8 +424,10 @@ public class PlayerController : MonoBehaviour
 
     private void Jump()
     {
-        if (onGround && !isDashing && !isStunned) //jump
+        if ((onGround || delayedJumpTimer + delayedJumpTime > Time.time) && !isDashing && !isStunned) //jump
         {
+            canSetDelayedJump = false;
+            rb.velocity = new Vector2(xMove * walkSpeed, 0);
             rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
             jumpTimer = 0;
             dust.Play();
