@@ -18,6 +18,7 @@ public class Chest : MonoBehaviour
     public float openIncrement = 20f;
     public float closeIncrement = 1f;
     private bool isOpened;
+    private bool isCloseBy;
 
     [Header("Coins")]
     public float timeBetweenCoins = 0.2f;
@@ -71,7 +72,7 @@ public class Chest : MonoBehaviour
 
     private void IncreaseMeter()
     {
-        if (meter.value < 100 && !isOpened)
+        if (meter.value < 100 && !isOpened && isCloseBy)
         {
             anim.Play(Constants.CHEST_WIGGLE);
             meter.value += openIncrement;
@@ -122,6 +123,7 @@ public class Chest : MonoBehaviour
     {
         if (collision.CompareTag("Player") && !isOpened)
         {
+            isCloseBy = true;
             warning.SetActive(true);
             openMeter.SetActive(true);
         }
@@ -131,6 +133,7 @@ public class Chest : MonoBehaviour
     {
         if (collision.CompareTag("Player") && !isOpened)
         {
+            isCloseBy = false;
             warning.SetActive(false);
             openMeter.SetActive(false);
             meter.value = 0;
