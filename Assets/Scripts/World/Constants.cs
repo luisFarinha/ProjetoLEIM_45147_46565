@@ -42,11 +42,15 @@ public class Constants : MonoBehaviour
     public const string WALL_SLIDING_DIRT = "WallSlidingDirt";
     public const string DOUBLE_JUMP_SHINE = "DoubleJumpShine";
     public const string SLASH01 = "Slash01";
+    public const string SLASH01SHINE = "Slash01Shine";
+    public const string SLASH01SHINEUP = "Slash01ShineUp";
+    public const string SLASH01SHINEDOWN = "Slash01ShineDown";
     public const string SLASHUP = "SlashUp";
     public const string SLASHDOWN = "SlashDown";
     public const string SLASH02 = "Slash02";
     public const string SLASH02SHINE = "Slash02Shine";
     public const string SLASH03 = "Slash03";
+    public const string SLASH03SHINE = "Slash03Shine";
 
 
     //UI---------------------------------------------------------------
