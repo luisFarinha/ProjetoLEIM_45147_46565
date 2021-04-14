@@ -14854,7 +14854,7 @@ RectTransform:
   m_GameObject: {fileID: 466539343}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.15, y: 1.15, z: 1.15}
   m_Children: []
   m_Father: {fileID: 679542408}
   m_RootOrder: 1
@@ -25068,7 +25068,7 @@ ParticleSystem:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  moveWithTransform: 0
+  moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
   randomSeed: 0
@@ -49478,7 +49478,7 @@ ParticleSystem:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  moveWithTransform: 0
+  moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
   randomSeed: 0
@@ -59086,7 +59086,7 @@ ParticleSystem:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  moveWithTransform: 0
+  moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
   randomSeed: 0
@@ -73711,7 +73711,7 @@ ParticleSystem:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  moveWithTransform: 0
+  moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
   randomSeed: 0
@@ -92986,7 +92986,7 @@ ParticleSystem:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  moveWithTransform: 0
+  moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
   randomSeed: 0
@@ -98017,7 +98017,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4891150491148459941}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.049999237, y: 0.03399992, z: -7}
+  m_LocalPosition: {x: -0.05000019, y: 0.034000397, z: -7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4891150492176851276}
@@ -98266,6 +98266,8 @@ MonoBehaviour:
   followSlider: {fileID: 243988540}
   walkSpeed: 5
   jumpForce: 13
+  delayedJumpTime: 0.1
+  canSetDelayedJump: 0
   glideFallingSpeed: -2.5
   isGliding: 0
   dashForce: 13
@@ -98281,13 +98283,13 @@ MonoBehaviour:
   onGround: 0
   onLeftWall: 0
   onRightWall: 0
-  attackAnimTime: 0.23
+  attackAnimTime: 0.25
   isAttacking: 0
   attackPos: {fileID: 4891150492289438494}
   attackUpPos: {fileID: 4891150492847601246}
   attackDownPos: {fileID: 4891150490996447322}
   attackRange: 0.75
-  attackCooldown: 0.3
+  attackCooldown: 0.35
   meleeAttackDmg: 25
   knockbackForce: 8
   isKnocked: 0

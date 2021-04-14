@@ -30,7 +30,7 @@ public class ChangeScene : MonoBehaviour
     private IEnumerator SceneTransition()
     {
         uim.SceneTransitionFadeIn();
-        yield return new WaitForSecondsRealtime(uim.anim.speed + 0.01f); //(+0.01) para que a personagem se consiga teleportar com a OnLoadScene do PlayerController
+        yield return new WaitForSecondsRealtime(uim.anim.speed + 0.1f); //(+0.1) para que a personagem se consiga teleportar com a OnLoadScene do PlayerController
         SceneManager.LoadScene(sceneName);
         uim.SceneTransitionFadeOut();
     }

@@ -264,8 +264,8 @@ public class PlayerController : MonoBehaviour
 
     private void CheckGrounded()
     {
-        leftGPoint = new Vector3(transform.position.x - sr.bounds.size.x * 0.2f, transform.position.y, transform.position.z);
-        rightGPoint = new Vector3(transform.position.x + sr.bounds.size.x * 0.2f, transform.position.y, transform.position.z);
+        leftGPoint = new Vector3(transform.position.x - sr.bounds.size.x * 0.25f, transform.position.y, transform.position.z);
+        rightGPoint = new Vector3(transform.position.x + sr.bounds.size.x * 0.25f, transform.position.y, transform.position.z);
         if (Physics2D.Raycast(leftGPoint, Vector2.down, gLength, gLayer) || Physics2D.Raycast(rightGPoint, Vector2.down, gLength, gLayer))
         {
             onGround = true;

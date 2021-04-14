@@ -6582,30 +6582,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 397028474, guid: 2c40168298356bb489a731018a85c760, type: 3}
-      propertyPath: moveWithTransform
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 398246924, guid: 2c40168298356bb489a731018a85c760, type: 3}
-      propertyPath: moveWithTransform
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 466539343, guid: 2c40168298356bb489a731018a85c760, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 466539346, guid: 2c40168298356bb489a731018a85c760, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1.15
-      objectReference: {fileID: 0}
-    - target: {fileID: 466539346, guid: 2c40168298356bb489a731018a85c760, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1.15
-      objectReference: {fileID: 0}
-    - target: {fileID: 466539346, guid: 2c40168298356bb489a731018a85c760, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1.15
-      objectReference: {fileID: 0}
     - target: {fileID: 493765261, guid: 2c40168298356bb489a731018a85c760, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -6687,36 +6663,6 @@ PrefabInstance:
       propertyPath: m_BoundingShape2D
       value: 
       objectReference: {fileID: 955274780}
-    - target: {fileID: 4891150491148459943, guid: 2c40168298356bb489a731018a85c760,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.05000019
-      objectReference: {fileID: 0}
-    - target: {fileID: 4891150491148459943, guid: 2c40168298356bb489a731018a85c760,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.034000397
-      objectReference: {fileID: 0}
-    - target: {fileID: 4891150491923075411, guid: 2c40168298356bb489a731018a85c760,
-        type: 3}
-      propertyPath: attackAnimTime
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 4891150491923075411, guid: 2c40168298356bb489a731018a85c760,
-        type: 3}
-      propertyPath: attackCooldown
-      value: 0.35
-      objectReference: {fileID: 0}
-    - target: {fileID: 4891150491923075411, guid: 2c40168298356bb489a731018a85c760,
-        type: 3}
-      propertyPath: delayedJumpTime
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4891150491923075411, guid: 2c40168298356bb489a731018a85c760,
-        type: 3}
-      propertyPath: delayedAttackTime
-      value: 0.3
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2c40168298356bb489a731018a85c760, type: 3}
 --- !u!1001 &8817015450627663554
