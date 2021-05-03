@@ -102,6 +102,10 @@ public class PlayerController : MonoBehaviour
     public int currentHealth;
     public int dmgTaken = 20;
 
+    [Header("Money")]
+    public int currentMoney;
+    private Text moneyText;
+
     [Header("Particle Effects")]
     private ParticleSystem dust;
     private ParticleSystem landingDirt;
@@ -135,6 +139,7 @@ public class PlayerController : MonoBehaviour
         anim = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
         cineShake = GameObject.FindWithTag("Cinemachine").GetComponent<CinemachineShake>();
+        moneyText = GameObject.Find(Constants.MONEY_TEXT).GetComponent<Text>();
 
         dust = GameObject.Find(Constants.DUST).GetComponent<ParticleSystem>();
         landingDirt = GameObject.Find(Constants.LANDING_DIRT).GetComponent<ParticleSystem>();
@@ -710,6 +715,12 @@ public class PlayerController : MonoBehaviour
         slider.value = currentHealth;
     }
 
+    public void AddMoney(int money)
+    {
+        currentMoney += money;
+        moneyText.text = currentMoney.ToString();
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Entrance"))
@@ -747,6 +758,30 @@ public class PlayerController : MonoBehaviour
         currentState = newState;
     }
 
+    public void SavePlayer()
+    {
+        SaveSystem.SavePlayer(this);
+        Debug.Log("Saved");
+    }
+
+
+    public void LoadPlayer()
+    {
+        WorldData data = SaveSystem.LoadWorld();
+
+        currentMoney = data.money;
+        moneyText.text = currentMoney.ToString();
+        currentHealth = data.health;
+        slider.value = currentHealth;
+
+        Vector3 position;
+        position.x = data.position[0];
+        position.y = data.position[1];
+        position.z = data.position[2];
+        transform.position = position;
+
+        Debug.Log("Loaded");
+    }
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;

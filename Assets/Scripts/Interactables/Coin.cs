@@ -72,15 +72,15 @@ public class Coin : MonoBehaviour
             {
                 if (gameObject.CompareTag(Constants.SMALL_COIN_TEXT))
                 {
-                    moneyText.text = (int.Parse(moneyText.text) + Constants.SMALL_COIN_VALUE).ToString();
+                    collision.GetComponent<PlayerController>().AddMoney(Constants.SMALL_COIN_VALUE);
                 }
                 else if (gameObject.CompareTag(Constants.MEDIUM_COIN_TEXT))
                 {
-                    moneyText.text = (int.Parse(moneyText.text) + Constants.MEDIUM_COIN_VALUE).ToString();
+                    collision.GetComponent<PlayerController>().AddMoney(Constants.SMALL_COIN_VALUE);
                 }
                 else if (gameObject.CompareTag(Constants.LARGE_COIN_TEXT))
                 {
-                    moneyText.text = (int.Parse(moneyText.text) + Constants.LARGE_COIN_VALUE).ToString();
+                    collision.GetComponent<PlayerController>().AddMoney(Constants.SMALL_COIN_VALUE);
                 }
             }
             sr.enabled = false;
