@@ -69,10 +69,10 @@ public class DataSaver : MonoBehaviour
         switch (SceneManager.GetActiveScene().name)
         {
             case "Room_00":
-                GetEnemyData(data.enemiesAlive00, data.enemiesHealth00);
+                GetEnemyData(data.enemiesDead00, data.enemiesHealth00);
                 break;
             case "Room_01":
-                GetEnemyData(data.enemiesAlive01, data.enemiesHealth01);
+                GetEnemyData(data.enemiesDead01, data.enemiesHealth01);
                 break;
         }
 
@@ -80,14 +80,12 @@ public class DataSaver : MonoBehaviour
         Debug.Log("Loaded " + SceneManager.GetActiveScene().name);
     }
 
-    private void GetEnemyData(bool[] enemiesAlive, int[] enemiesHealth)
+    private void GetEnemyData(bool[] enemiesDead, int[] enemiesHealth)
     {
         Debug.Log(EnemiesInScene.Length);
         for (int i = 0; i < EnemiesInScene.Length; i++)
         {
-            Debug.Log("Get " + i + " " + enemiesAlive[i]);
-            Debug.Log("Get " + i + " " + enemiesHealth[i]);
-            EnemiesInScene[i].isDead = enemiesAlive[i];
+            EnemiesInScene[i].isDead = enemiesDead[i];
             EnemiesInScene[i].currentHealth = enemiesHealth[i];
         }
     }

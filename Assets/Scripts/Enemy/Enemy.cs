@@ -32,6 +32,7 @@ public class Enemy : MonoBehaviour
 
     [Header("Death")]
     public bool isDead;
+    public bool hasDied;
     public int nSmallCoins;
     public int nMediumCoins;
     public int nLargeCoins;
@@ -70,7 +71,10 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-        if (currentHealth <= 0) { Die(); }
+        if (currentHealth <= 0 && !hasDied) { 
+            Die(); 
+            hasDied = true; 
+        }
         if (!isDead)
         {
             CheckGrounded();
@@ -168,7 +172,8 @@ public class Enemy : MonoBehaviour
             SpawnCoins(smallCoin, nSmallCoins);
             SpawnCoins(mediumCoin, nMediumCoins);
             SpawnCoins(largeCoin, nLargeCoins);
-        }else if(isDead && !anim.name.Equals(Constants.ENEMY_DEATH)) { 
+            anim.Play(Constants.ENEMY_DEATH);
+        }else if(isDead && !anim.name.Equals(Constants.ENEMY_DEATH)) {
             anim.Play(Constants.ENEMY_DEATH); 
         }
         isDead = true;

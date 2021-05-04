@@ -25,25 +25,25 @@ using UnityEngine;
 public class WorldData
 {
     //SCENE00
-    public bool[] enemiesAlive00 = { true };
-    public int[] enemiesHealth00 = new int[1];
+    public bool[] enemiesDead00 = new bool[1];
+    public int[] enemiesHealth00 = { 100 };
     //SCENE01
-    public bool[] enemiesAlive01 = new bool[3];
-    public int[] enemiesHealth01 = new int[3];
+    public bool[] enemiesDead01 = new bool[3];
+    public int[] enemiesHealth01 = { 100, 100, 100 };
     //SCENE02
-    public bool[] enemiesAlive02 = new bool[2];
+    public bool[] enemiesDead02 = new bool[2];
     public int[] enemiesHealth02 = new int[2];
     //SCENE03
-    public bool[] enemiesAlive03 = new bool[2];
+    public bool[] enemiesDead03 = new bool[2];
     public int[] enemiesHealth03 = new int[2];
     //SCENE04
-    public bool[] enemiesAlive04 = new bool[2];
+    public bool[] enemiesDead04 = new bool[2];
     public int[] enemiesHealth04 = new int[2];
     //SCENE05
-    public bool[] enemiesAlive05 = new bool[2];
+    public bool[] enemiesDead05 = new bool[2];
     public int[] enemiesHealth05 = new int[2];
     //SCENE06
-    public bool[] enemiesAlive06 = new bool[2];
+    public bool[] enemiesDead06 = new bool[2];
     public int[] enemiesHealth06 = new int[2];
 
     public int money;
@@ -53,19 +53,19 @@ public class WorldData
         switch (scene)
         {
             case "Room_00":
-                UpdateEnemyData(enemies, enemiesAlive00, enemiesHealth00);
+                UpdateEnemyData(enemies, enemiesDead00, enemiesHealth00);
                 break;
             case "Room_01":
-                UpdateEnemyData(enemies, enemiesAlive01, enemiesHealth01);
+                UpdateEnemyData(enemies, enemiesDead01, enemiesHealth01);
                 break;
             case "Room_02":
-                UpdateEnemyData(enemies, enemiesAlive02, enemiesHealth02);
+                UpdateEnemyData(enemies, enemiesDead02, enemiesHealth02);
                 break;
             case "Room_03":
-                UpdateEnemyData(enemies, enemiesAlive03, enemiesHealth03);
+                UpdateEnemyData(enemies, enemiesDead03, enemiesHealth03);
                 break;
             case "Room_04":
-                UpdateEnemyData(enemies, enemiesAlive04, enemiesHealth04);
+                UpdateEnemyData(enemies, enemiesDead04, enemiesHealth04);
                 break;
         }
 
@@ -76,8 +76,6 @@ public class WorldData
     {
         for (int i = 0; i < enemies.Length; i++)
         {
-            Debug.Log("Update " + i + " " + enemies[i].isDead);
-            Debug.Log("Update " + i + " " + enemies[i].currentHealth);
             enemiesAlive[i] = enemies[i].isDead;
             enemiesHealth[i] = enemies[i].currentHealth;
         }
