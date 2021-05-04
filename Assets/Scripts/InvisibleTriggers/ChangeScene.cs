@@ -27,12 +27,12 @@ public class ChangeScene : MonoBehaviour
         {
             pc.startPos = startPos;
             StartCoroutine(SceneTransition());
-            dataSaver.SaveScene();
         }
     }
 
     private IEnumerator SceneTransition()
     {
+        dataSaver.SaveScene();
         uim.SceneTransitionFadeIn();
         yield return new WaitForSecondsRealtime(uim.anim.speed + 0.1f); //(+0.1) para que a personagem se consiga teleportar com a OnLoadScene do PlayerController
         SceneManager.LoadScene(sceneName);

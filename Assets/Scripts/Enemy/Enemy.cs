@@ -32,7 +32,6 @@ public class Enemy : MonoBehaviour
 
     [Header("Death")]
     public bool isDead;
-    public bool needsRevive;
     public int nSmallCoins;
     public int nMediumCoins;
     public int nLargeCoins;
@@ -71,9 +70,9 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
+        if (currentHealth <= 0) { Die(); }
         if (!isDead)
         {
-            checkRevive();
             CheckGrounded();
             CheckWall();
             CheckDirection();
@@ -155,14 +154,8 @@ public class Enemy : MonoBehaviour
             isStunned = true;
             StartCoroutine(ActionComplete("isStunned", stunDuration));
         }
-
-        if (currentHealth <= 0 && !isDead)
+        if (!isDead)
         {
-            Die();
-        }
-        else if(!isDead)
-        {
-            //anim.Play("beetle_takedmg");
             anim.Play(Constants.ENEMY_GET_HIT);
         }
     }
@@ -171,18 +164,17 @@ public class Enemy : MonoBehaviour
     {
         slider.gameObject.SetActive(false);
         //Destroy(gameObject);
-        //anim.Play("beetle_die"); 
-        anim.Play(Constants.ENEMY_DEATH);
+        if (!isDead){
+            SpawnCoins(smallCoin, nSmallCoins);
+            SpawnCoins(mediumCoin, nMediumCoins);
+            SpawnCoins(largeCoin, nLargeCoins);
+        }else if(isDead && !anim.name.Equals(Constants.ENEMY_DEATH)) { 
+            anim.Play(Constants.ENEMY_DEATH); 
+        }
         isDead = true;
         Physics2D.IgnoreCollision(col, playerCol);
         rb.drag = 5;
         rb.gravityScale = 3;
-
-        SpawnCoins(smallCoin, nSmallCoins);
-        SpawnCoins(mediumCoin, nMediumCoins);
-        SpawnCoins(largeCoin, nLargeCoins);
-
-        needsRevive = true;
     }
 
     private void SpawnCoins(GameObject coin, int nCoins)
@@ -207,18 +199,6 @@ public class Enemy : MonoBehaviour
         slider.value = maxhealth;
         followSlider.maxValue = maxhealth;
         followSlider.value = maxhealth;
-    }
-    private void checkRevive()
-    {
-        if (needsRevive)
-        {
-            slider.value = currentHealth;
-            followSlider.value = currentHealth;
-            Physics2D.IgnoreCollision(col, playerCol, false);
-            rb.drag = 0;
-            rb.gravityScale = 2;
-            needsRevive = false;
-        }
     }
 
     private IEnumerator ActionComplete(string action, float time)

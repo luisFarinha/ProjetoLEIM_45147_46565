@@ -25,7 +25,7 @@ using UnityEngine;
 public class WorldData
 {
     //SCENE00
-    public bool[] enemiesAlive00 = new bool[1];
+    public bool[] enemiesAlive00 = { true };
     public int[] enemiesHealth00 = new int[1];
     //SCENE01
     public bool[] enemiesAlive01 = new bool[3];
@@ -49,7 +49,7 @@ public class WorldData
     public int money;
     public int health;
     public float[] position;
-    public WorldData(PlayerController player, Enemy[] enemies, string scene) {
+    public void InsertData(PlayerController player, Enemy[] enemies, string scene) {
         switch (scene)
         {
             case "Room_00":
@@ -76,6 +76,8 @@ public class WorldData
     {
         for (int i = 0; i < enemies.Length; i++)
         {
+            Debug.Log("Update " + i + " " + enemies[i].isDead);
+            Debug.Log("Update " + i + " " + enemies[i].currentHealth);
             enemiesAlive[i] = enemies[i].isDead;
             enemiesHealth[i] = enemies[i].currentHealth;
         }

@@ -3656,10 +3656,6 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1709969454, guid: 2c40168298356bb489a731018a85c760, type: 3}
-      propertyPath: m_TagString
-      value: DataSaver
-      objectReference: {fileID: 0}
     - target: {fileID: 4891150490962565785, guid: 2c40168298356bb489a731018a85c760,
         type: 3}
       propertyPath: m_RootOrder
@@ -3725,16 +3721,6 @@ PrefabInstance:
       propertyPath: m_BoundingShape2D
       value: 
       objectReference: {fileID: 728366816}
-    - target: {fileID: 4891150491148459943, guid: 2c40168298356bb489a731018a85c760,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.049999237
-      objectReference: {fileID: 0}
-    - target: {fileID: 4891150491148459943, guid: 2c40168298356bb489a731018a85c760,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.03399992
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2c40168298356bb489a731018a85c760, type: 3}
 --- !u!114 &1619531412 stripped

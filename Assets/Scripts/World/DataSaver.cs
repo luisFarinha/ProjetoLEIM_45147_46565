@@ -26,6 +26,7 @@ public class DataSaver : MonoBehaviour
     {
         if (!firstTime)
         {
+            EnemiesInScene = GameObject.FindWithTag("Enemies").GetComponentsInChildren<Enemy>();
             LoadScene();
         }
         firstTime = false;
@@ -45,7 +46,7 @@ public class DataSaver : MonoBehaviour
     public void SaveScene()
     {
         SaveSystem.SaveData(player, EnemiesInScene, SceneManager.GetActiveScene().name);
-        Debug.Log("Saved");
+        Debug.Log("Saved " + SceneManager.GetActiveScene().name);
     }
 
 
@@ -76,15 +77,16 @@ public class DataSaver : MonoBehaviour
         }
 
 
-        Debug.Log("Loaded");
+        Debug.Log("Loaded " + SceneManager.GetActiveScene().name);
     }
 
     private void GetEnemyData(bool[] enemiesAlive, int[] enemiesHealth)
     {
-        Debug.Log(enemiesAlive.Length);
-
+        Debug.Log(EnemiesInScene.Length);
         for (int i = 0; i < EnemiesInScene.Length; i++)
         {
+            Debug.Log("Get " + i + " " + enemiesAlive[i]);
+            Debug.Log("Get " + i + " " + enemiesHealth[i]);
             EnemiesInScene[i].isDead = enemiesAlive[i];
             EnemiesInScene[i].currentHealth = enemiesHealth[i];
         }
