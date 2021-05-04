@@ -4,6 +4,23 @@ using UnityEditor.SearchService;
 using UnityEngine;
 
 
+/*
+*Options (as soon as modified)
+**** ON CHECKPOINT ****
+*Player (health, money, position, unlockables)
+*Enemy (restart health, position)
+*Inventory (collectibles, unlockables, ...)
+*Treasure Chests (state)
+*NPC Missions
+*
+**** ON CHANGE SCENE ****
+*Enemy (state, health)
+*Treasure Chests (state)
+*Collectibles
+*
+*
+*/
+
 [System.Serializable]
 public class WorldData
 {

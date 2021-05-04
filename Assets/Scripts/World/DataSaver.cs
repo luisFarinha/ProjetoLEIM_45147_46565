@@ -7,6 +7,9 @@ public class DataSaver : MonoBehaviour
 {
     private Enemy[] EnemiesInScene;
     private PlayerController player;
+    private bool firstTime = true;
+ 
+
     void Start()
     {
         EnemiesInScene = GameObject.FindWithTag("Enemies").GetComponentsInChildren<Enemy>();
@@ -19,18 +22,37 @@ public class DataSaver : MonoBehaviour
         
     }
 
-    public void SavePlayer()
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        SaveSystem.SavePlayer(player, EnemiesInScene, SceneManager.GetActiveScene().name);
+        if (!firstTime)
+        {
+            LoadScene();
+        }
+        firstTime = false;
+        
+    }
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    public void SaveScene()
+    {
+        SaveSystem.SaveData(player, EnemiesInScene, SceneManager.GetActiveScene().name);
         Debug.Log("Saved");
     }
 
 
-    public void LoadPlayer()
+    public void LoadScene()
     {
         WorldData data = SaveSystem.LoadWorld();
-        Debug.Log(player.currentMoney);
-
+        
         player.currentMoney = data.money;
         player.moneyText.text = player.currentMoney.ToString();
         player.currentHealth = data.health;

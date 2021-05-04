@@ -12,10 +12,13 @@ public class ChangeScene : MonoBehaviour
     private UIManager uim;
 
     private PlayerController pc;
+
+    private DataSaver dataSaver;
     public void Start()
     {
         pc = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
         uim = GameObject.FindWithTag("UI").GetComponent<UIManager>();
+        dataSaver = GameObject.FindWithTag("DataSaver").GetComponent<DataSaver>();
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
@@ -24,6 +27,7 @@ public class ChangeScene : MonoBehaviour
         {
             pc.startPos = startPos;
             StartCoroutine(SceneTransition());
+            dataSaver.SaveScene();
         }
     }
 

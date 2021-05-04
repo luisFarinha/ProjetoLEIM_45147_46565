@@ -17,6 +17,7 @@ TagManager:
   - Cinemachine
   - Entrance
   - Enemies
+  - DataSaver
   layers:
   - Default
   - TransparentFX

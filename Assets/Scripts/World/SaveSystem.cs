@@ -8,7 +8,7 @@ public static class SaveSystem
 {
 
     private static string path = Application.persistentDataPath + "/player.state"; //To enable saving on different operating systems (Mac, Windows, ...)
-    public static void SavePlayer(PlayerController player, Enemy[] enemies, string scene)
+    public static void SaveData(PlayerController player, Enemy[] enemies, string scene)
     {
         BinaryFormatter formatter = new BinaryFormatter();
         FileStream stream = new FileStream(path, FileMode.Create); //Enables to read and write from a file
