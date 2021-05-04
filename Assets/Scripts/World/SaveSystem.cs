@@ -8,11 +8,11 @@ public static class SaveSystem
 {
 
     private static string path = Application.persistentDataPath + "/player.state"; //To enable saving on different operating systems (Mac, Windows, ...)
-    public static void SavePlayer(PlayerController player)
+    public static void SavePlayer(PlayerController player, Enemy[] enemies, string scene)
     {
         BinaryFormatter formatter = new BinaryFormatter();
         FileStream stream = new FileStream(path, FileMode.Create); //Enables to read and write from a file
-        WorldData data = new WorldData(player);
+        WorldData data = new WorldData(player, enemies, scene);
         formatter.Serialize(stream, data);
         stream.Close();
     }

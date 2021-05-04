@@ -16,6 +16,7 @@ TagManager:
   - StartPos_1
   - Cinemachine
   - Entrance
+  - Enemies
   layers:
   - Default
   - TransparentFX

@@ -288,8 +288,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 621339528}
-        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+      - m_Target: {fileID: 1619531412}
+        m_TargetAssemblyTypeName: DataSaver, Assembly-CSharp
         m_MethodName: SavePlayer
         m_Mode: 1
         m_Arguments:
@@ -565,18 +565,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 604605171}
   m_CullTransparentMesh: 1
---- !u!114 &621339528 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4891150491923075411, guid: 2c40168298356bb489a731018a85c760,
-    type: 3}
-  m_PrefabInstance: {fileID: 1619531411}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f31e73376a8f3f41a4a71d6a6ca1cf6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &690056537
 GameObject:
   m_ObjectHideFlags: 0
@@ -3474,8 +3462,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 621339528}
-        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+      - m_Target: {fileID: 1619531412}
+        m_TargetAssemblyTypeName: DataSaver, Assembly-CSharp
         m_MethodName: LoadPlayer
         m_Mode: 1
         m_Arguments:
@@ -3739,6 +3727,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2c40168298356bb489a731018a85c760, type: 3}
+--- !u!114 &1619531412 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1709969456, guid: 2c40168298356bb489a731018a85c760,
+    type: 3}
+  m_PrefabInstance: {fileID: 1619531411}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f2e5d5f8d924904bb5fd3b8a23a8675, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1774358093
 GameObject:
   m_ObjectHideFlags: 0

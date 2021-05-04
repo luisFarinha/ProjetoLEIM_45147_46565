@@ -32,6 +32,7 @@ public class Enemy : MonoBehaviour
 
     [Header("Death")]
     public bool isDead;
+    public bool needsRevive;
     public int nSmallCoins;
     public int nMediumCoins;
     public int nLargeCoins;
@@ -72,6 +73,7 @@ public class Enemy : MonoBehaviour
     {
         if (!isDead)
         {
+            checkRevive();
             CheckGrounded();
             CheckWall();
             CheckDirection();
@@ -110,6 +112,10 @@ public class Enemy : MonoBehaviour
     {
         if (!isStunned)
         {
+            if (!anim.name.Equals(Constants.ENEMY_WALK))
+            {
+                anim.Play(Constants.ENEMY_WALK);
+            }
             if (facingRight)
             {
                 rb.velocity = new Vector2(moveSpeed, rb.velocity.y);
@@ -157,7 +163,7 @@ public class Enemy : MonoBehaviour
         else if(!isDead)
         {
             //anim.Play("beetle_takedmg");
-            anim.Play("Hit");
+            anim.Play(Constants.ENEMY_GET_HIT);
         }
     }
 
@@ -166,7 +172,7 @@ public class Enemy : MonoBehaviour
         slider.gameObject.SetActive(false);
         //Destroy(gameObject);
         //anim.Play("beetle_die"); 
-        anim.Play("Death");
+        anim.Play(Constants.ENEMY_DEATH);
         isDead = true;
         Physics2D.IgnoreCollision(col, playerCol);
         rb.drag = 5;
@@ -175,6 +181,8 @@ public class Enemy : MonoBehaviour
         SpawnCoins(smallCoin, nSmallCoins);
         SpawnCoins(mediumCoin, nMediumCoins);
         SpawnCoins(largeCoin, nLargeCoins);
+
+        needsRevive = true;
     }
 
     private void SpawnCoins(GameObject coin, int nCoins)
@@ -199,6 +207,18 @@ public class Enemy : MonoBehaviour
         slider.value = maxhealth;
         followSlider.maxValue = maxhealth;
         followSlider.value = maxhealth;
+    }
+    private void checkRevive()
+    {
+        if (needsRevive)
+        {
+            slider.value = currentHealth;
+            followSlider.value = currentHealth;
+            Physics2D.IgnoreCollision(col, playerCol, false);
+            rb.drag = 0;
+            rb.gravityScale = 2;
+            needsRevive = false;
+        }
     }
 
     private IEnumerator ActionComplete(string action, float time)

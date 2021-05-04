@@ -51,6 +51,13 @@ public class Constants : MonoBehaviour
     public const string SLASH03 = "Slash03";
     public const string SLASH03SHINE = "Slash03Shine";
 
+    //ENEMY------------------------------------------------------------
+
+    //Enemy Animations
+    public const string ENEMY_WALK = "Walk";
+    public const string ENEMY_GET_HIT= "Hit";
+    public const string ENEMY_DEATH = "Death";
+
 
     //UI---------------------------------------------------------------
 

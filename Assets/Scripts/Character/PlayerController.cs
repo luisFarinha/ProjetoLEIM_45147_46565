@@ -104,7 +104,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Money")]
     public int currentMoney;
-    private Text moneyText;
+    public Text moneyText;
 
     [Header("Particle Effects")]
     private ParticleSystem dust;
@@ -756,31 +756,6 @@ public class PlayerController : MonoBehaviour
         if (currentState == newState) return;
         anim.Play(newState);
         currentState = newState;
-    }
-
-    public void SavePlayer()
-    {
-        SaveSystem.SavePlayer(this);
-        Debug.Log("Saved");
-    }
-
-
-    public void LoadPlayer()
-    {
-        WorldData data = SaveSystem.LoadWorld();
-
-        currentMoney = data.money;
-        moneyText.text = currentMoney.ToString();
-        currentHealth = data.health;
-        slider.value = currentHealth;
-
-        Vector3 position;
-        position.x = data.position[0];
-        position.y = data.position[1];
-        position.z = data.position[2];
-        transform.position = position;
-
-        Debug.Log("Loaded");
     }
     private void OnDrawGizmos()
     {
