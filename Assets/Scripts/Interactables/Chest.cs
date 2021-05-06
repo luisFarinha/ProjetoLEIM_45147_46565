@@ -17,8 +17,9 @@ public class Chest : MonoBehaviour
     [Header("Opening Action")]
     public float openIncrement = 20f;
     public float closeIncrement = 1f;
-    private bool isOpened;
+    public bool isOpened;
     private bool isCloseBy;
+    private bool hasOpened;
 
     [Header("Coins")]
     public float timeBetweenCoins = 0.2f;
@@ -99,6 +100,14 @@ public class Chest : MonoBehaviour
             StartCoroutine(SpawnCoins(mediumCoin, nMediumCoins));
             StartCoroutine(SpawnCoins(largeCoin, nLargeCoins));
 
+            sr.sprite = Resources.Load<Sprite>("chestOpened");
+            anim.Play(Constants.CHEST_OPENED_IDLE);
+        }
+        else if(isOpened && !hasOpened)
+        {
+            hasOpened = true;
+            warning.SetActive(false);
+            openMeter.SetActive(false);
             sr.sprite = Resources.Load<Sprite>("chestOpened");
             anim.Play(Constants.CHEST_OPENED_IDLE);
         }

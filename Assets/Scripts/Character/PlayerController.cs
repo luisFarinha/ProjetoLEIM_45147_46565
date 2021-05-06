@@ -9,12 +9,11 @@ public class PlayerController : MonoBehaviour
     [Header("Components")]
     public LayerMask eLayer;
     public LayerMask gLayer;
-    public Slider slider;
-    public Slider followSlider;
     private Rigidbody2D rb;
     private Animator anim;
     private SpriteRenderer sr;
     private CinemachineShake cineShake;
+    private UIManager uiManager;
 
     private InputMaster im;
     private bool imIsEnabled = true;
@@ -104,7 +103,6 @@ public class PlayerController : MonoBehaviour
 
     [Header("Money")]
     public int currentMoney;
-    public Text moneyText;
 
     [Header("Particle Effects")]
     private ParticleSystem dust;
@@ -139,7 +137,7 @@ public class PlayerController : MonoBehaviour
         anim = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
         cineShake = GameObject.FindWithTag("Cinemachine").GetComponent<CinemachineShake>();
-        moneyText = GameObject.Find(Constants.MONEY_TEXT).GetComponent<Text>();
+        uiManager = GameObject.FindWithTag("UI").GetComponent<UIManager>();
 
         dust = GameObject.Find(Constants.DUST).GetComponent<ParticleSystem>();
         landingDirt = GameObject.Find(Constants.LANDING_DIRT).GetComponent<ParticleSystem>();
@@ -688,7 +686,7 @@ public class PlayerController : MonoBehaviour
             isStunned = true;
             rb.velocity = new Vector2(0, 0);
             rb.AddForce(new Vector2(dmgHere.x * stunForce, dmgHere.y * stunForce * 1.5f), ForceMode2D.Impulse);
-            SetHealth(dmgTaken);
+            SetHealth(currentHealth - dmgTaken);
             StartCoroutine(ActionComplete(Constants.ActionType.STUNNED, stunTime));
 
             stunTimer = Time.time + stunCooldown;
@@ -709,16 +707,18 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void SetHealth(int damage)
+    public void SetHealth(int newHealth)
     {
-        currentHealth -= damage;
-        slider.value = currentHealth;
+        currentHealth = newHealth;
+        //-----
+        uiManager.slider.value = currentHealth;
     }
 
-    public void AddMoney(int money)
+    public void SetMoney(int newMoney)
     {
-        currentMoney += money;
-        moneyText.text = currentMoney.ToString();
+        currentMoney = newMoney;
+        //-----
+        uiManager.moneyText.text = currentMoney.ToString();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

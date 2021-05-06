@@ -18,6 +18,8 @@ TagManager:
   - Entrance
   - Enemies
   - DataSaver
+  - Chests
+  - UnlockableOrbs
   layers:
   - Default
   - TransparentFX

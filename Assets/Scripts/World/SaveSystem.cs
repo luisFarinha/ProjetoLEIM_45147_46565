@@ -7,16 +7,16 @@ using UnityEditor.Experimental.RestService;
 public static class SaveSystem
 {
 
-    private static string path = Application.persistentDataPath + "/player.state"; //To enable saving on different operating systems (Mac, Windows, ...)
+    private static string path = Application.persistentDataPath + "/world.state"; //To enable saving on different operating systems (Mac, Windows, ...)
     private static WorldData worldData = new WorldData();
 
-    public static void SaveData(PlayerController player, Enemy[] enemies, string scene)
+    public static void SaveData(PlayerController player, Enemy[] enemies, Chest[] chests, UnlockableOrb[] unlockOrbs, string scene)
     {
         BinaryFormatter formatter = new BinaryFormatter();
-        FileStream stream = new FileStream(path, FileMode.Create); //Enables to read and write from a file
-        worldData.InsertData(player, enemies, scene);
-        formatter.Serialize(stream, worldData);
-        stream.Close();
+        FileStream file = new FileStream(path, FileMode.Create); //Enables to read and write from a file
+        worldData.InsertData(player, enemies, chests, unlockOrbs, scene);
+        formatter.Serialize(file, worldData);
+        file.Close();
     }
 
     public static WorldData LoadWorld()
@@ -24,10 +24,10 @@ public static class SaveSystem
         if (File.Exists(path))
         {
             BinaryFormatter formatter = new BinaryFormatter();
-            FileStream stream = new FileStream(path, FileMode.Open);
+            FileStream file = new FileStream(path, FileMode.Open);
 
-            WorldData data = formatter.Deserialize(stream) as WorldData; //Read from the stream, Binary to Readable format
-            stream.Close();
+            WorldData data = formatter.Deserialize(file) as WorldData; //Read from the stream, Binary to Readable format
+            file.Close();
 
             return data;
         }

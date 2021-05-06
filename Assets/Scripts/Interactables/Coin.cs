@@ -9,7 +9,6 @@ public class Coin : MonoBehaviour
 
     [Header("Components")]
     private Transform target;
-    private Text moneyText;
     private Rigidbody2D rb;
     private ParticleSystem ps;
     private SpriteRenderer sr;
@@ -29,7 +28,6 @@ public class Coin : MonoBehaviour
     void Start()
     {
         target = GameObject.Find(Constants.PLAYER_OBJECT).GetComponent<Transform>();
-        moneyText = GameObject.Find(Constants.MONEY_TEXT).GetComponent<Text>();
         rb = GetComponent<Rigidbody2D>();
         ps = GetComponent<ParticleSystem>();
         sr = GetComponent<SpriteRenderer>();
@@ -72,15 +70,15 @@ public class Coin : MonoBehaviour
             {
                 if (gameObject.CompareTag(Constants.SMALL_COIN_TEXT))
                 {
-                    collision.GetComponent<PlayerController>().AddMoney(Constants.SMALL_COIN_VALUE);
+                    collision.GetComponent<PlayerController>().SetMoney(collision.GetComponent<PlayerController>().currentMoney + Constants.SMALL_COIN_VALUE);
                 }
                 else if (gameObject.CompareTag(Constants.MEDIUM_COIN_TEXT))
                 {
-                    collision.GetComponent<PlayerController>().AddMoney(Constants.SMALL_COIN_VALUE);
+                    collision.GetComponent<PlayerController>().SetMoney(collision.GetComponent<PlayerController>().currentMoney + Constants.SMALL_COIN_VALUE);
                 }
                 else if (gameObject.CompareTag(Constants.LARGE_COIN_TEXT))
                 {
-                    collision.GetComponent<PlayerController>().AddMoney(Constants.SMALL_COIN_VALUE);
+                    collision.GetComponent<PlayerController>().SetMoney(collision.GetComponent<PlayerController>().currentMoney + Constants.SMALL_COIN_VALUE);
                 }
             }
             sr.enabled = false;

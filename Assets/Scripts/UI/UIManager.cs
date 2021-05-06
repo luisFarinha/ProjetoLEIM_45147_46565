@@ -19,10 +19,17 @@ public class UIManager : MonoBehaviour
     public Text unlockLore;
     public Text unlockExit;
 
+    [Header("PlayerUI")]
+    public Slider slider;
+    public Slider followSlider;
+    public Text moneyText;
+
     private void Awake()
     {
         im = new InputMaster();
         anim = GetComponent<Animator>();
+
+        moneyText = GameObject.Find(Constants.MONEY_TEXT).GetComponent<Text>();
 
         im.Player.Interact.started += _ => HideUI();
     }

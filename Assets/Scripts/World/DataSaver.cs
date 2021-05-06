@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,15 +6,20 @@ using UnityEngine.SceneManagement;
 
 public class DataSaver : MonoBehaviour
 {
-    private Enemy[] EnemiesInScene;
     private PlayerController player;
+    private Enemy[] enemiesInScene;
+    private Chest[] chestsInScene;
+    private UnlockableOrb[] unlockOrbsInScene;
+
     private bool firstTime = true;
  
 
     void Start()
     {
-        EnemiesInScene = GameObject.FindWithTag("Enemies").GetComponentsInChildren<Enemy>();
         player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+        enemiesInScene = GameObject.FindWithTag("Enemies").GetComponentsInChildren<Enemy>();
+        chestsInScene = GameObject.FindWithTag("Chests").GetComponentsInChildren<Chest>();
+        unlockOrbsInScene = GameObject.FindWithTag("UnlockableOrbs").GetComponentsInChildren<UnlockableOrb>();
     }
 
     // Update is called once per frame
@@ -26,7 +32,10 @@ public class DataSaver : MonoBehaviour
     {
         if (!firstTime)
         {
-            EnemiesInScene = GameObject.FindWithTag("Enemies").GetComponentsInChildren<Enemy>();
+            try { enemiesInScene = GameObject.FindWithTag("Enemies").GetComponentsInChildren<Enemy>(); } catch (Exception) { }
+            try { chestsInScene = GameObject.FindWithTag("Chests").GetComponentsInChildren<Chest>(); } catch (Exception) { }
+            try { unlockOrbsInScene = GameObject.FindWithTag("UnlockableOrbs").GetComponentsInChildren<UnlockableOrb>(); } catch (Exception) { }
+
             LoadScene();
         }
         firstTime = false;
@@ -45,8 +54,8 @@ public class DataSaver : MonoBehaviour
 
     public void SaveScene()
     {
-        SaveSystem.SaveData(player, EnemiesInScene, SceneManager.GetActiveScene().name);
-        Debug.Log("Saved " + SceneManager.GetActiveScene().name);
+        SaveSystem.SaveData(player, enemiesInScene, chestsInScene, unlockOrbsInScene, SceneManager.GetActiveScene().name);
+        //Debug.Log("Saved " + SceneManager.GetActiveScene().name);
     }
 
 
@@ -54,11 +63,8 @@ public class DataSaver : MonoBehaviour
     {
         WorldData data = SaveSystem.LoadWorld();
         
-        player.currentMoney = data.money;
-        player.moneyText.text = player.currentMoney.ToString();
-        player.currentHealth = data.health;
-        player.slider.value = player.currentHealth;
-        player.followSlider.value = player.currentHealth;
+        player.SetMoney(data.money);
+        player.SetHealth(data.health);
 
         Vector3 position;
         position.x = data.position[0];
@@ -73,20 +79,32 @@ public class DataSaver : MonoBehaviour
                 break;
             case "Room_01":
                 GetEnemyData(data.enemiesDead01, data.enemiesHealth01);
+                GetPickUpsData(data.chestsStatus01, data.unlockOrbsDone01);
                 break;
         }
 
 
-        Debug.Log("Loaded " + SceneManager.GetActiveScene().name);
+        //Debug.Log("Loaded " + SceneManager.GetActiveScene().name);
     }
 
     private void GetEnemyData(bool[] enemiesDead, int[] enemiesHealth)
     {
-        Debug.Log(EnemiesInScene.Length);
-        for (int i = 0; i < EnemiesInScene.Length; i++)
+        for (int i = 0; i < enemiesInScene.Length; i++)
         {
-            EnemiesInScene[i].isDead = enemiesDead[i];
-            EnemiesInScene[i].currentHealth = enemiesHealth[i];
+            enemiesInScene[i].isDead = enemiesDead[i];
+            enemiesInScene[i].currentHealth = enemiesHealth[i];
+        }
+    }
+
+    private void GetPickUpsData(bool[] chestsStatus, bool[] unlockOrbsDone)
+    {
+        for(int i = 0; i < chestsInScene.Length; i++)
+        {
+            chestsInScene[i].isOpened = chestsStatus[i];
+        }
+        for (int i = 0; i < unlockOrbsDone.Length; i++)
+        {
+            try { unlockOrbsInScene[i].gameObject.SetActive(unlockOrbsDone[i]); } catch (Exception) { }
         }
     }
 }
