@@ -760,18 +760,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &445997867 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 243988540, guid: 2c40168298356bb489a731018a85c760,
-    type: 3}
-  m_PrefabInstance: {fileID: 4891150492217982669}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &446258821
 GameObject:
   m_ObjectHideFlags: 0
@@ -7259,18 +7247,6 @@ Transform:
   m_Father: {fileID: 1913540969}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -15.312}
---- !u!114 &2110462625 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1451572284, guid: 2c40168298356bb489a731018a85c760,
-    type: 3}
-  m_PrefabInstance: {fileID: 4891150492217982669}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2137998596
 GameObject:
   m_ObjectHideFlags: 0
@@ -7442,14 +7418,6 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 679542404, guid: 2c40168298356bb489a731018a85c760, type: 3}
-      propertyPath: slider
-      value: 
-      objectReference: {fileID: 2110462625}
-    - target: {fileID: 679542404, guid: 2c40168298356bb489a731018a85c760, type: 3}
-      propertyPath: followSlider
-      value: 
-      objectReference: {fileID: 445997867}
     - target: {fileID: 1057873195, guid: 2c40168298356bb489a731018a85c760, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -7523,16 +7491,6 @@ PrefabInstance:
       propertyPath: m_BoundingShape2D
       value: 
       objectReference: {fileID: 955274780}
-    - target: {fileID: 4891150491148459943, guid: 2c40168298356bb489a731018a85c760,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.05000019
-      objectReference: {fileID: 0}
-    - target: {fileID: 4891150491148459943, guid: 2c40168298356bb489a731018a85c760,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.034000397
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2c40168298356bb489a731018a85c760, type: 3}
 --- !u!1001 &8817015450627663554
