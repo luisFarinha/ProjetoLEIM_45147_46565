@@ -10,9 +10,15 @@ public class DataSaver : MonoBehaviour
     private Enemy[] enemiesInScene;
     private Chest[] chestsInScene;
     private UnlockableOrb[] unlockOrbsInScene;
+    private Vector3 checkPoint;
+
+    [Header("Animation Components")]
+    private UIManager uim;
 
     private bool firstTime = true;
- 
+    private bool deathChecked;
+
+
 
     void Start()
     {
@@ -20,12 +26,15 @@ public class DataSaver : MonoBehaviour
         enemiesInScene = GameObject.FindWithTag("Enemies").GetComponentsInChildren<Enemy>();
         chestsInScene = GameObject.FindWithTag("Chests").GetComponentsInChildren<Chest>();
         unlockOrbsInScene = GameObject.FindWithTag("UnlockableOrbs").GetComponentsInChildren<UnlockableOrb>();
+        checkPoint = GameObject.FindWithTag("StartPos_1").transform.position;
+
+        uim = GameObject.FindWithTag("UI").GetComponent<UIManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        StartCoroutine(CheckPlayerDeath());
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -35,6 +44,7 @@ public class DataSaver : MonoBehaviour
             try { enemiesInScene = GameObject.FindWithTag("Enemies").GetComponentsInChildren<Enemy>(); } catch (Exception) { }
             try { chestsInScene = GameObject.FindWithTag("Chests").GetComponentsInChildren<Chest>(); } catch (Exception) { }
             try { unlockOrbsInScene = GameObject.FindWithTag("UnlockableOrbs").GetComponentsInChildren<UnlockableOrb>(); } catch (Exception) { }
+            try { checkPoint = GameObject.FindWithTag("StartPos_1").transform.position; } catch (Exception) { }
 
             LoadScene();
         }
@@ -55,12 +65,12 @@ public class DataSaver : MonoBehaviour
     public void SaveScene()
     {
         SaveSystem.SaveData(player, enemiesInScene, chestsInScene, unlockOrbsInScene, SceneManager.GetActiveScene().name);
-        //Debug.Log("Saved " + SceneManager.GetActiveScene().name);
+        Debug.Log("Saved " + SceneManager.GetActiveScene().name);
     }
-
 
     public void LoadScene()
     {
+        SaveSystem.SaveCheckPoint(checkPoint);
         WorldData data = SaveSystem.LoadWorld();
         
         player.SetMoney(data.money);
@@ -83,8 +93,23 @@ public class DataSaver : MonoBehaviour
                 break;
         }
 
+        Debug.Log("Loaded " + SceneManager.GetActiveScene().name);
+    }
 
-        //Debug.Log("Loaded " + SceneManager.GetActiveScene().name);
+    public IEnumerator CheckPlayerDeath()
+    {
+        if (player.isDead && !deathChecked)
+        {
+            deathChecked = true;
+            Debug.Log("Player Died");
+            SaveSystem.SaveDataOnPlayerDeath();
+            uim.SceneTransitionFadeIn();
+            yield return new WaitForSecondsRealtime(uim.anim.speed + 0.1f); //(+0.1) para que a personagem se consiga teleportar com a OnLoadScene do PlayerController
+            LoadScene();
+            uim.SceneTransitionFadeOut();
+            deathChecked = false;
+        }
+
     }
 
     private void GetEnemyData(bool[] enemiesDead, int[] enemiesHealth)

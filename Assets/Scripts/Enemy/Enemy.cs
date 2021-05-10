@@ -74,6 +74,9 @@ public class Enemy : MonoBehaviour
         if (currentHealth <= 0 && !hasDied) { 
             Die(); 
             hasDied = true; 
+        }else if(currentHealth > 0)
+        {
+            hasDied = false;
         }
         if (!isDead)
         {

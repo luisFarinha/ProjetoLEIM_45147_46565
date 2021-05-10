@@ -48,8 +48,8 @@ public class WorldData
     public bool[] enemiesDead06 = new bool[2];
     public int[] enemiesHealth06 = new int[2];
 
-    public int money;
-    public int health;
+    public int money = 0;
+    public int health = 100;
     public float[] position;
     
     //[System.NonSerialized]
@@ -77,11 +77,11 @@ public class WorldData
         UpdatePlayerData(player);
     }
 
-    private void UpdateEnemyData(Enemy[] enemies, bool[] enemiesAlive, int[] enemiesHealth)
+    private void UpdateEnemyData(Enemy[] enemies, bool[] enemiesDead, int[] enemiesHealth)
     {
         for (int i = 0; i < enemies.Length; i++)
         {
-            enemiesAlive[i] = enemies[i].isDead;
+            enemiesDead[i] = enemies[i].isDead;
             enemiesHealth[i] = enemies[i].currentHealth;
         }
     }
@@ -90,11 +90,14 @@ public class WorldData
     {
         health = player.currentHealth;
         money = player.currentMoney;
+    }
 
+    public void InsertCheckpointData(Vector3 checkPoint)
+    {
         position = new float[3];
-        position[0] = player.transform.position.x;
-        position[1] = player.transform.position.y;
-        position[2] = player.transform.position.z;
+        position[0] = checkPoint.x;
+        position[1] = checkPoint.y;
+        position[2] = checkPoint.z;
     }
 
     private void UpdatePickUpsStatus(Chest[] chests, bool[] chestsStatus, UnlockableOrb[] unlockableOrbs, bool[] unlockOrbsDone)
@@ -106,6 +109,25 @@ public class WorldData
         for (int i = 0; i < unlockableOrbs.Length; i++)
         {
             unlockOrbsDone[i] = unlockableOrbs[i].isActiveAndEnabled;
+        }
+    }
+
+    public void InsertDataOnPlayerDeath()
+    {
+        money = 0;
+        health = 100;
+
+        ReviveEnemies(enemiesDead00, enemiesHealth00); //SCENE00
+        ReviveEnemies(enemiesDead01, enemiesHealth01); //SCENE01
+        ReviveEnemies(enemiesDead02, enemiesHealth02); //SCENE02
+    }
+
+    public void ReviveEnemies(bool[] enemiesDead, int[] enemiesHealth)
+    {
+        for(int i = 0; i < enemiesHealth.Length; i++)
+        {
+            enemiesDead[i] = false;
+            enemiesHealth[i] = 100;
         }
     }
 }

@@ -19,6 +19,24 @@ public static class SaveSystem
         file.Close();
     }
 
+    public static void SaveCheckPoint(Vector3 checkPoint)
+    {
+        BinaryFormatter formatter = new BinaryFormatter();
+        FileStream file = new FileStream(path, FileMode.Create); //Enables to read and write from a file
+        worldData.InsertCheckpointData(checkPoint);
+        formatter.Serialize(file, worldData);
+        file.Close();
+    }
+
+    public static void SaveDataOnPlayerDeath()
+    {
+        BinaryFormatter formatter = new BinaryFormatter();
+        FileStream file = new FileStream(path, FileMode.Create); //Enables to read and write from a file
+        worldData.InsertDataOnPlayerDeath();
+        formatter.Serialize(file, worldData);
+        file.Close();
+    }
+
     public static WorldData LoadWorld()
     {
         if (File.Exists(path))

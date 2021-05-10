@@ -100,6 +100,7 @@ public class PlayerController : MonoBehaviour
     public int maxHealth = 100;
     public int currentHealth;
     public int dmgTaken = 20;
+    public bool isDead;
 
     [Header("Money")]
     public int currentMoney;
@@ -129,6 +130,10 @@ public class PlayerController : MonoBehaviour
     public bool isSpawning = true;
     public string startPos = "StartPos";
 
+    [Header("Collisions Between Objects")]
+    private Collider2D col;
+    private Collider2D enemyCol;
+
     private string currentState = Constants.PLAYER_IDLE;
 
     private void Awake()
@@ -138,6 +143,9 @@ public class PlayerController : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
         cineShake = GameObject.FindWithTag("Cinemachine").GetComponent<CinemachineShake>();
         uiManager = GameObject.FindWithTag("UI").GetComponent<UIManager>();
+
+        col = GetComponent<Collider2D>();
+        enemyCol = GameObject.FindWithTag("Enemy").GetComponent<Collider2D>();
 
         dust = GameObject.Find(Constants.DUST).GetComponent<ParticleSystem>();
         landingDirt = GameObject.Find(Constants.LANDING_DIRT).GetComponent<ParticleSystem>();
@@ -196,6 +204,7 @@ public class PlayerController : MonoBehaviour
         CheckWalled();
 
         RestrictControls();
+        CheckDeath();
     }
 
     private void FixedUpdate()
@@ -710,6 +719,10 @@ public class PlayerController : MonoBehaviour
     public void SetHealth(int newHealth)
     {
         currentHealth = newHealth;
+        if (currentHealth > uiManager.followSlider.value)
+        {
+            uiManager.followSlider.value = newHealth;
+        }
         //-----
         uiManager.slider.value = currentHealth;
     }
@@ -719,6 +732,19 @@ public class PlayerController : MonoBehaviour
         currentMoney = newMoney;
         //-----
         uiManager.moneyText.text = currentMoney.ToString();
+    }
+
+    public void CheckDeath()
+    {
+        if(currentHealth <= 0 && !isDead)
+        {
+            isDead = true;
+            rb.velocity = Vector2.zero;
+        }
+        else if(isDead)
+        {
+            isDead = false;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
