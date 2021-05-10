@@ -92,7 +92,7 @@ public class Enemy : MonoBehaviour
         leftGPoint = new Vector2(transform.position.x - col.bounds.size.x * 0.5f, transform.position.y);
         rightGPoint = new Vector2(transform.position.x + col.bounds.size.x * 0.5f, transform.position.y);
         gRayDiretion = (facingRight) ? Physics2D.Raycast(rightGPoint, Vector2.down, gLength, gLayer) : Physics2D.Raycast(leftGPoint, Vector2.down, gLength, gLayer);
-        if (gRayDiretion)
+        if (gRayDiretion || GameObject.Find("Fly")) //alterar para um parent "FlyEnemies"
         {
             onGround = true;
         }
