@@ -11,6 +11,7 @@ public class DataSaver : MonoBehaviour
     private Chest[] chestsInScene;
     private UnlockableOrb[] unlockOrbsInScene;
     private Vector3 checkPoint;
+    private Soul soul;
 
     [Header("Animation Components")]
     private UIManager uim;
@@ -27,6 +28,7 @@ public class DataSaver : MonoBehaviour
         chestsInScene = GameObject.FindWithTag("Chests").GetComponentsInChildren<Chest>();
         unlockOrbsInScene = GameObject.FindWithTag("UnlockableOrbs").GetComponentsInChildren<UnlockableOrb>();
         checkPoint = GameObject.FindWithTag("StartPos_1").transform.position;
+        soul = GameObject.FindWithTag("Soul").GetComponent<Soul>();
 
         uim = GameObject.FindWithTag("UI").GetComponent<UIManager>();
     }
@@ -45,6 +47,7 @@ public class DataSaver : MonoBehaviour
             try { chestsInScene = GameObject.FindWithTag("Chests").GetComponentsInChildren<Chest>(); } catch (Exception) { }
             try { unlockOrbsInScene = GameObject.FindWithTag("UnlockableOrbs").GetComponentsInChildren<UnlockableOrb>(); } catch (Exception) { }
             try { checkPoint = GameObject.FindWithTag("StartPos_1").transform.position; } catch (Exception) { }
+            try { soul = GameObject.FindWithTag("Soul").GetComponent<Soul>(); } catch (Exception) { }
 
             LoadScene();
         }
@@ -86,10 +89,12 @@ public class DataSaver : MonoBehaviour
         {
             case "Room_00":
                 GetEnemyData(data.enemiesDead00, data.enemiesHealth00);
+                GetSoulData(data.soulMoney00, data.soulPosition00, data.soulCanSpawn00);
                 break;
             case "Room_01":
                 GetEnemyData(data.enemiesDead01, data.enemiesHealth01);
                 GetPickUpsData(data.chestsStatus01, data.unlockOrbsDone01);
+                GetSoulData(data.soulMoney01, data.soulPosition01, data.soulCanSpawn01);
                 break;
         }
 
@@ -102,7 +107,8 @@ public class DataSaver : MonoBehaviour
         {
             deathChecked = true;
             Debug.Log("Player Died");
-            SaveSystem.SaveDataOnPlayerDeath();
+            ResetSoulData();
+            SaveSystem.SaveDataOnPlayerDeath(player, SceneManager.GetActiveScene().name);
             uim.SceneTransitionFadeIn();
             yield return new WaitForSecondsRealtime(uim.anim.speed + 0.1f); //(+0.1) para que a personagem se consiga teleportar com a OnLoadScene do PlayerController
             LoadScene();
@@ -112,12 +118,17 @@ public class DataSaver : MonoBehaviour
 
     }
 
+    public void ResetSoulData()
+    {
+        SaveSystem.ResetSoul();
+    }
+
     private void GetEnemyData(bool[] enemiesDead, int[] enemiesHealth)
     {
         for (int i = 0; i < enemiesInScene.Length; i++)
         {
             enemiesInScene[i].isDead = enemiesDead[i];
-            enemiesInScene[i].currentHealth = enemiesHealth[i];
+            enemiesInScene[i].SetHealth(enemiesHealth[i]);
         }
     }
 
@@ -131,5 +142,12 @@ public class DataSaver : MonoBehaviour
         {
             try { unlockOrbsInScene[i].gameObject.SetActive(unlockOrbsDone[i]); } catch (Exception) { }
         }
+    }
+
+    private void GetSoulData(int soulMoney, float[] soulPosition, bool soulCanSpawn)
+    {
+        soul.money = soulMoney;
+        soul.transform.position = new Vector3(soulPosition[0], soulPosition[1], soulPosition[2]);
+        soul.canSpawn = soulCanSpawn;
     }
 }

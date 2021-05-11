@@ -64,7 +64,7 @@ public class Enemy : MonoBehaviour
         mediumCoin = (GameObject)Resources.Load(Constants.MEDIUM_COIN_TEXT);
         largeCoin = (GameObject)Resources.Load(Constants.LARGE_COIN_TEXT);
 
-        SetMaxHealth(maxHealth);
+        SetHealth(maxHealth);
         gLength = (col.bounds.size.y / 1.6f);
         wLength = (col.bounds.size.x / 1.8f);
     }
@@ -74,9 +74,11 @@ public class Enemy : MonoBehaviour
         if (currentHealth <= 0 && !hasDied) { 
             Die(); 
             hasDied = true; 
-        }else if(currentHealth > 0)
+        }else if(currentHealth > 0 && hasDied)
         {
             hasDied = false;
+            Physics2D.IgnoreCollision(col, playerCol, false);
+            slider.gameObject.SetActive(false);
         }
         if (!isDead)
         {
@@ -139,7 +141,7 @@ public class Enemy : MonoBehaviour
         {
             slider.gameObject.SetActive(true);
 
-            SetHealth(damage);
+            SetDamagedHealth(damage);
             rb.velocity = Vector2.zero;
             if (DmgDirection == "right")
             {
@@ -194,14 +196,18 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void SetHealth(int damage)
+    public void SetDamagedHealth(int damage)
     {
         currentHealth -= damage;
         slider.value = currentHealth;
     }
 
-    public void SetMaxHealth(int maxhealth)
+    public void SetHealth(int maxhealth)
     {
+        if(maxhealth == maxHealth)
+        {
+            slider.gameObject.SetActive(false);
+        }
         currentHealth = maxhealth;
         slider.maxValue = maxhealth;
         slider.value = maxhealth;

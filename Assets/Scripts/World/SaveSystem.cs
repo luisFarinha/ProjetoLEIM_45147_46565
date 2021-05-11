@@ -28,11 +28,19 @@ public static class SaveSystem
         file.Close();
     }
 
-    public static void SaveDataOnPlayerDeath()
+    public static void SaveDataOnPlayerDeath(PlayerController player, string scene)
     {
         BinaryFormatter formatter = new BinaryFormatter();
         FileStream file = new FileStream(path, FileMode.Create); //Enables to read and write from a file
-        worldData.InsertDataOnPlayerDeath();
+        worldData.InsertDataOnPlayerDeath(player, scene);
+        formatter.Serialize(file, worldData);
+        file.Close();
+    }
+
+    public static void ResetSoul() {
+        BinaryFormatter formatter = new BinaryFormatter();
+        FileStream file = new FileStream(path, FileMode.Create); //Enables to read and write from a file
+        worldData.ResetSoulData();
         formatter.Serialize(file, worldData);
         file.Close();
     }
