@@ -70,6 +70,9 @@ TagManager:
   - name: BoarHardEnemy
     uniqueID: 1130156503
     locked: 0
+  - name: NPC
+    uniqueID: 3611118675
+    locked: 0
   - name: Player
     uniqueID: 2939267003
     locked: 0

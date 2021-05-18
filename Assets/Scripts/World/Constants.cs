@@ -140,4 +140,7 @@ public class Constants : MonoBehaviour
     public const string CHEST_OPENED_IDLE = "chest_openedIdle";
 
 
+    //Inventory
+    public const string INVENTORY_SPRITE = "InventoryBG";
+
 }

@@ -24,6 +24,11 @@ public class UIManager : MonoBehaviour
     public Slider followSlider;
     public Text moneyText;
 
+    [Header("Inventory")]
+    public GameObject inventory;
+    public Image inventoryMenuImage;
+    public static bool isPaused;
+
     private void Awake()
     {
         im = new InputMaster();
@@ -32,6 +37,9 @@ public class UIManager : MonoBehaviour
         moneyText = GameObject.Find(Constants.MONEY_TEXT).GetComponent<Text>();
 
         im.Player.Interact.started += _ => HideUI();
+        im.Player.Inventory.started += _ => Inventory();
+
+        isPaused = false;
     }
 
     private void OnEnable()
@@ -110,6 +118,22 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    private void Inventory()
+    {
+        if (!isPaused)
+        {
+            inventoryMenuImage.sprite = Resources.Load<Sprite>(Constants.INVENTORY_SPRITE);
+            inventory.SetActive(true);
+            Pause();
+            isPaused = true;
+        } else
+        {
+            StartCoroutine(Resume(0f));
+            isPaused = false;
+        }
+        
+    }
+
     private void Pause()
     {
         background.SetActive(true);
@@ -121,6 +145,7 @@ public class UIManager : MonoBehaviour
         yield return new WaitForSecondsRealtime(time);
         background.SetActive(false);
         unlocks.SetActive(false);
+        inventory.SetActive(false);
         Time.timeScale = 1f;
     }
 
