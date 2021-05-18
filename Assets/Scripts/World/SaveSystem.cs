@@ -6,9 +6,8 @@ using UnityEditor.Experimental.RestService;
 
 public static class SaveSystem
 {
-
-    private static string path = Application.persistentDataPath + "/world.state"; //To enable saving on different operating systems (Mac, Windows, ...)
-    private static WorldData worldData = new WorldData();
+    public static string path = Application.persistentDataPath + "/world.state"; //To enable saving on different operating systems (Mac, Windows, ...)
+    private static WorldData worldData;
 
     public static void SaveData(PlayerController player, Enemy[] enemies, Chest[] chests, UnlockableOrb[] unlockOrbs, string scene)
     {
@@ -19,11 +18,11 @@ public static class SaveSystem
         file.Close();
     }
 
-    public static void SaveCheckPoint(Vector3 checkPoint)
+    public static void SaveCheckPoint(Vector3 checkPoint, string scene)
     {
         BinaryFormatter formatter = new BinaryFormatter();
         FileStream file = new FileStream(path, FileMode.Create); //Enables to read and write from a file
-        worldData.InsertCheckpointData(checkPoint);
+        worldData.InsertCheckpointData(checkPoint, scene);
         formatter.Serialize(file, worldData);
         file.Close();
     }
@@ -51,16 +50,51 @@ public static class SaveSystem
         {
             BinaryFormatter formatter = new BinaryFormatter();
             FileStream file = new FileStream(path, FileMode.Open);
+            if(file.Length > 0)
+            {
+                worldData = formatter.Deserialize(file) as WorldData; //Read from the stream, Binary to Readable format
+            }
+            else
+            {
+                worldData = new WorldData();
+            }
 
-            WorldData data = formatter.Deserialize(file) as WorldData; //Read from the stream, Binary to Readable format
             file.Close();
 
-            return data;
+            return worldData;
         }
         else
         {
-            Debug.LogError("Save file not found in " + path);
+            Debug.Log("Save file not found in " + path);
             return null;
         }
     }
+
+    //public static WorldData LoadWorld(string slot)
+    //{
+    //    path = Application.persistentDataPath + "/" + slot + ".state";
+
+    //    if (File.Exists(path))
+    //    {
+    //        BinaryFormatter formatter = new BinaryFormatter();
+    //        FileStream file = new FileStream(path, FileMode.Open);
+    //        if (file.Length > 0)
+    //        {
+    //            worldData = formatter.Deserialize(file) as WorldData; //Read from the stream, Binary to Readable format
+    //        }
+    //        else
+    //        {
+    //            worldData = new WorldData();
+    //        }
+
+    //        file.Close();
+
+    //        return worldData;
+    //    }
+    //    else
+    //    {
+    //        Debug.LogError("Save file not found in " + path);
+    //        return null;
+    //    }
+    //}
 }

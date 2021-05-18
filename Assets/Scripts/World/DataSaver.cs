@@ -16,21 +16,20 @@ public class DataSaver : MonoBehaviour
     [Header("Animation Components")]
     private UIManager uim;
 
-    private bool firstTime = true;
     private bool deathChecked;
 
 
 
-    void Start()
+    void Awake()
     {
         player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+        uim = GameObject.FindWithTag("UI").GetComponent<UIManager>();
+        
         enemiesInScene = GameObject.FindWithTag("Enemies").GetComponentsInChildren<Enemy>();
         chestsInScene = GameObject.FindWithTag("Chests").GetComponentsInChildren<Chest>();
         unlockOrbsInScene = GameObject.FindWithTag("UnlockableOrbs").GetComponentsInChildren<UnlockableOrb>();
         checkPoint = GameObject.FindWithTag("StartPos_1").transform.position;
         soul = GameObject.FindWithTag("Soul").GetComponent<Soul>();
-
-        uim = GameObject.FindWithTag("UI").GetComponent<UIManager>();
     }
 
     // Update is called once per frame
@@ -41,18 +40,13 @@ public class DataSaver : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (!firstTime)
-        {
-            try { enemiesInScene = GameObject.FindWithTag("Enemies").GetComponentsInChildren<Enemy>(); } catch (Exception) { }
-            try { chestsInScene = GameObject.FindWithTag("Chests").GetComponentsInChildren<Chest>(); } catch (Exception) { }
-            try { unlockOrbsInScene = GameObject.FindWithTag("UnlockableOrbs").GetComponentsInChildren<UnlockableOrb>(); } catch (Exception) { }
-            try { checkPoint = GameObject.FindWithTag("StartPos_1").transform.position; } catch (Exception) { }
-            try { soul = GameObject.FindWithTag("Soul").GetComponent<Soul>(); } catch (Exception) { }
+        try { enemiesInScene = GameObject.FindWithTag("Enemies").GetComponentsInChildren<Enemy>(); } catch (Exception) { }
+        try { chestsInScene = GameObject.FindWithTag("Chests").GetComponentsInChildren<Chest>(); } catch (Exception) { }
+        try { unlockOrbsInScene = GameObject.FindWithTag("UnlockableOrbs").GetComponentsInChildren<UnlockableOrb>(); } catch (Exception) { }
+        try { checkPoint = GameObject.FindWithTag("StartPos_1").transform.position; } catch (Exception) { }
+        try { soul = GameObject.FindWithTag("Soul").GetComponent<Soul>(); } catch (Exception) { }
 
-            LoadScene();
-        }
-        firstTime = false;
-        
+        LoadScene();
     }
 
     private void OnEnable()
@@ -73,11 +67,11 @@ public class DataSaver : MonoBehaviour
 
     public void LoadScene()
     {
-        SaveSystem.SaveCheckPoint(checkPoint);
         WorldData data = SaveSystem.LoadWorld();
-        
+        SaveSystem.SaveCheckPoint(checkPoint, SceneManager.GetActiveScene().name);
+
         player.SetMoney(data.money);
-        player.SetHealth(data.health);
+        player.SetHealthInstantly(data.health);
 
         Vector3 position;
         position.x = data.position[0];
@@ -115,7 +109,6 @@ public class DataSaver : MonoBehaviour
             uim.SceneTransitionFadeOut();
             deathChecked = false;
         }
-
     }
 
     public void ResetSoulData()

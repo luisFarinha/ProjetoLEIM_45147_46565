@@ -727,6 +727,13 @@ public class PlayerController : MonoBehaviour
         uiManager.slider.value = currentHealth;
     }
 
+    public void SetHealthInstantly(int newHealth)
+    {
+        currentHealth = newHealth;
+        uiManager.followSlider.value = newHealth;
+        uiManager.slider.value = currentHealth;
+    }
+
     public void SetMoney(int newMoney)
     {
         currentMoney = newMoney;

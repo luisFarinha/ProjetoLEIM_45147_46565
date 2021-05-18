@@ -72,9 +72,10 @@ public class WorldData
     public int money = 0;
     public int health = 100;
     public float[] position;
-    
-    //[System.NonSerialized]
-    //public Enemy jones;
+
+    public string lastSavedScene = "Room_00";
+    public string lastSavedTime;
+
     public void InsertData(PlayerController player, Enemy[] enemies, Chest[] chests, UnlockableOrb[] unlockOrbs, string scene) {
         switch (scene)
         {
@@ -113,12 +114,15 @@ public class WorldData
         money = player.currentMoney;
     }
 
-    public void InsertCheckpointData(Vector3 checkPoint)
+    public void InsertCheckpointData(Vector3 checkPoint, string scene)
     {
         position = new float[3];
         position[0] = checkPoint.x;
         position[1] = checkPoint.y;
         position[2] = checkPoint.z;
+
+        lastSavedScene = scene;
+        lastSavedTime = System.DateTime.Now.ToString();
     }
 
     private void UpdatePickUpsStatus(Chest[] chests, bool[] chestsStatus, UnlockableOrb[] unlockableOrbs, bool[] unlockOrbsDone)
