@@ -50,7 +50,7 @@ public static class SaveSystem
         {
             BinaryFormatter formatter = new BinaryFormatter();
             FileStream file = new FileStream(path, FileMode.Open);
-            
+
             worldData = formatter.Deserialize(file) as WorldData; //Read from the stream, Binary to Readable format
 
             file.Close();
@@ -59,12 +59,9 @@ public static class SaveSystem
         }
         else
         {
-            //Debug.Log("Save file not found in " + path);
+            worldData = new WorldData(); //Create new data object
+            Debug.Log("Save file not found in " + path);
             return null;
         }
-    }
-    
-    public static void EndWorld()
-    {
     }
 }
