@@ -68,31 +68,37 @@ public class DataSaver : MonoBehaviour
     public void LoadScene()
     {
         WorldData data = SaveSystem.LoadWorld();
-        SaveSystem.SaveCheckPoint(checkPoint, SceneManager.GetActiveScene().name);
-
-        player.SetMoney(data.money);
-        player.SetHealthInstantly(data.health);
-
-        Vector3 position;
-        position.x = data.position[0];
-        position.y = data.position[1];
-        position.z = data.position[2];
-        player.transform.position = position;
-
-        switch (SceneManager.GetActiveScene().name)
+        if (data != null)
         {
-            case "Room_00":
-                GetEnemyData(data.enemiesDead00, data.enemiesHealth00);
-                GetSoulData(data.soulMoney00, data.soulPosition00, data.soulCanSpawn00);
-                break;
-            case "Room_01":
-                GetEnemyData(data.enemiesDead01, data.enemiesHealth01);
-                GetPickUpsData(data.chestsStatus01, data.unlockOrbsDone01);
-                GetSoulData(data.soulMoney01, data.soulPosition01, data.soulCanSpawn01);
-                break;
-        }
+            SaveSystem.SaveCheckPoint(checkPoint, SceneManager.GetActiveScene().name);
+            player.SetMoney(data.money);
+            player.SetHealthInstantly(data.health);
 
-        Debug.Log("Loaded " + SceneManager.GetActiveScene().name);
+            Vector3 position;
+            position.x = data.position[0];
+            position.y = data.position[1];
+            position.z = data.position[2];
+            player.transform.position = position;
+
+            switch (SceneManager.GetActiveScene().name)
+            {
+                case "Room_00":
+                    GetEnemyData(data.enemiesDead00, data.enemiesHealth00);
+                    GetSoulData(data.soulMoney00, data.soulPosition00, data.soulCanSpawn00);
+                    break;
+                case "Room_01":
+                    GetEnemyData(data.enemiesDead01, data.enemiesHealth01);
+                    GetPickUpsData(data.chestsStatus01, data.unlockOrbsDone01);
+                    GetSoulData(data.soulMoney01, data.soulPosition01, data.soulCanSpawn01);
+                    break;
+            }
+
+            Debug.Log("Loaded " + SceneManager.GetActiveScene().name);
+        }
+        else
+        {
+            Debug.Log("Loaded " + SceneManager.GetActiveScene().name + " for the 1st time");
+        }
     }
 
     public IEnumerator CheckPlayerDeath()

@@ -50,14 +50,8 @@ public static class SaveSystem
         {
             BinaryFormatter formatter = new BinaryFormatter();
             FileStream file = new FileStream(path, FileMode.Open);
-            if(file.Length > 0)
-            {
-                worldData = formatter.Deserialize(file) as WorldData; //Read from the stream, Binary to Readable format
-            }
-            else
-            {
-                worldData = new WorldData();
-            }
+            
+            worldData = formatter.Deserialize(file) as WorldData; //Read from the stream, Binary to Readable format
 
             file.Close();
 
@@ -65,36 +59,12 @@ public static class SaveSystem
         }
         else
         {
-            Debug.Log("Save file not found in " + path);
+            //Debug.Log("Save file not found in " + path);
             return null;
         }
     }
-
-    //public static WorldData LoadWorld(string slot)
-    //{
-    //    path = Application.persistentDataPath + "/" + slot + ".state";
-
-    //    if (File.Exists(path))
-    //    {
-    //        BinaryFormatter formatter = new BinaryFormatter();
-    //        FileStream file = new FileStream(path, FileMode.Open);
-    //        if (file.Length > 0)
-    //        {
-    //            worldData = formatter.Deserialize(file) as WorldData; //Read from the stream, Binary to Readable format
-    //        }
-    //        else
-    //        {
-    //            worldData = new WorldData();
-    //        }
-
-    //        file.Close();
-
-    //        return worldData;
-    //    }
-    //    else
-    //    {
-    //        Debug.LogError("Save file not found in " + path);
-    //        return null;
-    //    }
-    //}
+    
+    public static void EndWorld()
+    {
+    }
 }

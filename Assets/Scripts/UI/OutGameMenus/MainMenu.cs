@@ -29,39 +29,27 @@ public class MainMenu : MonoBehaviour
 
     public void SetupSaveSlots()
     {
-        SaveSystem.path = Application.persistentDataPath + "/slot1.state";
-        if(SaveSystem.LoadWorld() != null) {
-            WorldData wd1 = SaveSystem.LoadWorld();
-            region1Text.text = wd1.lastSavedScene;
-            money1Text.text = "Money: " + wd1.money;
-            playT1Text.text = "Saved: " + wd1.lastSavedTime;
-        }
+        SetupSaveSlot("slot1", region1Text, money1Text, playT1Text);
+        SetupSaveSlot("slot2", region2Text, money2Text, playT2Text);
+        SetupSaveSlot("slot3", region3Text, money3Text, playT3Text);
+        SetupSaveSlot("slot4", region4Text, money4Text, playT4Text);
+    }
 
-        SaveSystem.path = Application.persistentDataPath + "/slot2.state";
+    private void SetupSaveSlot(string slot, Text regionText, Text moneyText, Text playTText)
+    {
+        SaveSystem.path = Application.persistentDataPath + "/" + slot + ".state";
         if (SaveSystem.LoadWorld() != null)
         {
-            WorldData wd2 = SaveSystem.LoadWorld();
-            region2Text.text = wd2.lastSavedScene;
-            money2Text.text = "Money: " + wd2.money;
-            playT2Text.text = "Saved: " + wd2.lastSavedTime;
+            WorldData wd = SaveSystem.LoadWorld();
+            regionText.text = wd.lastSavedScene;
+            moneyText.text = "Money: " + wd.money;
+            playTText.text = "Saved: " + wd.lastSavedTime;
         }
-
-        SaveSystem.path = Application.persistentDataPath + "/slot3.state";
-        if (SaveSystem.LoadWorld() != null)
+        else
         {
-            WorldData wd3 = SaveSystem.LoadWorld();
-            region3Text.text = wd3.lastSavedScene;
-            money3Text.text = "Money: " + wd3.money;
-            playT3Text.text = "Saved: " + wd3.lastSavedTime;
-        }
-
-        SaveSystem.path = Application.persistentDataPath + "/slot4.state";
-        if (SaveSystem.LoadWorld() != null)
-        {
-            WorldData wd4 = SaveSystem.LoadWorld();
-            region4Text.text = wd4.lastSavedScene;
-            money4Text.text = "Money: " + wd4.money;
-            playT4Text.text = "Saved: " + wd4.lastSavedTime;
+            regionText.text = "New Game";
+            moneyText.text = "";
+            playTText.text = "";
         }
     }
 }
