@@ -21,6 +21,7 @@ TagManager:
   - Chests
   - UnlockableOrbs
   - Soul
+  - NPC
   layers:
   - Default
   - TransparentFX

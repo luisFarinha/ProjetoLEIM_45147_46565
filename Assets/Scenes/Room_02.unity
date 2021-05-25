@@ -468,6 +468,7 @@ MonoBehaviour:
   dialogueText: {fileID: 1141994726}
   dialogueBox: {fileID: 228765042}
   animator: {fileID: 228765046}
+  npc: {fileID: 0}
 --- !u!4 &257258705
 Transform:
   m_ObjectHideFlags: 0
@@ -4931,10 +4932,168 @@ PrefabInstance:
       propertyPath: canvas
       value: 
       objectReference: {fileID: 228765042}
+    - target: {fileID: 1351544089, guid: 01d5465b6250a814692cad027993c76f, type: 3}
+      propertyPath: dialogue.name
+      value: Camellia
+      objectReference: {fileID: 0}
+    - target: {fileID: 1351544089, guid: 01d5465b6250a814692cad027993c76f, type: 3}
+      propertyPath: finishedFirstConversation
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1351544089, guid: 01d5465b6250a814692cad027993c76f, type: 3}
+      propertyPath: dialogue.FirstSentences.Array.size
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 1351544089, guid: 01d5465b6250a814692cad027993c76f, type: 3}
+      propertyPath: dialogue.Firstsentences.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1351544089, guid: 01d5465b6250a814692cad027993c76f, type: 3}
+      propertyPath: dialogue.SecondSentences.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1351544089, guid: 01d5465b6250a814692cad027993c76f, type: 3}
+      propertyPath: dialogue.Secondsentences.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1351544089, guid: 01d5465b6250a814692cad027993c76f, type: 3}
+      propertyPath: dialogue.FirstSentences.Array.data[0]
+      value: 'Oh! '
+      objectReference: {fileID: 0}
+    - target: {fileID: 1351544089, guid: 01d5465b6250a814692cad027993c76f, type: 3}
+      propertyPath: dialogue.FirstSentences.Array.data[1]
+      value: Hello fellow traveler, I'm a Green Witch and my name is Camellia.
+      objectReference: {fileID: 0}
+    - target: {fileID: 1351544089, guid: 01d5465b6250a814692cad027993c76f, type: 3}
+      propertyPath: dialogue.FirstSentences.Array.data[2]
+      value: ...
+      objectReference: {fileID: 0}
+    - target: {fileID: 1351544089, guid: 01d5465b6250a814692cad027993c76f, type: 3}
+      propertyPath: dialogue.FirstSentences.Array.data[3]
+      value: Well I see you are not much of a talker...
+      objectReference: {fileID: 0}
+    - target: {fileID: 1351544089, guid: 01d5465b6250a814692cad027993c76f, type: 3}
+      propertyPath: dialogue.FirstSentences.Array.data[4]
+      value: But, don't you think this place feels a little sad?
+      objectReference: {fileID: 0}
+    - target: {fileID: 1351544089, guid: 01d5465b6250a814692cad027993c76f, type: 3}
+      propertyPath: dialogue.FirstSentences.Array.data[5]
+      value: Well, it sure could use some greenery.
+      objectReference: {fileID: 0}
+    - target: {fileID: 1351544089, guid: 01d5465b6250a814692cad027993c76f, type: 3}
+      propertyPath: dialogue.FirstSentences.Array.data[6]
+      value: As an added bonus, a small garden could serve as a nice classroom for
+        my plant based potion lessons!
+      objectReference: {fileID: 0}
+    - target: {fileID: 1351544089, guid: 01d5465b6250a814692cad027993c76f, type: 3}
+      propertyPath: dialogue.FirstSentences.Array.data[7]
+      value: It has always been a dream of mine to teach this kind of things.
+      objectReference: {fileID: 0}
+    - target: {fileID: 1351544089, guid: 01d5465b6250a814692cad027993c76f, type: 3}
+      propertyPath: dialogue.FirstSentences.Array.data[8]
+      value: 'It will be called "Calming Thyme: If a plant is sad, photosympathise
+        with it."'
+      objectReference: {fileID: 0}
+    - target: {fileID: 1351544089, guid: 01d5465b6250a814692cad027993c76f, type: 3}
+      propertyPath: dialogue.FirstSentences.Array.data[9]
+      value: Hmm, yeah, it sounded better in my head...
+      objectReference: {fileID: 0}
+    - target: {fileID: 1351544089, guid: 01d5465b6250a814692cad027993c76f, type: 3}
+      propertyPath: dialogue.Firstsentences.Array.data[0]
+      value: Hello fellow traveler
+      objectReference: {fileID: 0}
+    - target: {fileID: 1351544089, guid: 01d5465b6250a814692cad027993c76f, type: 3}
+      propertyPath: dialogue.Firstsentences.Array.data[1]
+      value: I'm a Green Witch
+      objectReference: {fileID: 0}
+    - target: {fileID: 1351544089, guid: 01d5465b6250a814692cad027993c76f, type: 3}
+      propertyPath: dialogue.Firstsentences.Array.data[2]
+      value: I see u dont talk much
+      objectReference: {fileID: 0}
+    - target: {fileID: 1351544089, guid: 01d5465b6250a814692cad027993c76f, type: 3}
+      propertyPath: dialogue.FirstSentences.Array.data[10]
+      value: Maybe I need to work on the name some more...
+      objectReference: {fileID: 0}
+    - target: {fileID: 1351544089, guid: 01d5465b6250a814692cad027993c76f, type: 3}
+      propertyPath: dialogue.SecondSentences.Array.data[0]
+      value: Have you noticed how the plants sway and grow as you entertain them?
+      objectReference: {fileID: 0}
+    - target: {fileID: 1351544089, guid: 01d5465b6250a814692cad027993c76f, type: 3}
+      propertyPath: dialogue.SecondSentences.Array.data[1]
+      value: "Isn\xB4t that fabulous?"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1351544089, guid: 01d5465b6250a814692cad027993c76f, type: 3}
+      propertyPath: dialogue.SecondSentences.Array.data[2]
+      value: As I suspected, emotions, in this world, manifest themselves much more
+        vividly.
+      objectReference: {fileID: 0}
+    - target: {fileID: 1351544089, guid: 01d5465b6250a814692cad027993c76f, type: 3}
+      propertyPath: dialogue.SecondSentences.Array.data[3]
+      value: Well, I'll make sure to spread the word about this fascinating discovery.
+      objectReference: {fileID: 0}
+    - target: {fileID: 1351544089, guid: 01d5465b6250a814692cad027993c76f, type: 3}
+      propertyPath: dialogue.Secondsentences.Array.data[0]
+      value: bla bla bla
+      objectReference: {fileID: 0}
+    - target: {fileID: 1351544089, guid: 01d5465b6250a814692cad027993c76f, type: 3}
+      propertyPath: dialogue.Secondsentences.Array.data[1]
+      value: kpoqwjapod
+      objectReference: {fileID: 0}
+    - target: {fileID: 1351544089, guid: 01d5465b6250a814692cad027993c76f, type: 3}
+      propertyPath: dialogue.Secondsentences.Array.data[2]
+      value: llll
+      objectReference: {fileID: 0}
+    - target: {fileID: 1351544089, guid: 01d5465b6250a814692cad027993c76f, type: 3}
+      propertyPath: dialogue.MissionCompletedSentences.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1351544089, guid: 01d5465b6250a814692cad027993c76f, type: 3}
+      propertyPath: dialogue.MissionCompletedSentences.Array.data[0]
+      value: Yes! Perfect!
+      objectReference: {fileID: 0}
+    - target: {fileID: 1351544089, guid: 01d5465b6250a814692cad027993c76f, type: 3}
+      propertyPath: dialogue.MissionCompletedSentences.Array.data[1]
+      value: What a wonderfull little garden! You really outdid yourself little one!
+      objectReference: {fileID: 0}
+    - target: {fileID: 1351544089, guid: 01d5465b6250a814692cad027993c76f, type: 3}
+      propertyPath: dialogue.MissionCompletedSentences.Array.data[2]
+      value: Well, then, that makes me just about ready to practice on my future
+        lessons.
+      objectReference: {fileID: 0}
+    - target: {fileID: 1351544089, guid: 01d5465b6250a814692cad027993c76f, type: 3}
+      propertyPath: dialogue.FirstMissionCompletedSentences.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1351544089, guid: 01d5465b6250a814692cad027993c76f, type: 3}
+      propertyPath: dialogue.SecondMissionCompletedSentences.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1351544089, guid: 01d5465b6250a814692cad027993c76f, type: 3}
+      propertyPath: dialogue.FirstMissionCompletedSentences.Array.data[0]
+      value: Yes! Perfect!
+      objectReference: {fileID: 0}
+    - target: {fileID: 1351544089, guid: 01d5465b6250a814692cad027993c76f, type: 3}
+      propertyPath: dialogue.FirstMissionCompletedSentences.Array.data[1]
+      value: What a wonderfull little garden! You really outdid yourself little one!
+      objectReference: {fileID: 0}
+    - target: {fileID: 1351544089, guid: 01d5465b6250a814692cad027993c76f, type: 3}
+      propertyPath: dialogue.FirstMissionCompletedSentences.Array.data[2]
+      value: Well, then that makes me just about to start practicing on my future
+        lessons.
+      objectReference: {fileID: 0}
+    - target: {fileID: 1351544089, guid: 01d5465b6250a814692cad027993c76f, type: 3}
+      propertyPath: dialogue.SecondMissionCompletedSentences.Array.data[0]
+      value: skr
+      objectReference: {fileID: 0}
     - target: {fileID: 4857123519597642680, guid: 01d5465b6250a814692cad027993c76f,
         type: 3}
       propertyPath: m_Name
       value: GreenWitchNPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 4857123519597642680, guid: 01d5465b6250a814692cad027993c76f,
+        type: 3}
+      propertyPath: m_TagString
+      value: NPC
       objectReference: {fileID: 0}
     - target: {fileID: 4857123519597642681, guid: 01d5465b6250a814692cad027993c76f,
         type: 3}

@@ -12,11 +12,16 @@ public class NPC : MonoBehaviour
     public Dialogue dialogue;
     public bool isNear;
 
-    [Header("Mission")]
+    [Header("FirstInteraction")]
+    public bool finishedFirstConversation;
+    public bool hasStartedFirstConversation;
+    public bool hasStartedSecondConversation;
+
+    [Header("MissionInteraction")]
     private bool hasCompletedMission;
-    private bool finishedFirstConversation;
-    private bool finishedFirstTalk;
-    public bool hasStartedConversation;
+    public bool finishedFirstMissionConversation;
+    public bool hasStartedFirstMissionConversation;
+    public bool hasStartedSecondMissionConversation;
 
 
     private void Awake()
@@ -60,14 +65,51 @@ public class NPC : MonoBehaviour
 
     public void TalkInteraction()
     {
-        if (isNear && !hasStartedConversation) {
-            FindObjectOfType<DialogueManager>().StartDialogue(dialogue);
-            hasStartedConversation = true;
-        } 
-        else if(isNear && hasStartedConversation)
-        {
-            FindObjectOfType<DialogueManager>().DisplayNextSentence();
-            //hasStartedConversation = false;
+        if (isNear) {
+            if (!hasCompletedMission)
+            {
+                if (!hasStartedFirstConversation && !finishedFirstConversation)
+                {
+                    FindObjectOfType<DialogueManager>().StartDialogue(dialogue, 1);
+                    hasStartedFirstConversation = true;
+                }
+                else if (hasStartedFirstConversation && !finishedFirstConversation)
+                {
+                    FindObjectOfType<DialogueManager>().DisplayNextSentence(1);
+                }
+                else if (finishedFirstConversation && !hasStartedSecondConversation)
+                {
+                    FindObjectOfType<DialogueManager>().StartDialogue(dialogue, 2);
+                    hasStartedSecondConversation = true;
+                }
+                else if (finishedFirstConversation && hasStartedSecondConversation)
+                {
+                    FindObjectOfType<DialogueManager>().DisplayNextSentence(2);
+                }
+            }        
+            else
+            {
+                if (!hasStartedFirstMissionConversation && !finishedFirstMissionConversation)
+                {
+                    FindObjectOfType<DialogueManager>().StartDialogue(dialogue, 3);
+                    hasStartedFirstMissionConversation = true;
+                }
+                else if (hasStartedFirstMissionConversation && !finishedFirstMissionConversation)
+                {
+                    FindObjectOfType<DialogueManager>().DisplayNextSentence(3);
+                }
+                else if (finishedFirstMissionConversation && !hasStartedSecondMissionConversation)
+                {
+                    FindObjectOfType<DialogueManager>().StartDialogue(dialogue, 4);
+                    hasStartedSecondMissionConversation = true;
+                }
+                else if (finishedFirstMissionConversation && hasStartedSecondMissionConversation)
+                {
+                    FindObjectOfType<DialogueManager>().DisplayNextSentence(4);
+                }
+
+            }
         }
+
     }
 }
