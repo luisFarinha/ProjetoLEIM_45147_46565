@@ -18,7 +18,7 @@ public class NPC : MonoBehaviour
     public bool hasStartedSecondConversation;
 
     [Header("MissionInteraction")]
-    private bool hasCompletedMission;
+    public bool hasCompletedMission;
     public bool finishedFirstMissionConversation;
     public bool hasStartedFirstMissionConversation;
     public bool hasStartedSecondMissionConversation;
@@ -39,11 +39,6 @@ public class NPC : MonoBehaviour
     private void OnDisable()
     {
         im.Disable();
-    }
-
-    private void FixedUpdate()
-    {
-        //check ending of conversation
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

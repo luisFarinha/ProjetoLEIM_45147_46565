@@ -245,7 +245,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4857123519597642681}
   - component: {fileID: 1351544087}
-  - component: {fileID: 1351544089}
   m_Layer: 0
   m_Name: GreenWitchNPC
   m_TagString: Untagged
@@ -296,26 +295,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 3.1093369, y: 1.8994865}
   m_EdgeRadius: 0
---- !u!114 &1351544089
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4857123519597642680}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed27e47cbc9b9894b92c1b54eeaeb5e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  interaction: {fileID: 1258666207}
-  turn: {fileID: 1852132753}
-  dialogue:
-    name: Green Witch
-    sentences:
-    - Hello fellow traveler
-    - I see u dont talk much
-    - ...
 --- !u!1 &4857123519768053276
 GameObject:
   m_ObjectHideFlags: 0

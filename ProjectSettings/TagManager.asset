@@ -22,6 +22,7 @@ TagManager:
   - UnlockableOrbs
   - Soul
   - NPC
+  - bla
   layers:
   - Default
   - TransparentFX

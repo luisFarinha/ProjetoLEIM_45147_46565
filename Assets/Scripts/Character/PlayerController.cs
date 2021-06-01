@@ -134,6 +134,7 @@ public class PlayerController : MonoBehaviour
     private Collider2D col;
     private Collider2D enemyCol;
 
+    public Quest quest;
     private string currentState = Constants.PLAYER_IDLE;
 
     private void Awake()
@@ -790,6 +791,7 @@ public class PlayerController : MonoBehaviour
         anim.Play(newState);
         currentState = newState;
     }
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;

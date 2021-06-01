@@ -20,9 +20,8 @@ public class DialogueManager : MonoBehaviour
 
     public Animator animator;
 
-    public NPC npc;
-
-    //public bool activateSecondConversation;
+    private NPC npc;
+    private QuestGiver questGiver;
 
     void Start()
     {
@@ -30,13 +29,20 @@ public class DialogueManager : MonoBehaviour
         SecondTalkSentences = new Queue<string>();
         FirstTalkSentencesMissionCompleted = new Queue<string>();
         SecondTalkSentencesMissionCompleted = new Queue<string>();
+
         GameObject g = GameObject.FindGameObjectWithTag("NPC");
         npc = g.GetComponent<NPC>();
+        questGiver = g.GetComponent<QuestGiver>();
+    }
+
+    private void Update()
+    {
+        npc.hasCompletedMission = questGiver.CompletedMissionDialogue();
     }
 
     public void StartDialogue(Dialogue dialogue, int interactionFase)
     {
-
+        
         animator.SetBool("IsOpen", true);
         //dialogueBox.SetActive(true);
         nameText.text = dialogue.name;
@@ -80,7 +86,6 @@ public class DialogueManager : MonoBehaviour
                 }
                 break;
         }
-               
 
         DisplayNextSentence(interactionFase);
     }
@@ -95,6 +100,7 @@ public class DialogueManager : MonoBehaviour
                 if (FirstTalkSentences.Count == 0)
                 {
                     EndDialogue();
+                    questGiver.AcceptQuest();
                     npc.finishedFirstConversation = true;
                     return;
                 }
@@ -134,6 +140,7 @@ public class DialogueManager : MonoBehaviour
         
         StopAllCoroutines(); //Stop doing when doing one already
         StartCoroutine(TypeSentence(sentence));
+        
     }
 
     IEnumerator TypeSentence(string sentence)
@@ -151,7 +158,6 @@ public class DialogueManager : MonoBehaviour
     {
         animator.SetBool("IsOpen", false);
         //dialogueBox.SetActive(false);
-        //activateSecondConversation = true;
         Debug.Log("End of conversation");
         
     }

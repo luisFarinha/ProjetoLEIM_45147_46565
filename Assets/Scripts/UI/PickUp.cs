@@ -6,6 +6,8 @@ public class PickUp : MonoBehaviour
 {
     private Inventory inventory;
     public GameObject itemButton;
+    public Quest quest;
+    public QuestGiver questGiver;
 
     private void Start()
     {
@@ -20,10 +22,31 @@ public class PickUp : MonoBehaviour
             {
                 if(inventory.isFull[i] == false)
                 {
+
+                    //ifActive
+                    if (quest.isActive){
+                        for(int j=0; j<questGiver.pickUp.Count; j++)
+                        {
+                            if (itemButton.name == questGiver.pickUp[j].name)
+                            {
+                                questGiver.pickUp.Remove(questGiver.pickUp[j]);
+                                quest.goal.ItemCollected();
+                                if (quest.goal.IsReached())
+                                {
+                                    quest.Complete();
+                                }
+                            }
+
+                        }
+                        
+                    }
+                                    
+                    
                     //ITEM CAN BE ADDED TO INVENTORY
                     inventory.isFull[i] = true;
                     Instantiate(itemButton, inventory.slots[i].transform, false);
                     Destroy(gameObject);
+                    
                     break;
                 }
             }

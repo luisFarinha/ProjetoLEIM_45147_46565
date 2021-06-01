@@ -3,28 +3,36 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq; //to specify what I am looking for in a quest
 
-public class Quest : MonoBehaviour
+[System.Serializable]
+public class Quest
 {
-    public List<Goal> Goals { get; set; } = new List<Goal>();
-    public string questName { get; set; }
-    public string description { get; set; }
-    public int experienceReward { get; set; }
-    //public Item itemReward { get; set; }
-    public bool completed { get; set; }
 
-    public void CheckGoals()
+    public string questName;
+
+    [TextArea(3, 10)]
+    public string description;
+
+    public int moneyReward;
+
+    public bool completed;
+
+    public bool isActive;
+    public QuestGoal goal;
+
+    public void Complete()
     {
-        completed = Goals.All(g => g.completed); //checks if this statement is true or false, if is one or more goals to achieve, returns false
-        //if (completed) { GiveReward; }
+        isActive = false;
+        completed = true;
+        Debug.Log(questName + " was completed!");
     }
 
     /*void GiveReward()
     {
         if(itemReward != null)
         {
+            Debug.Log("TODO");
+            //Give a Reward
             //InventoryConstroller.Instance.GiveItem(itemReward);
         }
     }*/
-
-    
 }

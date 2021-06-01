@@ -17,5 +17,6 @@ public class Inventory : MonoBehaviour
     void Update()
     {
         
+
     }
 }
