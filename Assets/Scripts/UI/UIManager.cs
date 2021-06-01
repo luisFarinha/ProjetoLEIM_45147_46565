@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -27,6 +28,17 @@ public class UIManager : MonoBehaviour
     [Header("Inventory")]
     public GameObject inventory;
     public Image inventoryMenuImage;
+
+    [Header("Map")]
+    public GameObject map;
+
+    [Header("InGameMenus")]
+    public GameObject mainMenu;
+    public GameObject optionsMenu;
+    public GameObject soundMenu;
+    public GameObject videoMenu;
+    public GameObject controlsMenu;
+
     public static bool isPaused;
 
     private void Awake()
@@ -38,6 +50,7 @@ public class UIManager : MonoBehaviour
 
         im.Player.Interact.started += _ => HideUI();
         im.Player.Inventory.started += _ => Inventory();
+        im.Player.Menu.started += _ => MainMenu();
 
         isPaused = false;
     }
@@ -125,18 +138,47 @@ public class UIManager : MonoBehaviour
             inventoryMenuImage.sprite = Resources.Load<Sprite>(Constants.INVENTORY_SPRITE);
             inventory.SetActive(true);
             Pause();
-            isPaused = true;
         } else
         {
             StartCoroutine(Resume(0f));
-            isPaused = false;
         }
         
+    }
+
+    private void MainMenu()
+    {
+        if (!isPaused)
+        {
+            inventory.SetActive(false);
+            map.SetActive(false);
+
+            mainMenu.SetActive(true);
+            Pause();
+        } else
+        {
+            if (mainMenu.activeSelf)
+            {
+                StartCoroutine(Resume(0f));
+            }
+            else
+            {
+                mainMenu.SetActive(true);
+
+                inventory.SetActive(false);
+                optionsMenu.SetActive(false);
+                soundMenu.SetActive(false);
+                videoMenu.SetActive(false);
+                controlsMenu.SetActive(false);
+            }
+        }
     }
 
     private void Pause()
     {
         background.SetActive(true);
+        
+        isPaused = true;
+        
         Time.timeScale = 0;
     }
 
@@ -146,6 +188,10 @@ public class UIManager : MonoBehaviour
         background.SetActive(false);
         unlocks.SetActive(false);
         inventory.SetActive(false);
+        mainMenu.SetActive(false);
+        
+        isPaused = false;
+        
         Time.timeScale = 1f;
     }
 
@@ -153,5 +199,10 @@ public class UIManager : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(time);
         Time.timeScale = 1f;
+    }
+
+    public void ContinueGame() // função usada pelo continue button
+    {
+        StartCoroutine(Resume(0f));
     }
 }
