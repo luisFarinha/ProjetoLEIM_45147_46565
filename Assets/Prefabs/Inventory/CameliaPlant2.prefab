@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1768725859376778658}
   - component: {fileID: 2095511025456231228}
   m_Layer: 0
-  m_Name: FirstMissionButton
+  m_Name: CameliaPlant2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

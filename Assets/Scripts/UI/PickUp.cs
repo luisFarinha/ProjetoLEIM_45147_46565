@@ -8,6 +8,7 @@ public class PickUp : MonoBehaviour
     public GameObject itemButton;
     public Quest quest;
     public QuestGiver questGiver;
+    public NPC npc;
 
     private void Start()
     {
@@ -29,12 +30,9 @@ public class PickUp : MonoBehaviour
                         {
                             if (itemButton.name == questGiver.pickUp[j].name)
                             {
+                                questGiver.objectPicked.Add(itemButton.name);
                                 questGiver.pickUp.Remove(questGiver.pickUp[j]);
                                 quest.goal.ItemCollected();
-                                if (quest.goal.IsReached())
-                                {
-                                    quest.Complete();
-                                }
                             }
 
                         }
@@ -46,7 +44,13 @@ public class PickUp : MonoBehaviour
                     inventory.isFull[i] = true;
                     Instantiate(itemButton, inventory.slots[i].transform, false);
                     Destroy(gameObject);
-                    
+
+                    if (quest.goal.IsReached())
+                    {
+                        quest.Complete();
+                        inventory.RemoveItems(questGiver.objectPicked);
+                    }
+
                     break;
                 }
             }
