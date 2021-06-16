@@ -9,10 +9,12 @@ public class QuestGiver : MonoBehaviour
 
     public PlayerController player;
     public List<PickUp> pickUp;
+    public List<string> objectPicked;
 
     
     public void AcceptQuest()
     {
+        objectPicked = new List<string>(new string[quest.goal.requiredAmount]);
         quest.goal.requiredAmount = pickUp.Count;
         quest.isActive = true;
         //player.quest = quest;

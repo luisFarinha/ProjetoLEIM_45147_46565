@@ -17,11 +17,13 @@ public class DialogueManager : MonoBehaviour
     public Text nameText;
     public Text dialogueText;
     public GameObject dialogueBox;
+    private float dialogueSpeed = 0.005f;
 
     public Animator animator;
 
     private NPC npc;
     private QuestGiver questGiver;
+    private bool check = true;
 
     void Start()
     {
@@ -87,7 +89,7 @@ public class DialogueManager : MonoBehaviour
                 break;
         }
 
-        DisplayNextSentence(interactionFase);
+        DisplayNextSentence(interactionFase);        
     }
 
     public void DisplayNextSentence(int interactionFase)
@@ -138,8 +140,13 @@ public class DialogueManager : MonoBehaviour
                 break;
         }
         
-        StopAllCoroutines(); //Stop doing when doing one already
-        StartCoroutine(TypeSentence(sentence));
+        
+        if (check)
+        {
+            StopAllCoroutines(); //Stop doing when doing one already
+            StartCoroutine(TypeSentence(sentence));
+        }
+        
         
     }
 
@@ -147,12 +154,19 @@ public class DialogueManager : MonoBehaviour
     {
         dialogueText.text = "";
 
-        foreach(char letter in sentence.ToCharArray())
+        check = false;
+
+        foreach (char letter in sentence.ToCharArray())
         {
             dialogueText.text += letter;
-            yield return new WaitForSeconds(0.02f);
+            yield return new WaitForSeconds(dialogueSpeed);
         }
+
+        check = true;
+
     }
+
+
 
     void EndDialogue()
     {

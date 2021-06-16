@@ -22,13 +22,17 @@ public class NPC : MonoBehaviour
     public bool finishedFirstMissionConversation;
     public bool hasStartedFirstMissionConversation;
     public bool hasStartedSecondMissionConversation;
+    private DialogueManager dialogueManager;
 
+    private PickUp pickUp;
 
     private void Awake()
     {
         im = new InputMaster();
 
         im.Player.Interact.started += _ => TalkInteraction();
+
+        dialogueManager = FindObjectOfType<DialogueManager>();
     }
 
     private void OnEnable()
@@ -65,42 +69,42 @@ public class NPC : MonoBehaviour
             {
                 if (!hasStartedFirstConversation && !finishedFirstConversation)
                 {
-                    FindObjectOfType<DialogueManager>().StartDialogue(dialogue, 1);
+                    dialogueManager.StartDialogue(dialogue, 1);
                     hasStartedFirstConversation = true;
                 }
                 else if (hasStartedFirstConversation && !finishedFirstConversation)
                 {
-                    FindObjectOfType<DialogueManager>().DisplayNextSentence(1);
+                    dialogueManager.DisplayNextSentence(1);
                 }
                 else if (finishedFirstConversation && !hasStartedSecondConversation)
                 {
-                    FindObjectOfType<DialogueManager>().StartDialogue(dialogue, 2);
+                    dialogueManager.StartDialogue(dialogue, 2);
                     hasStartedSecondConversation = true;
                 }
                 else if (finishedFirstConversation && hasStartedSecondConversation)
                 {
-                    FindObjectOfType<DialogueManager>().DisplayNextSentence(2);
+                    dialogueManager.DisplayNextSentence(2);
                 }
             }        
             else
             {
                 if (!hasStartedFirstMissionConversation && !finishedFirstMissionConversation)
                 {
-                    FindObjectOfType<DialogueManager>().StartDialogue(dialogue, 3);
+                    dialogueManager.StartDialogue(dialogue, 3);
                     hasStartedFirstMissionConversation = true;
                 }
                 else if (hasStartedFirstMissionConversation && !finishedFirstMissionConversation)
                 {
-                    FindObjectOfType<DialogueManager>().DisplayNextSentence(3);
+                    dialogueManager.DisplayNextSentence(3);
                 }
                 else if (finishedFirstMissionConversation && !hasStartedSecondMissionConversation)
                 {
-                    FindObjectOfType<DialogueManager>().StartDialogue(dialogue, 4);
+                    dialogueManager.StartDialogue(dialogue, 4);
                     hasStartedSecondMissionConversation = true;
                 }
                 else if (finishedFirstMissionConversation && hasStartedSecondMissionConversation)
                 {
-                    FindObjectOfType<DialogueManager>().DisplayNextSentence(4);
+                    dialogueManager.DisplayNextSentence(4);
                 }
 
             }
