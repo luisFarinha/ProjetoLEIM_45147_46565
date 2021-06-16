@@ -48,23 +48,30 @@ public class CharacterSoundManager : MonoBehaviour
 
     private void Update()
     {
-        if (!anim.GetCurrentAnimatorClipInfo(0)[0].clip.name.Equals(Constants.PLAYER_GLIDE))
+        try
         {
-            playGlide = true;
-        }
-        if (!anim.GetCurrentAnimatorClipInfo(0)[0].clip.name.Equals(Constants.PLAYER_WALLSLIDE))
-        {
-            if(source.clip.name.Equals("dirt_slide_01") || source.clip.name.Equals("dirt_slide_02"))
+            if (!anim.GetCurrentAnimatorClipInfo(0)[0].clip.name.Equals(Constants.PLAYER_GLIDE))
             {
-                source.Stop();
+                playGlide = true;
             }
-            canAudioSlide = true;
         }
-            if (pc.isDead && canPlayDeathAudio)
+        catch (Exception) { }
+        try
         {
-            AudioDie();
-            canPlayDeathAudio = false;
-        }
+            if (!anim.GetCurrentAnimatorClipInfo(0)[0].clip.name.Equals(Constants.PLAYER_WALLSLIDE))
+            {
+                if (source.clip.name.Equals("dirt_slide_01") || source.clip.name.Equals("dirt_slide_02"))
+                {
+                    source.Stop();
+                }
+                canAudioSlide = true;
+            }
+            if (pc.isDead && canPlayDeathAudio)
+            {
+                AudioDie();
+                canPlayDeathAudio = false;
+            }
+        }catch (Exception) { }
     }
 
     public void AudioFootStep()
