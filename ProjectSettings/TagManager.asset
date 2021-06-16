@@ -22,7 +22,6 @@ TagManager:
   - UnlockableOrbs
   - Soul
   - NPC
-  - bla
   - Unlock
   layers:
   - Default

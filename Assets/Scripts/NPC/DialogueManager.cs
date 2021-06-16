@@ -171,8 +171,6 @@ public class DialogueManager : MonoBehaviour
     void EndDialogue()
     {
         animator.SetBool("IsOpen", false);
-        //dialogueBox.SetActive(false);
-        Debug.Log("End of conversation");
-        
+        //dialogueBox.SetActive(false);        
     }
 }

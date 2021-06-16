@@ -245,9 +245,12 @@ GameObject:
   m_Component:
   - component: {fileID: 4857123519597642681}
   - component: {fileID: 1351544087}
+  - component: {fileID: 328342931}
+  - component: {fileID: 328342927}
+  - component: {fileID: 328342930}
   m_Layer: 0
   m_Name: GreenWitchNPC
-  m_TagString: Untagged
+  m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -295,6 +298,103 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 3.1093369, y: 1.8994865}
   m_EdgeRadius: 0
+--- !u!95 &328342931
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4857123519597642680}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8e22663de0da4564ab32c4b9874cd571, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &328342927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4857123519597642680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41dfc1f648d41c543ac397d05059076f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  quest:
+    questName: Nature Class
+    description: hiohoi
+    moneyReward: 100
+    completed: 0
+    isActive: 0
+    goal:
+      currentAmount: 0
+      requiredAmount: 0
+      goalType: 1
+  player: {fileID: 0}
+  pickUp:
+  - {fileID: 0}
+  - {fileID: 0}
+  objectPicked: []
+--- !u!114 &328342930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4857123519597642680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed27e47cbc9b9894b92c1b54eeaeb5e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interaction: {fileID: 1258666207}
+  turn: {fileID: 1852132753}
+  dialogue:
+    name: Camellia
+    FirstSentences:
+    - Oh!
+    - Hello fellow traveler, I'm a Green Witch and my name is Camellia.
+    - ...
+    - Well I see you are not much of a talker...
+    - But, don't you think this place feels a little sad?
+    - Well, it sure could use some greenery.
+    - As an added bonus, a small garden could serve as a nice classroom for my plant
+      based potion lessons!
+    - It has always been a dream of mine to teach this kind of things.
+    - 'It will be called "Calming Thyme: If a plant is sad, photosympathise with
+      it."'
+    - Hmm, yeah, it sounded better in my head...
+    - Maybe I need to work on the name some more...
+    SecondSentences:
+    - Have you noticed how the plants sway and grow as you entertain them?
+    - "Isn\xB4t that fabulous?"
+    - As I suspected, emotions, in this world, manifest themselves much more vividly.
+    - Well, I'll make sure to spread the word about this fascinating discovery.
+    FirstMissionCompletedSentences:
+    - Yes! Perfect!
+    - What a wonderfull little garden! You really outdid yourself little one!
+    - Well, then that makes me just about to start practicing on my future lessons.
+    SecondMissionCompletedSentences:
+    - 'skr
+
+'
+  isNear: 0
+  finishedFirstConversation: 0
+  hasStartedFirstConversation: 0
+  hasStartedSecondConversation: 0
+  hasCompletedMission: 0
+  finishedFirstMissionConversation: 0
+  hasStartedFirstMissionConversation: 0
+  hasStartedSecondMissionConversation: 0
 --- !u!1 &4857123519768053276
 GameObject:
   m_ObjectHideFlags: 0
@@ -319,13 +419,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4857123519768053276}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0.024784112, w: 0.99969286}
   m_LocalPosition: {x: -0.85899734, y: -0.5489998, z: 0}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0}
   m_Children: []
   m_Father: {fileID: 7122385724469672087}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -2.84}
 --- !u!212 &4857123519768053278
 SpriteRenderer:
   m_ObjectHideFlags: 0
