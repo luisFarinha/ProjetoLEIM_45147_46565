@@ -12,6 +12,7 @@ public class Coin : MonoBehaviour
     private Rigidbody2D rb;
     private ParticleSystem ps;
     private SpriteRenderer sr;
+    private AudioSource source;
 
     [Header("Force Range")]
     private float xRange = Constants.COIN_X_RANGE;
@@ -23,7 +24,11 @@ public class Coin : MonoBehaviour
     private float acceleration = Constants.COIN_ACCELERATION;
     private float speedVariation = Constants.COIN_SPEED_VARIATION;
     private float followSpeed = 0;
-    private bool isFollowing = false;
+    public bool isFollowing = false;
+
+    [Header("Audio")]
+    public AudioClip[] coinDrops;
+    private bool audioPlayed;
     
     void Start()
     {
@@ -31,6 +36,7 @@ public class Coin : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         ps = GetComponent<ParticleSystem>();
         sr = GetComponent<SpriteRenderer>();
+        source = GetComponent<AudioSource>();
 
         rb.AddForce(new Vector2(Random.Range(-xRange, xRange), Random.Range(yMinRange, yMaxRange)), ForceMode2D.Impulse);
     }
@@ -83,6 +89,12 @@ public class Coin : MonoBehaviour
             }
             sr.enabled = false;
             ps.Play();
+            if (!audioPlayed)
+            {
+                source.clip = coinDrops[Mathf.FloorToInt(UnityEngine.Random.value * coinDrops.Length)];
+                source.Play();
+                audioPlayed = true;
+            }
             Invoke("KillMe", 0.2f);
         }
     }

@@ -134,7 +134,6 @@ public class PlayerController : MonoBehaviour
     private Collider2D col;
     private Collider2D enemyCol;
 
-    public Quest quest;
     private string currentState = Constants.PLAYER_IDLE;
 
     private void Awake()
@@ -698,6 +697,7 @@ public class PlayerController : MonoBehaviour
             rb.AddForce(new Vector2(dmgHere.x * stunForce, dmgHere.y * stunForce * 1.5f), ForceMode2D.Impulse);
             SetHealth(currentHealth - dmgTaken);
             StartCoroutine(ActionComplete(Constants.ActionType.STUNNED, stunTime));
+            anim.Play(Constants.PLAYER_TAKEDAMAGE);
 
             stunTimer = Time.time + stunCooldown;
             StartCoroutine(FlashRed(stunTime / 4, 2));
@@ -765,6 +765,8 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+
+
     private IEnumerator ActionComplete(Constants.ActionType action, float time)
     {
         yield return new WaitForSeconds(time);
@@ -791,7 +793,6 @@ public class PlayerController : MonoBehaviour
         anim.Play(newState);
         currentState = newState;
     }
-
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;

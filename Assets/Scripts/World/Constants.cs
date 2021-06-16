@@ -23,6 +23,7 @@ public class Constants : MonoBehaviour
     public const string PLAYER_ATTACK3 = "player_attack3";
     public const string PLAYER_ATTACKUP = "player_attackUp";
     public const string PLAYER_ATTACKDOWN = "player_attackDown";
+    public const string PLAYER_TAKEDAMAGE = "player_takeDamage";
 
     public enum ActionType
     {

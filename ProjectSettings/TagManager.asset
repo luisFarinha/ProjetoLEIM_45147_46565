@@ -23,6 +23,7 @@ TagManager:
   - Soul
   - NPC
   - bla
+  - Unlock
   layers:
   - Default
   - TransparentFX

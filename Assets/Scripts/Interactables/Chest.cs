@@ -34,6 +34,12 @@ public class Chest : MonoBehaviour
     private float randomSpawnX;
     private float randomSpawnY;
 
+    [Header("Audio")]
+    private AudioSource source;
+    public AudioClip audioPry;
+    public AudioClip audioOpen;
+
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -41,6 +47,7 @@ public class Chest : MonoBehaviour
         img = meter.GetComponentInChildren<Image>();
         anim = GetComponent<Animator>();
         sr = GetComponentInChildren<SpriteRenderer>();
+        source = GetComponent<AudioSource>();
 
         smallCoin = (GameObject)Resources.Load(Constants.SMALL_COIN_TEXT);
         mediumCoin = (GameObject)Resources.Load(Constants.MEDIUM_COIN_TEXT);
@@ -77,6 +84,9 @@ public class Chest : MonoBehaviour
         {
             anim.Play(Constants.CHEST_WIGGLE);
             meter.value += openIncrement;
+            //audio
+            source.clip = audioPry;
+            source.Play();
         }
     }
 
@@ -110,6 +120,9 @@ public class Chest : MonoBehaviour
             openMeter.SetActive(false);
             sr.sprite = Resources.Load<Sprite>("chestOpened");
             anim.Play(Constants.CHEST_OPENED_IDLE);
+            //audio
+            source.clip = audioOpen;
+            source.Play();
         }
     }
 

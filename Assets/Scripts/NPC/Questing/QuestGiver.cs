@@ -15,7 +15,7 @@ public class QuestGiver : MonoBehaviour
     {
         quest.goal.requiredAmount = pickUp.Count;
         quest.isActive = true;
-        player.quest = quest;
+        //player.quest = quest;
         for(int i=0; i<pickUp.Count; i++)
         {
             pickUp[i].quest = quest;
