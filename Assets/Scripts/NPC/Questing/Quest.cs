@@ -23,7 +23,7 @@ public class Quest
     {
         isActive = false;
         completed = true;
-        Debug.Log(questName + " was completed!");
+        //Debug.Log(questName + " was completed!");
     }
 
     /*void GiveReward()

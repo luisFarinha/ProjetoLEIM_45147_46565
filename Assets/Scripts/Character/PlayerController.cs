@@ -677,6 +677,12 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy") && Time.time > stunTimer)
         {
+            TakeDamage(collision, dmgTaken);
+        }
+    }
+
+    public void TakeDamage(Collision2D collision, int dmgTaken)
+    {
             Vector2 dmgHere = gameObject.transform.position - collision.gameObject.transform.position;
             if (dmgHere.x < 1 && dmgHere.x > -1)
             {
@@ -702,7 +708,6 @@ public class PlayerController : MonoBehaviour
             stunTimer = Time.time + stunCooldown;
             StartCoroutine(FlashRed(stunTime / 4, 2));
             cineShake.ShakeCamera(3f, stunTime);
-        }
     }
 
     private IEnumerator FlashRed(float time, int nTimes)
