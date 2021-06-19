@@ -11,7 +11,7 @@ public abstract class Enemy : MonoBehaviour
     public Slider followSlider;
     [HideInInspector] public Collider2D playerCol;
     [HideInInspector] public Rigidbody2D rb;
-    [HideInInspector] public Animator anim;
+    public Animator anim;
     [HideInInspector] public Collider2D col;
 
     [Header("Health")]
