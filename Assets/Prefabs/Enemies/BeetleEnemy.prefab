@@ -1201,6 +1201,7 @@ MonoBehaviour:
   knockbackForce: 10
   stunDuration: 0.15
   isStunned: 0
+  stunForce: 6
   nSmallCoins: 2
   nMediumCoins: 0
   nLargeCoins: 0
@@ -1216,6 +1217,8 @@ MonoBehaviour:
   onWall: 0
   wLength: 0
   wallPoint: {x: 0, y: 0}
+  walkSpeed: 2
+  runSpeed: 5
 --- !u!1 &5069700415724755361
 GameObject:
   m_ObjectHideFlags: 0

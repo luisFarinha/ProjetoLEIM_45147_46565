@@ -530,7 +530,7 @@ GameObject:
   - component: {fileID: 8480143930099111408}
   - component: {fileID: 5511334566144634571}
   - component: {fileID: 1296831540916356610}
-  - component: {fileID: 1587769925}
+  - component: {fileID: 850390571}
   m_Layer: 9
   m_Name: Boar
   m_TagString: Enemy
@@ -614,7 +614,7 @@ CapsuleCollider2D:
   m_Offset: {x: 0.5649235, y: 0.14875673}
   m_Size: {x: 9.393224, y: 5.1816015}
   m_Direction: 1
---- !u!114 &1587769925
+--- !u!114 &850390571
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -623,7 +623,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8480143930099111409}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d59cbc83dd255e04ab8705fe60172e9c, type: 3}
+  m_Script: {fileID: 11500000, guid: 5292115fd05610c4a8280c427a6d2ed0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   gLayer:
@@ -632,20 +632,36 @@ MonoBehaviour:
   slider: {fileID: 386034052}
   followSlider: {fileID: 1869893755}
   playerCol: {fileID: 0}
-  maxHealth: 100
+  rb: {fileID: 0}
+  anim: {fileID: 0}
+  col: {fileID: 0}
+  maxHealth: 200
   currentHealth: 0
-  moveSpeed: 1.4
+  moveSpeed: 2
   changeDirectionCooldown: 0.5
   facingRight: 0
-  knockbackForce: 8
+  changeDirectionTimer: 0
+  knockbackForce: 5
   stunDuration: 0.15
   isStunned: 0
-  isDead: 0
-  nSmallCoins: 2
+  stunForce: 10
+  nSmallCoins: 3
   nMediumCoins: 1
   nLargeCoins: 0
+  isDead: 0
+  hasDied: 0
+  smallCoin: {fileID: 0}
+  mediumCoin: {fileID: 0}
+  largeCoin: {fileID: 0}
   onGround: 0
+  gLength: 0
+  leftGPoint: {x: 0, y: 0}
+  rightGPoint: {x: 0, y: 0}
   onWall: 0
+  wLength: 0
+  wallPoint: {x: 0, y: 0}
+  walkSpeed: 2
+  runSpeed: 5
 --- !u!1 &8480143930114592134
 GameObject:
   m_ObjectHideFlags: 0
@@ -715,7 +731,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -714477103
-  m_SortingLayer: -5
+  m_SortingLayer: -6
   m_SortingOrder: 0
   m_Sprite: {fileID: 4915712400781040468, guid: 77e37318016eb08468c27a8b0bd98be5,
     type: 3}
@@ -798,7 +814,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -714477103
-  m_SortingLayer: -5
+  m_SortingLayer: -6
   m_SortingOrder: 0
   m_Sprite: {fileID: 2834288217252098667, guid: 77e37318016eb08468c27a8b0bd98be5,
     type: 3}
@@ -881,7 +897,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -714477103
-  m_SortingLayer: -5
+  m_SortingLayer: -6
   m_SortingOrder: 2
   m_Sprite: {fileID: 1246345163782864607, guid: 77e37318016eb08468c27a8b0bd98be5,
     type: 3}
@@ -964,7 +980,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -714477103
-  m_SortingLayer: -5
+  m_SortingLayer: -6
   m_SortingOrder: 2
   m_Sprite: {fileID: 3980202819622034019, guid: 77e37318016eb08468c27a8b0bd98be5,
     type: 3}
@@ -1047,7 +1063,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -714477103
-  m_SortingLayer: -5
+  m_SortingLayer: -6
   m_SortingOrder: 1
   m_Sprite: {fileID: 3385642987832471505, guid: 77e37318016eb08468c27a8b0bd98be5,
     type: 3}
@@ -1131,7 +1147,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -714477103
-  m_SortingLayer: -5
+  m_SortingLayer: -6
   m_SortingOrder: 3
   m_Sprite: {fileID: -1887326657069130524, guid: 77e37318016eb08468c27a8b0bd98be5,
     type: 3}

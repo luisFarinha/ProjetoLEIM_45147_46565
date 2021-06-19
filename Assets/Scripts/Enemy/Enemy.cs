@@ -29,6 +29,9 @@ public abstract class Enemy : MonoBehaviour
     public float stunDuration;
     [HideInInspector] public bool isStunned;
 
+    [Header("Dmg Given")]
+    public float stunForce;
+
     [Header("Death")]
     public int nSmallCoins;
     public int nMediumCoins;

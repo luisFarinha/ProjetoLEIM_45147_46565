@@ -58,6 +58,9 @@ public class Constants : MonoBehaviour
     public const string ENEMY_WALK = "Walk";
     public const string ENEMY_GET_HIT= "Hit";
     public const string ENEMY_DEATH = "Death";
+    public const string ENEMY_RUN = "Run";
+    public const string ENEMY_ATTACK = "Attack";
+    public const string ENEMY_IDLE = "Idle";
 
 
     //UI---------------------------------------------------------------

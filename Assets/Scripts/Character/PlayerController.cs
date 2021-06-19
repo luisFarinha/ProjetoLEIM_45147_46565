@@ -90,7 +90,6 @@ public class PlayerController : MonoBehaviour
     public float knockbackTime = 0.2f;
 
     [Header("Stun")]
-    public float stunForce = 6f;
     public bool isStunned;
     public float stunTime = 0.3f;
     public float stunCooldown = 0.5f;
@@ -694,7 +693,8 @@ public class PlayerController : MonoBehaviour
 
             isStunned = true;
             rb.velocity = new Vector2(0, 0);
-            rb.AddForce(new Vector2(dmgHere.x * stunForce, dmgHere.y * stunForce * 1.5f), ForceMode2D.Impulse);
+            rb.AddForce(new Vector2(dmgHere.x * collision.gameObject.GetComponent<Enemy>().stunForce, 
+                dmgHere.y * collision.gameObject.GetComponent<Enemy>().stunForce * 1.5f), ForceMode2D.Impulse);
             SetHealth(currentHealth - dmgTaken);
             StartCoroutine(ActionComplete(Constants.ActionType.STUNNED, stunTime));
             anim.Play(Constants.PLAYER_TAKEDAMAGE);

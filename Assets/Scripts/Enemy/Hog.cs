@@ -20,7 +20,7 @@ public class Hog : GroundedEnemy
         gLength = (col.bounds.size.y / 1.6f);
         wLength = (col.bounds.size.x / 1.8f);
 
-        InvokeRepeating("Chase", 0f, 2f);
+        InvokeRepeating("Chase", 0f, 3f);
     }
 
     // Update is called once per frame
@@ -39,11 +39,16 @@ public class Hog : GroundedEnemy
         }
         if (!isDead)
         {
-            CheckGrounded();
-            CheckWall();
-            CheckDirection();
-            Move();
-            Charge();
+            Debug.Log(anim.GetCurrentAnimatorClipInfo(0)[0].clip.name);
+            if (!anim.GetCurrentAnimatorClipInfo(0)[0].clip.name.Equals(Constants.ENEMY_ATTACK) && !anim.GetCurrentAnimatorClipInfo(0)[0].clip.name.Equals(Constants.ENEMY_IDLE))
+            {
+                CheckGrounded();
+                CheckWall();
+                CheckDirection();
+                Move();
+                Charge();
+                Attack();
+            }
         }
     }
 }

@@ -17,6 +17,10 @@ public abstract class GroundedEnemy : Enemy
     [HideInInspector] public Vector2 wallPoint;
     [HideInInspector] public RaycastHit2D wRayDiretion;
 
+    [Header("Ground Movement")]
+    public float walkSpeed;
+    public float runSpeed;
+
     public void CheckGrounded()
     {
         leftGPoint = new Vector2(transform.position.x - col.bounds.size.x * 0.5f, transform.position.y);
@@ -48,7 +52,7 @@ public abstract class GroundedEnemy : Enemy
     {
         if (!isStunned)
         {
-            if (!anim.name.Equals(Constants.ENEMY_WALK))
+            if (!anim.GetCurrentAnimatorClipInfo(0)[0].clip.name.Equals(Constants.ENEMY_WALK) && moveSpeed != runSpeed)
             {
                 anim.Play(Constants.ENEMY_WALK);
             }
@@ -82,21 +86,9 @@ public abstract class GroundedEnemy : Enemy
         }
     }
 
-    public void Charge()
-    {
-        if (Mathf.Abs(playerCol.transform.position.x - transform.position.x) + Mathf.Abs(playerCol.transform.position.y - transform.position.y) < 6)
-        {
-            moveSpeed = 5;
-        }
-        else
-        {
-            moveSpeed = 2;
-        }
-    }
-
     public void Chase()
     {
-        if (Mathf.Abs(playerCol.transform.position.x - transform.position.x) + Mathf.Abs(playerCol.transform.position.y - transform.position.y) < 10)
+        if (Mathf.Abs(playerCol.transform.position.x - transform.position.x) + Mathf.Abs(playerCol.transform.position.y - transform.position.y) < 11 && moveSpeed != runSpeed)
         {
             if (playerCol.transform.position.x < transform.position.x)
             {
@@ -107,6 +99,65 @@ public abstract class GroundedEnemy : Enemy
             {
                 transform.eulerAngles = new Vector3(0, 180, 0);
                 facingRight = true;
+            }
+        }
+    }
+
+    public void Charge()
+    {
+        if (Mathf.Abs(playerCol.transform.position.x - transform.position.x) + Mathf.Abs(playerCol.transform.position.y - transform.position.y) < 5)
+        {
+            if(((playerCol.transform.position.x < transform.position.x) && !facingRight) || ((playerCol.transform.position.x > transform.position.x) && facingRight))
+            {
+                moveSpeed = runSpeed;
+                if (!anim.GetCurrentAnimatorClipInfo(0)[0].clip.name.Equals(Constants.ENEMY_RUN))
+                {
+                    anim.Play(Constants.ENEMY_RUN);
+                }
+            }
+            else if (moveSpeed == runSpeed)
+            {
+                Invoke("SetToWalkSpeed", 1f);
+            }
+        }
+        else if (moveSpeed == runSpeed)
+        {
+            Invoke("SetToWalkSpeed", 1f);
+        }
+        else
+        {
+            SetToWalkSpeed();
+        }
+    }
+
+    public void Attack()
+    {
+        if (Mathf.Abs(playerCol.transform.position.x - transform.position.x) + Mathf.Abs(playerCol.transform.position.y - transform.position.y) < 2)
+        {
+            if (!anim.GetCurrentAnimatorClipInfo(0)[0].clip.name.Equals(Constants.ENEMY_ATTACK))
+            {
+                anim.Play(Constants.ENEMY_ATTACK);
+                StartCoroutine(Recover());
+            }
+        }
+    }
+
+    private IEnumerator Recover()
+    {
+        yield return new WaitForSeconds(0.3f);
+        rb.velocity = Vector2.zero;
+        anim.Play(Constants.ENEMY_IDLE);
+        yield return new WaitForSeconds(1f);
+    }
+
+    private void SetToWalkSpeed()
+    {
+        //if is far away and not looking at the player then walk
+        if (Mathf.Abs(playerCol.transform.position.x - transform.position.x) + Mathf.Abs(playerCol.transform.position.y - transform.position.y) > 5)
+        {
+            if (((playerCol.transform.position.x > transform.position.x) && !facingRight) || ((playerCol.transform.position.x < transform.position.x) && facingRight))
+            {
+                moveSpeed = walkSpeed;
             }
         }
     }
