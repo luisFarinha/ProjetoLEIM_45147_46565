@@ -263,6 +263,7 @@ MonoBehaviour:
   knockbackForce: 10
   stunDuration: 0.15
   isStunned: 0
+  stunForce: 6
   nSmallCoins: 2
   nMediumCoins: 3
   nLargeCoins: 0
@@ -278,7 +279,7 @@ MonoBehaviour:
   DetectionDist: 10
   FireDist: 4
   timeBtwShots: 5
-  startTimeBtwShots: 0
+  startTimeBtwShots: 1
   currentWayPoint: 0
   seeker: {fileID: 0}
 --- !u!1 &3746256134510101097
@@ -498,7 +499,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 2453552796170098544, guid: fe81b70f0c5a7af4a9848b94a29f86b4,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -681,7 +682,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -2268532110097732448, guid: fe81b70f0c5a7af4a9848b94a29f86b4,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -764,7 +765,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: -5343745296752808240, guid: fe81b70f0c5a7af4a9848b94a29f86b4,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -847,7 +848,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -1324906800421723681, guid: fe81b70f0c5a7af4a9848b94a29f86b4,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1080,7 +1081,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 3643050211366897296, guid: fe81b70f0c5a7af4a9848b94a29f86b4,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

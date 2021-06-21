@@ -23,6 +23,7 @@ TagManager:
   - Soul
   - NPC
   - Unlock
+  - Fireball
   layers:
   - Default
   - TransparentFX

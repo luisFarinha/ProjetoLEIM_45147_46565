@@ -94,6 +94,8 @@ public class PlayerController : MonoBehaviour
     public float stunTime = 0.3f;
     public float stunCooldown = 0.5f;
     private float stunTimer;
+    private float defaultStun = 6f;
+    private float stunForce;
 
     [Header("Health and Damage")]
     public int maxHealth = 100;
@@ -674,7 +676,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Enemy") && Time.time > stunTimer)
+        if ((collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("Fireball")) && Time.time > stunTimer)
         {
             TakeDamage(collision, dmgTaken);
         }
@@ -682,32 +684,42 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(Collision2D collision, int dmgTaken)
     {
-            Vector2 dmgHere = gameObject.transform.position - collision.gameObject.transform.position;
-            if (dmgHere.x < 1 && dmgHere.x > -1)
-            {
-                dmgHere.y = dmgHere.y > 0 ? 1 : -1;
-            }
-            else if (dmgHere.y < 1 && dmgHere.y > -1)
-            {
-                dmgHere.x = dmgHere.x > 0 ? 1 : -1;
-            }
-            else
-            {
-                dmgHere.x = dmgHere.x > 0 ? 1 : -1;
-                dmgHere.y = dmgHere.y > 0 ? 1 : -1;
-            }
+        Vector2 dmgHere = gameObject.transform.position - collision.gameObject.transform.position;
+        
+        if(collision.gameObject.CompareTag("Enemy"))
+        {
+            stunForce = collision.gameObject.GetComponent<Enemy>().stunForce;
+        }
+        else
+        {
+            stunForce = defaultStun;
+        }
 
-            isStunned = true;
-            rb.velocity = new Vector2(0, 0);
-            rb.AddForce(new Vector2(dmgHere.x * collision.gameObject.GetComponent<Enemy>().stunForce, 
-                dmgHere.y * collision.gameObject.GetComponent<Enemy>().stunForce * 1.5f), ForceMode2D.Impulse);
-            SetHealth(currentHealth - dmgTaken);
-            StartCoroutine(ActionComplete(Constants.ActionType.STUNNED, stunTime));
-            anim.Play(Constants.PLAYER_TAKEDAMAGE);
+        if (dmgHere.x < 1 && dmgHere.x > -1)
+        {
+            dmgHere.y = dmgHere.y > 0 ? 1 : -1;
+        }
+        else if (dmgHere.y < 1 && dmgHere.y > -1)
+        {
+            dmgHere.x = dmgHere.x > 0 ? 1 : -1;
+        }
+        else
+        {
+            dmgHere.x = dmgHere.x > 0 ? 1 : -1;
+            dmgHere.y = dmgHere.y > 0 ? 1 : -1;
+        }
 
-            stunTimer = Time.time + stunCooldown;
-            StartCoroutine(FlashRed(stunTime / 4, 2));
-            cineShake.ShakeCamera(3f, stunTime);
+        isStunned = true;
+        rb.velocity = new Vector2(0, 0);
+        rb.AddForce(new Vector2(dmgHere.x * stunForce,
+            dmgHere.y * stunForce * 1.5f), ForceMode2D.Impulse);
+        SetHealth(currentHealth - dmgTaken);
+        StartCoroutine(ActionComplete(Constants.ActionType.STUNNED, stunTime));
+        anim.Play(Constants.PLAYER_TAKEDAMAGE);
+
+        stunTimer = Time.time + stunCooldown;
+        StartCoroutine(FlashRed(stunTime / 4, 2));
+        cineShake.ShakeCamera(3f, stunTime);
     }
 
     private IEnumerator FlashRed(float time, int nTimes)
@@ -749,12 +761,12 @@ public class PlayerController : MonoBehaviour
 
     public void CheckDeath()
     {
-        if(currentHealth <= 0 && !isDead)
+        if (currentHealth <= 0 && !isDead)
         {
             isDead = true;
             rb.velocity = Vector2.zero;
         }
-        else if(isDead)
+        else if (isDead)
         {
             isDead = false;
         }

@@ -10,6 +10,7 @@ public class BlueFly : FlyingEnemyAI
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<Collider2D>();
         playerCol = GameObject.FindWithTag("Player").GetComponent<BoxCollider2D>();
+        target = GameObject.FindGameObjectWithTag("Player").transform;
 
         seeker = GetComponent<Seeker>();
         InvokeRepeating("CheckDist", 0f, 0.5f);

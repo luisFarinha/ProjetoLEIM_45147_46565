@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
 
-public class OrangeFly : FlyingEnemyAI
+public class FlyingBossEnemy : FlyingEnemyAI
 {
 
 
@@ -29,7 +29,7 @@ public class OrangeFly : FlyingEnemyAI
     void FixedUpdate()
     {
         EnemyBehaviour();
-        Shoot();
+        SpawnEnemies();
 
         if (currentHealth <= 0 && !hasDied)
         {
@@ -54,30 +54,18 @@ public class OrangeFly : FlyingEnemyAI
         if (dist <= DetectionDist && dist > FireDist)
         {
             InvokeUpdatePath();
-            //CancelGoBackInvoke();
         }
-        else if (dist <= FireDist /*&& dist > 2*/)
+        else if (dist <= FireDist)
         {
-            //Shoot();
             rb.velocity = new Vector2(0, 0);
-            //CancelInvokeUpdatePath();
-            //CancelGoBackInvoke();
-            //path = null;
         }
-        /*else if(dist <= 2)
-        {
-            //GoBackInvoke();
-            
-
-        }*/
         else
         {
-            //CancelGoBackInvoke();
             CancelInvokeUpdatePath();
             path = null;
         }
     }
 
 
-    
+
 }
