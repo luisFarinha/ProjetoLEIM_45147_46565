@@ -140,14 +140,15 @@ public class FlyingEnemyAI : Enemy
 
     public void SpawnEnemies() {
         float dist = Vector2.Distance(rb.position, target.position);
+        Vector3 firepoint = transform.Find("BossFly").transform.Find("Boss").transform.Find("Firepoint").position;
         if (dist <= FireDist)
         {
             if (gameObject.activeSelf)
             {
                 if (timeBtwShots <= 0)
                 {
-                    Instantiate(Resources.Load("FlyingEnemy"), transform.Find("BossFly").transform.Find("Boss").transform.Find("Firepoint").position, Quaternion.identity);
-                    Instantiate(Resources.Load("FlyingEnemy3"), transform.Find("BossFly").transform.Find("Boss").transform.Find("Firepoint").position, Quaternion.identity);
+                    Instantiate(Resources.Load("FlyingEnemy"), firepoint, Quaternion.identity);
+                    Instantiate(Resources.Load("FlyingEnemy3"), firepoint, Quaternion.identity);
                     timeBtwShots = startTimeBtwShots;
                 }
                 else
