@@ -43,7 +43,7 @@ public class DataSaver : MonoBehaviour
         try { enemiesInScene = GameObject.FindWithTag("Enemies").GetComponentsInChildren<Enemy>(); } catch (Exception) { }
         try { chestsInScene = GameObject.FindWithTag("Chests").GetComponentsInChildren<Chest>(); } catch (Exception) { }
         try { unlockOrbsInScene = GameObject.FindWithTag("UnlockableOrbs").GetComponentsInChildren<UnlockableOrb>(); } catch (Exception) { }
-        try { checkPoint = GameObject.FindWithTag("StartPos_1").transform.position; } catch (Exception) { }
+        try { checkPoint = GameObject.FindWithTag(player.startPos).transform.position; } catch (Exception) { }
         try { soul = GameObject.FindWithTag("Soul").GetComponent<Soul>(); } catch (Exception) { }
 
         LoadScene();

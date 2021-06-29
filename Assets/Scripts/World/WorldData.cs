@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.SearchService;
 using UnityEngine;
 
 
@@ -68,6 +65,18 @@ public class WorldData
     public int soulMoney06;
     public float[] soulPosition06 = { 500, 500, 500 };
     public bool soulCanSpawn06;
+    //SCENE07
+    public bool[] enemiesDead07 = new bool[2];
+    public int[] enemiesHealth07 = new int[2];
+    public int soulMoney07;
+    public float[] soulPosition07 = { 500, 500, 500 };
+    public bool soulCanSpawn07;
+    //SCENE08
+    public bool[] enemiesDead08 = new bool[2];
+    public int[] enemiesHealth08 = new int[2];
+    public int soulMoney08;
+    public float[] soulPosition08 = { 500, 500, 500 };
+    public bool soulCanSpawn08;
 
     public int money = 0;
     public int health = 100;
@@ -87,13 +96,13 @@ public class WorldData
                 UpdatePickUpsStatus(chests, chestsStatus01, unlockOrbs, unlockOrbsDone01);
                 break;
             case "Room_02":
-                UpdateEnemyData(enemies, enemiesDead02, enemiesHealth02);
+                //UpdateEnemyData(enemies, enemiesDead02, enemiesHealth02);
                 break;
             case "Room_03":
-                UpdateEnemyData(enemies, enemiesDead03, enemiesHealth03);
+                //UpdateEnemyData(enemies, enemiesDead03, enemiesHealth03);
                 break;
             case "Room_04":
-                UpdateEnemyData(enemies, enemiesDead04, enemiesHealth04);
+                //UpdateEnemyData(enemies, enemiesDead04, enemiesHealth04);
                 break;
         }
         UpdatePlayerData(player);

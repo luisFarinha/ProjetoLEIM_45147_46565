@@ -26,6 +26,11 @@ public class FlyingEnemyAI : Enemy
     [HideInInspector] public int currentWayPoint = 0;
     [HideInInspector] public Seeker seeker;
 
+    public void Awake()
+    {
+        target = GameObject.FindWithTag("Player").transform;
+    }
+
 
     public void EnemyBehaviour(){
         if (path == null)

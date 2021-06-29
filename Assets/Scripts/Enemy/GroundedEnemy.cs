@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class GroundedEnemy : Enemy
 {
     [Header("Ground Collisions")]
-    [HideInInspector] public bool onGround;
+    public bool onGround;
     [HideInInspector] public float gLength;
     [HideInInspector] public Vector2 leftGPoint;
     [HideInInspector] public Vector2 rightGPoint;

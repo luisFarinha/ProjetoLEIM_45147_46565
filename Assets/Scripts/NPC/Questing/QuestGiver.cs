@@ -11,7 +11,12 @@ public class QuestGiver : MonoBehaviour
     public List<PickUp> pickUp;
     public List<string> objectPicked;
 
-    
+    public void Start()
+    {
+        player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+    }
+
+
     public void AcceptQuest()
     {
         objectPicked = new List<string>(new string[quest.goal.requiredAmount]);

@@ -39,7 +39,6 @@ public class Hog : GroundedEnemy
         }
         if (!isDead)
         {
-            Debug.Log(anim.GetCurrentAnimatorClipInfo(0)[0].clip.name);
             if (!anim.GetCurrentAnimatorClipInfo(0)[0].clip.name.Equals(Constants.ENEMY_ATTACK) && !anim.GetCurrentAnimatorClipInfo(0)[0].clip.name.Equals(Constants.ENEMY_IDLE))
             {
                 CheckGrounded();

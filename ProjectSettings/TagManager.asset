@@ -24,6 +24,8 @@ TagManager:
   - NPC
   - Unlock
   - Fireball
+  - StartPos_2
+  - StartPos_3
   layers:
   - Default
   - TransparentFX
