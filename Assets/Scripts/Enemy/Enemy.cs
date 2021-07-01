@@ -87,7 +87,7 @@ public abstract class Enemy : MonoBehaviour
             SpawnCoins(largeCoin, nLargeCoins);
             anim.Play(Constants.ENEMY_DEATH);
         }
-        else if (isDead && !anim.name.Equals(Constants.ENEMY_DEATH))
+        else if (isDead && !anim.GetCurrentAnimatorClipInfo(0)[0].clip.name.Equals(Constants.ENEMY_DEATH))
         {
             anim.Play(Constants.ENEMY_DEATH);
         }

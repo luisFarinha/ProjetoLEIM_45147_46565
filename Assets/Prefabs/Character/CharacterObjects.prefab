@@ -106654,7 +106654,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4891150491148459941}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.049999237, y: 0.8299999, z: -7}
+  m_LocalPosition: {x: -0.05000019, y: 0.8299999, z: -7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4891150492176851276}
@@ -106932,7 +106932,6 @@ MonoBehaviour:
   knockbackForce: 8
   isKnocked: 0
   knockbackTime: 0.2
-  stunForce: 6
   isStunned: 0
   stunTime: 0.3
   stunCooldown: 0.5
@@ -107117,9 +107116,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   footsteps:
+  - {fileID: 8300000, guid: 35a17b0b7d788674baabc0b5d855ecf5, type: 3}
   - {fileID: 8300000, guid: f718a30a0e853874db321a7372c7fc7d, type: 3}
   - {fileID: 8300000, guid: 946f7443622d78b42a30a2ad6f465efe, type: 3}
-  - {fileID: 8300000, guid: 03d6a13e941ce3e46a4fac20b8147fc8, type: 3}
   jump: {fileID: 8300000, guid: 4e20f2321a14adc4d9456e3c0ab50b5b, type: 3}
   playJump: 1
   doubleJump: {fileID: 8300000, guid: 61c390c29f2496548882a7abc897c9d9, type: 3}
@@ -107139,7 +107138,7 @@ MonoBehaviour:
   takeDamage: {fileID: 8300000, guid: a07b559b98b8e4a4b9d716a63562b865, type: 3}
   die: {fileID: 8300000, guid: 5fe7808aa4c137c41ac1aa09d70b09ff, type: 3}
   canPlayDeathAudio: 0
-  unlockablePickUp: {fileID: 8300000, guid: 4da162e09035b464dba5cece1865ecbd, type: 3}
+  unlockablePickUp: {fileID: 8300000, guid: 91fd804c93aca4e4481567b3aedcc7bd, type: 3}
 --- !u!1 &4891150492176851277
 GameObject:
   m_ObjectHideFlags: 0

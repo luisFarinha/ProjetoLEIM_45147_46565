@@ -122,7 +122,6 @@ public class CharacterSoundManager : MonoBehaviour
             source.clip = glide;
             source.Play();
             playGlide = false;
-            Debug.Log(anim.GetCurrentAnimatorClipInfo(0)[0].clip.name);
         }
     }
 

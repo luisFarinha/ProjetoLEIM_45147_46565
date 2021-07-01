@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -52,10 +53,14 @@ public abstract class GroundedEnemy : Enemy
     {
         if (!isStunned)
         {
-            if (!anim.GetCurrentAnimatorClipInfo(0)[0].clip.name.Equals(Constants.ENEMY_WALK) && moveSpeed != runSpeed)
+            try
             {
-                anim.Play(Constants.ENEMY_WALK);
+                if (!anim.GetCurrentAnimatorClipInfo(0)[0].clip.name.Equals(Constants.ENEMY_WALK) && moveSpeed != runSpeed)
+                {
+                    anim.Play(Constants.ENEMY_WALK);
+                }
             }
+            catch (Exception) { }
             if (facingRight)
             {
                 rb.velocity = new Vector2(moveSpeed, rb.velocity.y);

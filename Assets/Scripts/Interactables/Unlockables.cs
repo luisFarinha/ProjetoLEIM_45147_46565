@@ -9,8 +9,8 @@ public class Unlockables : MonoBehaviour
     //public static bool wallJumpUnlocked;
     //public static bool doubleJumpUnlocked;
 
-    public static bool glideUnlocked = true;
-    public static bool dashUnlocked = true;
-    public static bool wallJumpUnlocked = true;
-    public static bool doubleJumpUnlocked = true;
+    public static bool glideUnlocked = false;
+    public static bool dashUnlocked = false;
+    public static bool wallJumpUnlocked = false;
+    public static bool doubleJumpUnlocked = false;
 }

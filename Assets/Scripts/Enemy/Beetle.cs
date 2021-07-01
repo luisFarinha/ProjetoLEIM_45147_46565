@@ -16,7 +16,10 @@ public class Beetle : GroundedEnemy
         mediumCoin = (GameObject)Resources.Load(Constants.MEDIUM_COIN_TEXT);
         largeCoin = (GameObject)Resources.Load(Constants.LARGE_COIN_TEXT);
 
-        SetHealth(maxHealth);
+        if (!isDead)
+        {
+            SetHealth(maxHealth);
+        }
         gLength = (col.bounds.size.y / 1.6f);
         wLength = (col.bounds.size.x / 1.8f);
     }
