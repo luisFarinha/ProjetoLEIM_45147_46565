@@ -24,12 +24,14 @@ public class WorldData
     //SCENE00
     public bool[] enemiesDead00 = new bool[1];
     public int[] enemiesHealth00 = { 100 };
+    public int[] enemiesMaxHealth00 = { 100 };
     public int soulMoney00;
     public float[] soulPosition00 = { 500, 500, 500 };
     public bool soulCanSpawn00;
     //SCENE01
     public bool[] enemiesDead01 = new bool[4];
     public int[] enemiesHealth01 = { 200, 100, 100, 100 };
+    public int[] enemiesMaxHealth01 = { 200, 100, 100, 100 };
     public bool[] chestsStatus01 = new bool[1];
     public bool[] unlockOrbsDone01 = new bool[1];
     public int soulMoney01;
@@ -38,6 +40,7 @@ public class WorldData
     //SCENE02
     public bool[] enemiesDead02 = new bool[3];
     public int[] enemiesHealth02 = { 300, 100, 100 };
+    public int[] enemiesMaxHealth02 = { 300, 100, 100 };
     public bool[] chestsStatus02 = new bool[1];
     public int soulMoney02;
     public float[] soulPosition02 = { 500, 500, 500 };
@@ -45,6 +48,7 @@ public class WorldData
     //SCENE03
     public bool[] enemiesDead03 = new bool[6];
     public int[] enemiesHealth03 = { 100, 100, 100, 100, 100, 100 };
+    public int[] enemiesMaxHealth03 = { 100, 100, 100, 100, 100, 100 };
     public bool[] unlockOrbsDone03 = new bool[1];
     public int soulMoney03;
     public float[] soulPosition03 = { 500, 500, 500 };
@@ -57,6 +61,7 @@ public class WorldData
     //SCENE05
     public bool[] enemiesDead05 = new bool[5];
     public int[] enemiesHealth05 = { 100, 100, 100, 100, 100 };
+    public int[] enemiesMaxHealth05 = { 100, 100, 100, 100, 100 };
     public int soulMoney05;
     public float[] soulPosition05 = { 500, 500, 500 };
     public bool soulCanSpawn05;
@@ -72,6 +77,7 @@ public class WorldData
     //SCENE08
     public bool[] enemiesDead08 = new bool[2];
     public int[] enemiesHealth08 = { 300, 200 };
+    public int[] enemiesMaxHealth08 = { 300, 200 };
     public bool[] chestsStatus08 = new bool[1];
     public int soulMoney08;
     public float[] soulPosition08 = { 500, 500, 500 };
@@ -79,6 +85,7 @@ public class WorldData
     //SCENE09
     public bool[] enemiesDead09 = new bool[1];
     public int[] enemiesHealth09 = { 400 };
+    public int[] enemiesMaxHealth09 = { 400 };
     public int soulMoney09;
     public float[] soulPosition09 = { 500, 500, 500 };
     public bool soulCanSpawn09;
@@ -133,7 +140,7 @@ public class WorldData
                 UpdateEnemyData(enemies, enemiesDead09, enemiesHealth09);
                 break;
             case "Room_10":
-                
+                //-------------
                 break;
         }
         UpdatePlayerData(player);
@@ -277,16 +284,16 @@ public class WorldData
     money = 0;
     health = 100;
 
-    ReviveEnemies(enemiesDead00, enemiesHealth00); //SCENE00
-    ReviveEnemies(enemiesDead01, enemiesHealth01); //SCENE01
-    ReviveEnemies(enemiesDead02, enemiesHealth02); //SCENE02
-    ReviveEnemies(enemiesDead03, enemiesHealth03); //SCENE03
+    ReviveEnemies(enemiesDead00, enemiesHealth00, "Room_00"); //SCENE00
+    ReviveEnemies(enemiesDead01, enemiesHealth01, "Room_01"); //SCENE01
+    ReviveEnemies(enemiesDead02, enemiesHealth02, "Room_02"); //SCENE02
+    ReviveEnemies(enemiesDead03, enemiesHealth03, "Room_03"); //SCENE03
     //ReviveEnemies(enemiesDead04, enemiesHealth04); //SCENE04
-    ReviveEnemies(enemiesDead05, enemiesHealth05); //SCENE05
+    ReviveEnemies(enemiesDead05, enemiesHealth05, "Room_05"); //SCENE05
     //ReviveEnemies(enemiesDead06, enemiesHealth06); //SCENE06
     //ReviveEnemies(enemiesDead07, enemiesHealth07); //SCENE07
-    ReviveEnemies(enemiesDead08, enemiesHealth08); //SCENE08
-    ReviveEnemies(enemiesDead09, enemiesHealth09); //SCENE09
+    ReviveEnemies(enemiesDead08, enemiesHealth08, "Room_08"); //SCENE08
+    ReviveEnemies(enemiesDead09, enemiesHealth09, "Room_09"); //SCENE09
     //ReviveEnemies(enemiesDead10, enemiesHealth10); //SCENE10
     }
 
@@ -317,12 +324,59 @@ public class WorldData
         soulPosition10[0] = 500; soulPosition10[1] = 500; soulPosition10[2] = 500;
     }
 
-    public void ReviveEnemies(bool[] enemiesDead, int[] enemiesHealth)
+    public void ReviveEnemies(bool[] enemiesDead, int[] enemiesHealth, string scene)
     {
-        for(int i = 0; i < enemiesHealth.Length; i++)
+        switch (scene)
         {
-            enemiesDead[i] = false;
-            enemiesHealth[i] = 100;
+            case "Room_00":
+                for (int i = 0; i < enemiesHealth.Length; i++)
+                {
+                    enemiesDead[i] = false;
+                    enemiesHealth[i] = enemiesMaxHealth00[i];
+                }
+                break;
+            case "Room_01":
+                for (int i = 0; i < enemiesHealth.Length; i++)
+                {
+                    enemiesDead[i] = false;
+                    enemiesHealth[i] = enemiesMaxHealth01[i];
+                }
+                break;
+            case "Room_02":
+                for (int i = 0; i < enemiesHealth.Length; i++)
+                {
+                    enemiesDead[i] = false;
+                    enemiesHealth[i] = enemiesMaxHealth02[i];
+                }
+                break;
+            case "Room_03":
+                for (int i = 0; i < enemiesHealth.Length; i++)
+                {
+                    enemiesDead[i] = false;
+                    enemiesHealth[i] = enemiesMaxHealth03[i];
+                }
+                break;
+            case "Room_05":
+                for (int i = 0; i < enemiesHealth.Length; i++)
+                {
+                    enemiesDead[i] = false;
+                    enemiesHealth[i] = enemiesMaxHealth05[i];
+                }
+                break;
+            case "Room_08":
+                for (int i = 0; i < enemiesHealth.Length; i++)
+                {
+                    enemiesDead[i] = false;
+                    enemiesHealth[i] = enemiesMaxHealth08[i];
+                }
+                break;
+            case "Room_09":
+                for (int i = 0; i < enemiesHealth.Length; i++)
+                {
+                    enemiesDead[i] = false;
+                    enemiesHealth[i] = enemiesMaxHealth09[i];
+                }
+                break;
         }
     }
 }
