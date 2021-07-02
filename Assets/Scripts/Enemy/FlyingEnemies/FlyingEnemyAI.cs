@@ -19,9 +19,6 @@ public class FlyingEnemyAI : Enemy
     [HideInInspector] public float timeBtwShots;
     public float startTimeBtwShots;
 
-    //public float currentSpeed;
-    //public float decreaseVelocity;
-
     [HideInInspector] public Path path;
     [HideInInspector] public int currentWayPoint = 0;
     [HideInInspector] public Seeker seeker;
@@ -78,16 +75,6 @@ public class FlyingEnemyAI : Enemy
         CancelInvoke("UpdatePath");
     }
 
-    /*public void GoBackInvoke()
-    {
-        InvokeRepeating("GoBack", 0, .1f);
-    }
-
-    public void CancelGoBackInvoke()
-    {
-        CancelInvoke("GoBack");
-    }*/
-
 
     void OnPathComplete(Path p)
     {
@@ -96,20 +83,6 @@ public class FlyingEnemyAI : Enemy
             path = p;
             currentWayPoint = 0;
         }
-    }
-
-    
-
-    public void SlowDown()
-    {
-        //Diminuir velocidade
-
-        /*if (velocidade <= 0)
-        {
-            rb.velocity = new Vector2(0, 0);
-            Debug.Log("pew pew");
-            //Dispara
-        }*/
     }
 
 
@@ -125,7 +98,7 @@ public class FlyingEnemyAI : Enemy
     public void Shoot()
     {
         float dist = Vector2.Distance(rb.position, target.position);
-        if (dist <= FireDist /*&& dist > 2*/)
+        if (dist <= FireDist)
         {
             if (gameObject.activeSelf)
             {
@@ -163,8 +136,4 @@ public class FlyingEnemyAI : Enemy
             }
         }
     }
-    /*void GoBack()
-    {
-        transform.position = Vector2.MoveTowards(transform.position, target.position, -10 * Time.deltaTime);
-    }*/
 }

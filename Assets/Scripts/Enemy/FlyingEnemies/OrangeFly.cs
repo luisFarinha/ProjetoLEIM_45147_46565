@@ -29,14 +29,16 @@ public class OrangeFly : FlyingEnemyAI
     void FixedUpdate()
     {
         EnemyBehaviour();
-        Shoot();
-
+        if (!hasDied)
+        {
+           Shoot();
+        }
+        
         if (currentHealth <= 0 && !hasDied)
         {
-            //Die();
-            gameObject.SetActive(false);
-            //puuuff
-
+            Die();
+            CancelInvokeUpdatePath();
+            path = null;
             hasDied = true;
         }
         else if (currentHealth > 0 && hasDied)
@@ -50,31 +52,21 @@ public class OrangeFly : FlyingEnemyAI
     void CheckDist()
     {
         float dist = Vector2.Distance(rb.position, target.position);
-
-        if (dist <= DetectionDist && dist > FireDist)
+        if (!hasDied)
         {
-            InvokeUpdatePath();
-            //CancelGoBackInvoke();
-        }
-        else if (dist <= FireDist /*&& dist > 2*/)
-        {
-            //Shoot();
-            rb.velocity = new Vector2(0, 0);
-            //CancelInvokeUpdatePath();
-            //CancelGoBackInvoke();
-            //path = null;
-        }
-        /*else if(dist <= 2)
-        {
-            //GoBackInvoke();
-            
-
-        }*/
-        else
-        {
-            //CancelGoBackInvoke();
-            CancelInvokeUpdatePath();
-            path = null;
+            if (dist <= DetectionDist && dist > FireDist)
+            {
+                InvokeUpdatePath();
+            }
+            else if (dist <= FireDist)
+            {
+                rb.velocity = new Vector2(0, 0);
+            }
+            else
+            {
+                CancelInvokeUpdatePath();
+                path = null;
+            }
         }
     }
 

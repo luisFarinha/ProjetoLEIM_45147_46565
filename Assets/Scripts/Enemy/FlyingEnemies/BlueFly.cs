@@ -28,10 +28,9 @@ public class BlueFly : FlyingEnemyAI
 
         if (currentHealth <= 0 && !hasDied)
         {
-            //Die();
-            gameObject.SetActive(false);
-            //puuuff
-
+            Die();
+            CancelInvokeUpdatePath();
+            path = null;
             hasDied = true;
         }
         else if (currentHealth > 0 && hasDied)
@@ -45,16 +44,19 @@ public class BlueFly : FlyingEnemyAI
     void CheckDist()
     {
         float dist = Vector2.Distance(rb.position, target.position);
-
-        if (dist <= DetectionDist)
+        if (!hasDied)
         {
-            InvokeUpdatePath();
+            if (dist <= DetectionDist)
+            {
+                InvokeUpdatePath();
+            }
+            else
+            {
+                CancelInvokeUpdatePath();
+                path = null;
+            }
         }
-        else
-        {
-            CancelInvokeUpdatePath();
-            path = null;
-        }
+        
     }
 
 }

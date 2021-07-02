@@ -7,6 +7,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7190067321669813234, guid: 13162c0599004d34b8dac1076122b0f7,
+        type: 3}
+      propertyPath: m_Radius
+      value: 0.38741684
+      objectReference: {fileID: 0}
+    - target: {fileID: 7190067321669813234, guid: 13162c0599004d34b8dac1076122b0f7,
+        type: 3}
+      propertyPath: m_Offset.x
+      value: 0.0022735596
+      objectReference: {fileID: 0}
+    - target: {fileID: 7190067321669813234, guid: 13162c0599004d34b8dac1076122b0f7,
+        type: 3}
+      propertyPath: m_Offset.y
+      value: 0.03391266
+      objectReference: {fileID: 0}
     - target: {fileID: 7190067321669813236, guid: 13162c0599004d34b8dac1076122b0f7,
         type: 3}
       propertyPath: target
@@ -70,7 +85,7 @@ PrefabInstance:
     - target: {fileID: 7190067321669813238, guid: 13162c0599004d34b8dac1076122b0f7,
         type: 3}
       propertyPath: m_Name
-      value: FlyingEnemy3
+      value: FlyingEnemy3 Variant
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13162c0599004d34b8dac1076122b0f7, type: 3}

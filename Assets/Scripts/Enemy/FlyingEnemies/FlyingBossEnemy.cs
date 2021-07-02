@@ -6,13 +6,14 @@ using Pathfinding;
 public class FlyingBossEnemy : FlyingEnemyAI
 {
 
-
+    GameObject[] tentacle;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<Collider2D>();
         playerCol = GameObject.FindWithTag("Player").GetComponent<BoxCollider2D>();
         target = GameObject.FindGameObjectWithTag("Player").transform;
+        tentacle = GameObject.FindGameObjectsWithTag("Tentacle");
 
         seeker = GetComponent<Seeker>();
         InvokeRepeating("CheckDist", 0f, 0.5f);
@@ -33,10 +34,14 @@ public class FlyingBossEnemy : FlyingEnemyAI
 
         if (currentHealth <= 0 && !hasDied)
         {
-            //Die();
-            gameObject.SetActive(false);
-            //puuuff
-
+            Die();
+            for(int i=0; i<tentacle.Length; i++)
+            {
+                tentacle[i].SetActive(false);
+            }
+            
+            CancelInvokeUpdatePath();
+            path = null;
             hasDied = true;
         }
         else if (currentHealth > 0 && hasDied)
@@ -51,21 +56,21 @@ public class FlyingBossEnemy : FlyingEnemyAI
     {
         float dist = Vector2.Distance(rb.position, target.position);
 
-        if (dist <= DetectionDist && dist > FireDist)
+        if (!hasDied)
         {
-            InvokeUpdatePath();
-        }
-        else if (dist <= FireDist)
-        {
-            rb.velocity = new Vector2(0, 0);
-        }
-        else
-        {
-            CancelInvokeUpdatePath();
-            path = null;
-        }
+            if (dist <= DetectionDist && dist > FireDist)
+            {
+                InvokeUpdatePath();
+            }
+            else if (dist <= FireDist)
+            {
+                rb.velocity = new Vector2(0, 0);
+            }
+            else
+            {
+                CancelInvokeUpdatePath();
+                path = null;
+            }
+        } 
     }
-
-
-
 }
