@@ -19,7 +19,7 @@ public class SelectOnEnable : MonoBehaviour
 
     public void Update()
     {
-        if (isActiveAndEnabled && canSelect)
+        if (canSelect)
         {
             if (btn != null)
             {
