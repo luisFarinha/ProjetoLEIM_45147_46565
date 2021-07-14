@@ -786,6 +786,12 @@ PrefabInstance:
       propertyPath: dialogue.SecondSentences.Array.data[5]
       value: I'm sure you'll catch them right away strong little friend!
       objectReference: {fileID: 0}
+    - target: {fileID: 328342930, guid: 01d5465b6250a814692cad027993c76f, type: 3}
+      propertyPath: dialogue.SecondMissionCompletedSentences.Array.data[0]
+      value: 'Thank you again for the huge help little friend!
+
+'
+      objectReference: {fileID: 0}
     - target: {fileID: 4857123519597642680, guid: 01d5465b6250a814692cad027993c76f,
         type: 3}
       propertyPath: m_Name
