@@ -766,12 +766,25 @@ PrefabInstance:
       value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 328342930, guid: 01d5465b6250a814692cad027993c76f, type: 3}
+      propertyPath: dialogue.SecondSentences.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 328342930, guid: 01d5465b6250a814692cad027993c76f, type: 3}
       propertyPath: dialogue.FirstSentences.Array.data[11]
       value: Would you help a little friend and try to catch me two Japanese Maples?
       objectReference: {fileID: 0}
     - target: {fileID: 328342930, guid: 01d5465b6250a814692cad027993c76f, type: 3}
       propertyPath: dialogue.FirstSentences.Array.data[12]
       value: They would look stunnin' in my little place I call home!
+      objectReference: {fileID: 0}
+    - target: {fileID: 328342930, guid: 01d5465b6250a814692cad027993c76f, type: 3}
+      propertyPath: dialogue.SecondSentences.Array.data[4]
+      value: Oh! And don't forget about the two amazing Japanese Maples trees I asked
+        for!
+      objectReference: {fileID: 0}
+    - target: {fileID: 328342930, guid: 01d5465b6250a814692cad027993c76f, type: 3}
+      propertyPath: dialogue.SecondSentences.Array.data[5]
+      value: I'm sure you'll catch them right away strong little friend!
       objectReference: {fileID: 0}
     - target: {fileID: 4857123519597642680, guid: 01d5465b6250a814692cad027993c76f,
         type: 3}
