@@ -1,4 +1,4 @@
-// GENERATED AUTOMATICALLY FROM 'Assets/Scripts/CharScripts/InputMaster.inputactions'
+// GENERATED AUTOMATICALLY FROM 'Assets/Scripts/Character/InputMaster.inputactions'
 
 using System;
 using System.Collections;
@@ -298,7 +298,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""WH"",
+                    ""name"": ""WK"",
                     ""id"": ""40b4c609-b21b-4e5a-8114-51766e2cdc37"",
                     ""path"": ""ButtonWithOneModifier"",
                     ""interactions"": """",
@@ -322,7 +322,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 {
                     ""name"": ""button"",
                     ""id"": ""49a2461c-1ece-452b-a416-b42ea5cbd0b2"",
-                    ""path"": ""<Keyboard>/h"",
+                    ""path"": ""<Keyboard>/k"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
@@ -397,7 +397,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""SH"",
+                    ""name"": ""SK"",
                     ""id"": ""5fa1d7c4-c356-4174-8c79-ef2327e538e6"",
                     ""path"": ""ButtonWithOneModifier"",
                     ""interactions"": """",
@@ -421,7 +421,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 {
                     ""name"": ""button"",
                     ""id"": ""b6201107-330c-4c67-a021-c7db9aa2456b"",
-                    ""path"": ""<Keyboard>/h"",
+                    ""path"": ""<Keyboard>/k"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
@@ -520,7 +520,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""9f56c7c1-a175-45bd-aaba-0a41437b2f7c"",
-                    ""path"": ""<Keyboard>/h"",
+                    ""path"": ""<Keyboard>/k"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
