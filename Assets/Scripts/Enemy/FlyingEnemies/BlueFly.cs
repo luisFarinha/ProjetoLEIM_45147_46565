@@ -19,7 +19,10 @@ public class BlueFly : FlyingEnemyAI
         mediumCoin = (GameObject)Resources.Load(Constants.MEDIUM_COIN_TEXT);
         largeCoin = (GameObject)Resources.Load(Constants.LARGE_COIN_TEXT);
 
-        SetHealth(maxHealth);
+        if (!isDead)
+        {
+            SetHealth(maxHealth);
+        }
     }
 
     void FixedUpdate()

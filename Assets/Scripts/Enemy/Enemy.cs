@@ -16,7 +16,7 @@ public abstract class Enemy : MonoBehaviour
 
     [Header("Health")]
     public int maxHealth;
-    [HideInInspector] public int currentHealth;
+    public int currentHealth;
 
     [Header("Movement")]
     public float moveSpeed;
@@ -36,7 +36,7 @@ public abstract class Enemy : MonoBehaviour
     public int nSmallCoins;
     public int nMediumCoins;
     public int nLargeCoins;
-    [HideInInspector] public bool isDead;
+    public bool isDead;
     [HideInInspector] public bool hasDied;
     [HideInInspector] public GameObject smallCoin;
     [HideInInspector] public GameObject mediumCoin;
